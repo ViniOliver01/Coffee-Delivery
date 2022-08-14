@@ -9,6 +9,7 @@ export const LogoArea = styled.div`
     img{
         width: 90px;
         height: 40px;
+        cursor: pointer;
     }
 `
 export const HeaderContainer = styled.div`

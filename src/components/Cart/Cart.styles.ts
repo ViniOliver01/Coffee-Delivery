@@ -12,6 +12,7 @@ export const Container = styled.div`
 
     text-decoration: none;
     position: relative;
+    cursor: pointer;
 `
 export const CountItens = styled.div`
     width: 20px;
@@ -27,4 +28,6 @@ export const CountItens = styled.div`
     align-items: center;
     background: ${(props) => props.theme['yellow-dark']};
     color: white;
+
+    user-select: none;
 `
