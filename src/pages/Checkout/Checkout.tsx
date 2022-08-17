@@ -1,31 +1,17 @@
 import { CartList, Container, FormInput, HeaderItem, InputText, PaymentButton, PaymentButtonList, PaymentMethod } from "./Checkout.styles";
 import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money, Trash } from 'phosphor-react';
 import { CartItem } from "./components/CartItemList/CartItem";
-import { useState } from "react";
-
-const ListCart = [
-  {
-    id: 0,
-    type: ['tradicional'],
-    name: 'Expresso Tradicional',
-    description: "O tradicional café feito com água quente e grãos moídos",
-    price: 9.90,
-  },
-  {
-    id: 1,
-    type: ['tradicional'],
-    name: 'Expresso Americano',
-    description: "Expresso diluído, menos intenso que o tradicional",
-    price: 9.90,
-  },
-]
+import { useContext, useEffect, useState } from "react";
+import { CartContext, coffeesList } from './../../context/CartContext/CartContext';
 
 export function Checkout(){
-  const [paymethodSelect, setPaymethodSelect] = useState('');
-
+  const [paymethodSelect, setPaymethodSelect] = useState('')
+  
+  const {ItensObject, ItensPrice} = useContext(CartContext)
+  
     function handlePaymethodSelect(e: any){
       const id = e.target.id;
-      console.log(id)
+      // console.log(id)
       if(paymethodSelect==id){
         setPaymethodSelect("");
         
@@ -33,7 +19,20 @@ export function Checkout(){
         setPaymethodSelect(id);
       }
     }
+    const FormatedItensPrice = new Intl.NumberFormat('pt-BR', {
+      style: 'decimal',
+      minimumFractionDigits : 2
+      }).format(ItensPrice);
 
+    const FormatedDeliveryPrice = new Intl.NumberFormat('pt-BR', {
+      style: 'decimal',
+      minimumFractionDigits : 2
+      }).format(3.5);
+
+    const FormatedTotalPrice = new Intl.NumberFormat('pt-BR', {
+      style: 'decimal',
+      minimumFractionDigits : 2
+      }).format(ItensPrice+3.5);
   return (
     <Container>
       <FormInput>
@@ -102,25 +101,38 @@ export function Checkout(){
       
       <CartList>
 
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
+        {/* {id, type, name, img, description, price, amount} */}
+
+        {ItensObject.map(item => {
+          return(
+            <CartItem
+              key={item.id} 
+              id={item.id} 
+              type={item.type} 
+              name={item.name} 
+              img={item.img} 
+              description={item.description} 
+              price={item.price} 
+              amount={item.amount}/>
+          )
+        })}
+        
+        
+        
 
         <div className="InfoPrices">
           <h4 className="left">Total de Itens</h4>
-          <h4 className="right">R$ 29,70</h4>
+          <h4 className="right">R$ {FormatedItensPrice}</h4>
         </div>
 
         <div className="InfoPrices">
           <h4 className="left">Entrega</h4>
-          <h4 className="right">R$ 3,50</h4>
+          <h4 className="right">R$ {FormatedDeliveryPrice}</h4>
         </div>
 
         <div className="InfoPrices">
           <h3 className="left">Total</h3>
-          <h3 className="right">R$ 33,20</h3>
+          <h3 className="right">R$ {FormatedTotalPrice}</h3>
         </div>
 
           

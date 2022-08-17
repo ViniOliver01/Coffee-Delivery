@@ -5,7 +5,7 @@ export const Container = styled.div`
 
 `
 export const CoverArea = styled.div`
-    height: 544px;
+    height: fit-content;
     padding-inline: 10rem;
     padding-block: 5.75rem;
     display: flex;

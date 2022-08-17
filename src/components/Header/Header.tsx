@@ -3,8 +3,14 @@ import logo from '../../assets/Logo.svg';
 import { Cart } from '../Cart/Cart';
 import { MapPin } from 'phosphor-react';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext/CartContext";
 
 export function Header(){
+  const {
+    ItensAmount
+  } = useContext(CartContext)
+  
   const navigation = useNavigate();
 
   function GoToHome() {
@@ -18,11 +24,11 @@ export function Header(){
       
 
       <LocationIcon>
-        <MapPin size={32} weight="fill"/>
+        <MapPin size={24} weight="fill"/>
         <p>Porto Alegre, RS</p>
       </LocationIcon>
 
-      <Cart itens={3}/>
+      <Cart itens={ItensAmount}/>
 
     </HeaderContainer>
   )

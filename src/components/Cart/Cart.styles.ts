@@ -1,8 +1,13 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-    width: 38px;
+    width: fit-content;
     height: 38px;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    
     display: flex;
     justify-content: center;
     align-items: center;
