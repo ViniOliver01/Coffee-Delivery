@@ -1,13 +1,30 @@
-import { CartList, Container, FormInput, HeaderItem, InputText, PaymentButton, PaymentButtonList, PaymentMethod } from "./Checkout.styles";
+import { CartList, Container, FormInput, HeaderItem, InputText, PaymentButtonList, PaymentMethod } from "./Checkout.styles";
 import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money, Trash } from 'phosphor-react';
 import { CartItem } from "./components/CartItemList/CartItem";
 import { useContext, useEffect, useState } from "react";
 import { CartContext, coffeesList } from './../../context/CartContext/CartContext';
+import { SubmitHandler, useForm } from "react-hook-form";
+import { PaymentButton } from './components/PaymentButton/PaymentButton';
+
+interface Inputs{
+  cep: number,
+  rua: string,
+  numero: string,
+  complemento: string,
+  bairro: string,
+  cidade: string,
+  uf: string,
+  paymethodSelect: string,
+};
 
 export function Checkout(){
   const [paymethodSelect, setPaymethodSelect] = useState('')
-  
   const {ItensObject, ItensPrice} = useContext(CartContext)
+
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+
+  // console.log(watch("cep")) // watch input value by passing the name of it
   
     function handlePaymethodSelect(e: any){
       const id = e.target.id;
@@ -33,6 +50,10 @@ export function Checkout(){
       style: 'decimal',
       minimumFractionDigits : 2
       }).format(ItensPrice+3.5);
+
+      useEffect(() => {
+        console.log(paymethodSelect);
+      });
   return (
     <Container>
       <FormInput>
@@ -45,14 +66,14 @@ export function Checkout(){
           
         </HeaderItem>
       
-        <form>
-          <InputText type="text" name="cep" className="cep" placeholder="CEP"/>
-          <InputText type="text" name="rua" className="rua" placeholder="Rua"/>
-          <InputText type="text" name="numero" className="numero" placeholder="Número"/>
-          <InputText type="text" name="complemento" className="complemento" placeholder="Complemento"/>
-          <InputText type="text" name="bairro" className="bairro" placeholder="Bairro"/>
-          <InputText type="text" name="cidade" className="cidade" placeholder="Cidade"/>
-          <InputText type="text" name="uf" className="uf" placeholder="UF"/>
+        <form onSubmit={handleSubmit(onSubmit)} id="myform">
+          <InputText type="text" className="cep" placeholder="CEP" {...register("cep")}/>
+          <InputText type="text" className="rua" placeholder="Rua" {...register("rua")}/>
+          <InputText type="text" className="numero" placeholder="Número" {...register("numero")}/>
+          <InputText type="text" className="complemento" placeholder="Complemento" {...register("complemento")}/>
+          <InputText type="text" className="bairro" placeholder="Bairro" {...register("bairro")}/>
+          <InputText type="text" className="cidade" placeholder="Cidade" {...register("cidade")}/>
+          <InputText type="text" className="uf" placeholder="UF" {...register("uf")}/>
         </form>
         <PaymentMethod>
           <HeaderItem>
@@ -64,20 +85,27 @@ export function Checkout(){
           </HeaderItem>
 
           <PaymentButtonList>
+            <PaymentButton />
 
-            <PaymentButton 
+            {/* <PaymentButton 
               id="creditcard" 
               className={paymethodSelect == "creditcard" ? "active" : ""} 
-              onClick={handlePaymethodSelect}>
+              value={''}
+              onClick={handlePaymethodSelect}
+              // {...register("paymethodSelect")}
+              >
 
-              <CreditCard id="creditcard" size={16} className="purple" />
-              <p id="creditcard">Cartão de crédito</p>
+                
             </PaymentButton>
+            
 
             <PaymentButton 
               id="debitcard" 
               className={paymethodSelect == "debitcard" ? "active" : ""} 
-              onClick={handlePaymethodSelect}>
+              onClick={handlePaymethodSelect}
+              value={''}
+              // {...register("paymethodSelect")}
+              >
 
               <Bank id="debitcard" size={16} className="purple"  />
               <p id="debitcard">cartão de débito</p>
@@ -86,19 +114,25 @@ export function Checkout(){
             <PaymentButton 
               id="money" 
               className={paymethodSelect == "money" ? "active" : ""} 
-              onClick={handlePaymethodSelect}>
+              onClick={handlePaymethodSelect}
+              value={''} 
+              // {...register("paymethodSelect")}
+              >
 
               <Money id="money" size={16} className="purple"  />
               <p id="money">dinheiro</p>
             </PaymentButton>
 
-          </PaymentButtonList>
-          
+            <div className="toggle-switch">
+              <input type="checkbox" className="toggle-switch-checkbox" name="toggleSwitch" id="toggleSwitch" />
+              <label className="toggle-switch-label">
+                Toggle Me!
+              </label>
+            </div> */}
 
+          </PaymentButtonList>
         </PaymentMethod>
-        
       </FormInput>
-      
       <CartList>
 
         {/* {id, type, name, img, description, price, amount} */}
@@ -139,7 +173,7 @@ export function Checkout(){
 
           
         
-        <button className="footer">CONFIRMAR PEDIDO</button>
+        <button type="submit" form="myform" className="footer">CONFIRMAR PEDIDO</button>
       </CartList>
     </Container>
   );

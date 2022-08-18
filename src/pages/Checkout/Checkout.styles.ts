@@ -151,24 +151,6 @@ export const CartList = styled.div`
 export const PaymentMethod = styled.div`
 
 `
-export const PaymentButton = styled.div`
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    gap: 0.75rem;
-    border-radius: 8px;
-    background-color: ${(props) => props.theme['base-button']};
-    border: 2px solid transparent;
-    user-select: none;
-
-    font-size: 0.75rem;
-    color: ${(props) => props.theme['base-text']};
-    text-transform: uppercase;
-    cursor: pointer;
-    &:hover{
-        background-color: ${(props) => props.theme['base-hover']};
-    }
-`
 export const PaymentButtonList = styled.div`
     display: flex;
     margin: 0 2.5rem 2.5rem;
