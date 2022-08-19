@@ -7,7 +7,6 @@ export const Container = styled.div`
     margin-bottom: 5rem;
 `
 
-
 export const FormInput = styled.div`
     background-color: ${(props) => props.theme['base-card']};
     border-radius: 6px;
@@ -100,12 +99,26 @@ export const HeaderItem = styled.div`
 `
 export const CartList = styled.div`
     background-color: ${(props) => props.theme['base-card']};
-    padding: 40px;
+    padding: 2.5rem;
     border-radius: 6px 44px 6px 44px;
     margin-right: 10rem;
     width: 28rem;
     height: fit-content;
 
+    span{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        height: 5.5rem;
+        gap: 1rem;
+        padding-top: 1rem;
+        padding-bottom: 1.5rem;
+        margin-bottom: 1.5rem;
+
+        border-bottom: 1px solid;
+        border-color: ${(props) => props.theme['base-button']};
+    }
     .InfoPrices{
         width: 100%;
         display: grid;
@@ -149,12 +162,50 @@ export const CartList = styled.div`
     }
 `
 export const PaymentMethod = styled.div`
+    .invalidPaymentMethod{
+        padding: 0.5rem;
+        border-radius: 8px;
+        border: 2px solid;
+        border-color: #ff9191;
 
+    }
+    .AlertInvalidPayment{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-inline: 2.5rem;
+        margin-bottom: 0.5rem;
+        color: #ff9191;
+        /* background-color: red; */
+        /* margin-top: 1rem; */
+    }
+
+`
+export const PaymentButton = styled.button`
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 0.75rem;
+    border-radius: 8px;
+    background-color: ${(props) => props.theme['base-button']};
+    border: 2px solid transparent;
+    user-select: none;
+
+    font-size: 0.75rem;
+    color: ${(props) => props.theme['base-text']};
+    text-transform: uppercase;
+    cursor: pointer;
+    &:hover{
+        background-color: ${(props) => props.theme['base-hover']};
+    }
 `
 export const PaymentButtonList = styled.div`
     display: flex;
-    margin: 0 2.5rem 2.5rem;
+    width: fit-content;
+    margin: -0.5rem 2rem 0.5rem;
+    padding: 0.5rem;
     gap: 0.75rem;
+    border: 2px solid transparent;
     .active{
         background-color: ${(props) => props.theme['purple-light']};
         border-color: ${(props) => props.theme['purple']};

@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useEffect, useReducer, useState } from "react";
+import { FormInputs } from "../../pages/Checkout/Checkout";
 
 export const CartContext = createContext({} as CartContextType)
 
@@ -12,7 +13,10 @@ interface CartContextType {
     ItensPrice: number
     handleRemoveItensToCart: ({id, name, img, price, amount}: CartObjectType) => void
     handleCheckObjectsState: ({id, name, img, price, amount}: CartObjectType) => number
-}
+    handleSetFormData: ({cep, rua, numero, complemento, bairro, cidade, uf, paymethodSelect}: FormInputs) => void
+    FormItens: FormInputs | undefined
+    handleFinishBuy: () => void
+  }
 
 
 interface CartContextProviderProps {
@@ -26,6 +30,7 @@ interface CartObjectType{
     price: number
     amount: number
 }
+export const deliveryValue = 3.5
 
 export const coffeesList = [
     {
@@ -147,6 +152,7 @@ export function CartContextProvider({children}: CartContextProviderProps){
     const [ItensObject, setItensObject] = useState<CartObjectType[]>([]);
     const [ItensAmount, setItensAmount] = useState(0);
     const [ItensPrice, setItensPrice] = useState(0);
+    const [FormItens, setFormItens] = useState<FormInputs>()
 
     function handleCheckObjectsState({id, name, img, price, amount}: CartObjectType){
       let newAmount: number
@@ -185,6 +191,21 @@ export function CartContextProvider({children}: CartContextProviderProps){
       setItensObject(state => [...state,{id, name, img, price, amount}].sort((a, b) => a.id - b.id));
     }
 
+    function handleSetFormData({cep, rua, numero, complemento, bairro, cidade, uf, paymethodSelect}: FormInputs){
+      setFormItens({cep, rua, numero, complemento, bairro, cidade, uf, paymethodSelect});
+    }
+
+    function handleFinishBuy(){
+      setItensObject([])
+      setItensAmount(0)
+      setItensPrice(0)
+    }
+    useEffect(() => {
+        // console.log("Form ERROR: "+formError);
+        // console.log(paymethodSelect);
+        console.log(FormItens);
+      });
+
   return (
     <CartContext.Provider value={{
         ItensAmount,
@@ -195,7 +216,10 @@ export function CartContextProvider({children}: CartContextProviderProps){
         handleSetTotalPrice,
         ItensPrice,
         handleRemoveItensToCart,
-        handleCheckObjectsState
+        handleCheckObjectsState,
+        handleSetFormData,
+        FormItens,
+        handleFinishBuy
         }}>
             {children}
     </CartContext.Provider>

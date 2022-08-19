@@ -1,15 +1,15 @@
-import { CartList, Container, FormInput, HeaderItem, InputText, PaymentButtonList, PaymentMethod } from "./Checkout.styles";
-import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money, Trash } from 'phosphor-react';
+import { CartList, Container, FormInput, HeaderItem, InputText, PaymentButtonList, PaymentMethod, PaymentButton } from "./Checkout.styles";
+import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money, SmileySad, Trash } from 'phosphor-react';
 import { CartItem } from "./components/CartItemList/CartItem";
-import { useContext, useEffect, useState } from "react";
-import { CartContext, coffeesList } from './../../context/CartContext/CartContext';
+import { useContext, useState } from "react";
+import { CartContext, deliveryValue } from './../../context/CartContext/CartContext';
 import { SubmitHandler, useForm } from "react-hook-form";
-import { PaymentButton } from './components/PaymentButton/PaymentButton';
+import { useNavigate } from "react-router-dom";
 
-interface Inputs{
+export interface FormInputs{
   cep: number,
   rua: string,
-  numero: string,
+  numero: number,
   complemento: string,
   bairro: string,
   cidade: string,
@@ -18,13 +18,57 @@ interface Inputs{
 };
 
 export function Checkout(){
+  const {
+    ItensObject,
+    ItensAmount, 
+    ItensPrice,
+    handleSetFormData,
+    handleFinishBuy
+    } = useContext(CartContext)
+  
   const [paymethodSelect, setPaymethodSelect] = useState('')
-  const {ItensObject, ItensPrice} = useContext(CartContext)
+  const [paymethodSelectError, setPaymethodError] = useState(false)
+  const [formError, setformError] = useState(false)
+  const [FormItens, setFormItens] = useState<FormInputs>()
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+
+  const navigation = useNavigate();
+  function GoToSuccess() {
+    navigation('/success');
+  }
+  
+
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<FormInputs>();
+  const onSubmit: SubmitHandler<FormInputs> = data => addPaymenthodToForm(data);
 
   // console.log(watch("cep")) // watch input value by passing the name of it
+    function addPaymenthodToForm(data: FormInputs){
+
+      if(!!paymethodSelect){
+        if(ItensAmount!=0){
+          setformError(false);
+          setFormItens({...data, paymethodSelect: paymethodSelect})
+          handleSetFormData({...data, paymethodSelect: paymethodSelect})
+          handleFinishBuy();
+          GoToSuccess();
+        }
+        
+      }else{
+        setPaymethodError(true)
+        setTimeout(()=>{setPaymethodError(false)}, 4000)
+        setformError(true);
+        setFormItens({bairro:'', 
+          cep:0, 
+          cidade:'', 
+          complemento:'', 
+          numero: 0, 
+          paymethodSelect:'',
+          rua:'', 
+          uf:''});
+        
+      }
+      
+    }
   
     function handlePaymethodSelect(e: any){
       const id = e.target.id;
@@ -44,16 +88,18 @@ export function Checkout(){
     const FormatedDeliveryPrice = new Intl.NumberFormat('pt-BR', {
       style: 'decimal',
       minimumFractionDigits : 2
-      }).format(3.5);
+      }).format(ItensAmount == 0 ? 0 : deliveryValue);
 
     const FormatedTotalPrice = new Intl.NumberFormat('pt-BR', {
       style: 'decimal',
       minimumFractionDigits : 2
-      }).format(ItensPrice+3.5);
+      }).format(ItensAmount == 0 ? 0 : ItensPrice+deliveryValue);
 
-      useEffect(() => {
-        console.log(paymethodSelect);
-      });
+      // useEffect(() => {
+      //   // console.log("Form ERROR: "+formError);
+      //   // console.log(paymethodSelect);
+      //   console.log(FormItens);
+      // });
   return (
     <Container>
       <FormInput>
@@ -65,16 +111,54 @@ export function Checkout(){
           </div>
           
         </HeaderItem>
+        {/* {...register('test', { maxLength: { value: 2, message: "error message" } })} */}
       
         <form onSubmit={handleSubmit(onSubmit)} id="myform">
-          <InputText type="text" className="cep" placeholder="CEP" {...register("cep")}/>
-          <InputText type="text" className="rua" placeholder="Rua" {...register("rua")}/>
-          <InputText type="text" className="numero" placeholder="Número" {...register("numero")}/>
-          <InputText type="text" className="complemento" placeholder="Complemento" {...register("complemento")}/>
-          <InputText type="text" className="bairro" placeholder="Bairro" {...register("bairro")}/>
-          <InputText type="text" className="cidade" placeholder="Cidade" {...register("cidade")}/>
-          <InputText type="text" className="uf" placeholder="UF" {...register("uf")}/>
+          <InputText placeholder="CEP" 
+            type="text" 
+            className="cep" 
+            required
+            {...register("cep", {required: true})}/>
+
+          <InputText placeholder="Rua" 
+            type="text" 
+            className="rua" 
+            required
+            {...register("rua", { required: true })}/>
+
+          <InputText placeholder="Número" 
+            type="text" 
+            className="numero" 
+            required
+            {...register("numero", {required: true})}/>
+
+          <InputText placeholder="Complemento" 
+            type="text" 
+            className="complemento" 
+            {...register("complemento")}/>
+
+          <InputText placeholder="Bairro" 
+            type="text" 
+            className="bairro" 
+            required
+            {...register("bairro", {required: true})}/>
+
+          <InputText placeholder="Cidade" 
+            type="text" 
+            className="cidade" 
+            required
+            {...register("cidade", {required: true})}/>
+
+          <InputText placeholder="UF" 
+            type="text" 
+            className="uf" 
+            required
+            {...register("uf", { maxLength: { value: 2, message: "error message" }})}/>
+
         </form>
+        
+          {/* <input type="button" value={paymethodSelect}
+              {...register("paymethodSelect")}/> */}
         <PaymentMethod>
           <HeaderItem>
             <CurrencyDollar size={22} className="icon purple"/>
@@ -84,58 +168,51 @@ export function Checkout(){
             </div>
           </HeaderItem>
 
-          <PaymentButtonList>
-            <PaymentButton />
+          <PaymentButtonList className={paymethodSelectError ? 'invalidPaymentMethod' : ''}>
 
-            {/* <PaymentButton 
-              id="creditcard" 
-              className={paymethodSelect == "creditcard" ? "active" : ""} 
-              value={''}
+            <PaymentButton 
+              id="Cartão de Crédito" 
+              className={paymethodSelect == "Cartão de Crédito" ? "active" : ""} 
+              // value={""}
               onClick={handlePaymethodSelect}
               // {...register("paymethodSelect")}
+              // {...register("paymethodSelect", { value: paymethodSelect })}
               >
-
-                
+                <CreditCard id="Cartão de Crédito" size={16} className="purple"  />
+                <p id="Cartão de Crédito">cartão de crédito</p>
             </PaymentButton>
             
 
             <PaymentButton 
-              id="debitcard" 
-              className={paymethodSelect == "debitcard" ? "active" : ""} 
+              id="Cartão de Débito" 
+              className={paymethodSelect == "Cartão de Débito" ? "active" : ""} 
               onClick={handlePaymethodSelect}
-              value={''}
+              // value={''}
               // {...register("paymethodSelect")}
+              // {...register("paymethodSelect", { value: paymethodSelect })}
               >
-
-              <Bank id="debitcard" size={16} className="purple"  />
-              <p id="debitcard">cartão de débito</p>
+                <Bank id="Cartão de Débito" size={16} className="purple"  />
+                <p id="Cartão de Débito">cartão de débito</p>
             </PaymentButton>
 
             <PaymentButton 
-              id="money" 
-              className={paymethodSelect == "money" ? "active" : ""} 
+              id="Dinheiro" 
+              className={paymethodSelect == "Dinheiro" ? "active" : ""} 
               onClick={handlePaymethodSelect}
-              value={''} 
+              // value={''} 
+              // {...register("paymethodSelect", { value: paymethodSelect })}
               // {...register("paymethodSelect")}
               >
-
-              <Money id="money" size={16} className="purple"  />
-              <p id="money">dinheiro</p>
+                <Money id="Dinheiro" size={16} className="purple"  />
+                <p id="Dinheiro">dinheiro</p>
             </PaymentButton>
-
-            <div className="toggle-switch">
-              <input type="checkbox" className="toggle-switch-checkbox" name="toggleSwitch" id="toggleSwitch" />
-              <label className="toggle-switch-label">
-                Toggle Me!
-              </label>
-            </div> */}
-
+            {/* <input value={paymethodSelect} {...register("paymethodSelect")}></input> */}
+            
           </PaymentButtonList>
+          <span className="AlertInvalidPayment">{paymethodSelectError ? 'Por favor selecione uma forma de pagamento' : ''}</span>
         </PaymentMethod>
       </FormInput>
       <CartList>
-
-        {/* {id, type, name, img, description, price, amount} */}
 
         {ItensObject.map(item => {
           return(
@@ -150,6 +227,7 @@ export function Checkout(){
               amount={item.amount}/>
           )
         })}
+        {ItensObject == 0? <span>Carrinho Vazio <SmileySad size={32} /> </span> : ''}
         
         
         

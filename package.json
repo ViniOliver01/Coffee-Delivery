@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.9.7",
     "date-fns": "^2.29.1",
     "phosphor-react": "^1.4.1",
