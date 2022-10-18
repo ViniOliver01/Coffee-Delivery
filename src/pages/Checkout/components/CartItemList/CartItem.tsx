@@ -3,21 +3,18 @@ import { useContext } from 'react';
 import { CartContext } from '../../../../context/CartContext/CartContext';
 import { Buttons, CenterDiv, Container, ItensCountCart, PriceDisplay, RemoveItemButton } from './CartItem.styles';
 import { useState } from 'react';
-import { useEffect } from 'react';
 
 interface CartItemProps{
   id: number
-  type: string[]
   name: string
   img: string
-  description: string
   price: number
   amount: number
 }
 
 const URLImg = '../../../../src/assets/CoffeeTypes/'
 
-export function CartItem({id, type, name, img, description, price, amount}:CartItemProps){
+export function CartItem({id, name, img, price, amount}:CartItemProps){
   const {
     handleAddItensToCart,
     handleSetTotalAmount,

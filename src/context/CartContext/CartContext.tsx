@@ -6,7 +6,7 @@ export const CartContext = createContext({} as CartContextType)
 interface CartContextType {
     ItensAmount: number
     handleSetTotalAmount: (amount:number) => void
-    ItensObject: {}
+    ItensObject: CartObjectType[]
     addItensToCart: ({id, name, img, price}: CartObjectType) => void
     handleAddItensToCart: ({id, name, img, price, amount}: CartObjectType) => void
     handleSetTotalPrice: (amount:number) => void

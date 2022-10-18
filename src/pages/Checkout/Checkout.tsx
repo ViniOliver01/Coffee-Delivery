@@ -219,15 +219,13 @@ export function Checkout(){
             <CartItem
               key={item.id} 
               id={item.id} 
-              type={item.type} 
               name={item.name} 
               img={item.img} 
-              description={item.description} 
               price={item.price} 
               amount={item.amount}/>
           )
         })}
-        {ItensObject == 0? <span>Carrinho Vazio <SmileySad size={32} /> </span> : ''}
+        {ItensObject.length == 0? <span>Carrinho Vazio <SmileySad size={32} /> </span> : ''}
         
         
         
