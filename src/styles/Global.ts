@@ -7,8 +7,8 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
     body{
-        background-color: ${(props) => props.theme['background']};
-        color: ${(props) => props.theme['base-text']};
+        background-color: ${props => props.theme['background']};
+        color: ${props => props.theme['base-text']};
     }
     header {
         font-family: 'Baloo 2', cursive;
