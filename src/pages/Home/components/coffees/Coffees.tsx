@@ -12,7 +12,7 @@ interface CoffeesProps{
     price: number
     children?: React.ReactNode
 }
-const URLImg = '../../../../src/assets/CoffeeTypes/'
+const URLImg = '../src/assets/CoffeeTypes/'
 
 export function Coffees({id, type, name, img, description, price}: CoffeesProps){
   const [itensCount, setItensCount] = useState(1);

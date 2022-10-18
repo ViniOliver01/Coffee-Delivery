@@ -12,7 +12,7 @@ interface CartItemProps{
   amount: number
 }
 
-const URLImg = '../../../../src/assets/CoffeeTypes/'
+const URLImg = '../src/assets/CoffeeTypes/'
 
 export function CartItem({id, name, img, price, amount}:CartItemProps){
   const {
