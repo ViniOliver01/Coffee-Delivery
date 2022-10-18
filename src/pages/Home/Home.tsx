@@ -3,7 +3,8 @@ import { CoffeesList, Container, CoverArea, CoverImage, IconImage, IconItem, Ico
 import coverimage from "../../assets/home-cover.png"
 import { Coffee, Package, ShoppingCart, Timer } from "phosphor-react";
 import { useContext } from "react";
-import { CartContext, coffeesList } from "../../context/CartContext/CartContext";
+import { CartContext } from "../../context/CartContext/CartContext";
+import { coffeesList } from "../../context/CartContext/CoffesList";
 
 export function Home(){
 

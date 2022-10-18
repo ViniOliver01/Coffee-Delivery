@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { CartContext } from '../../../../context/CartContext/CartContext';
 import { Buttons, CenterDiv, Container, ItensCountCart, PriceDisplay, RemoveItemButton } from './CartItem.styles';
 import { useState } from 'react';
+import { ArabeImage } from './../../../../assets/CoffeeIndex';
 
 interface CartItemProps{
   id: number
@@ -29,35 +30,27 @@ export function CartItem({id, name, img, price, amount}:CartItemProps){
     minimumFractionDigits : 2
     }).format(totalPrice);
 
-
-
     function handleAdd(){
-
       setAmountItens(amountItens+1)
       const amount = amountItens+1
-      // addCountItens(+1)
       handleSetTotalAmount(+1)
       handleSetTotalPrice(+price)
       handleAddItensToCart({id, name, img, price, amount})
-      
     }
-    function handleMinus(){
 
+    function handleMinus(){
       setAmountItens(amountItens-1)
       const amount = amountItens-1
-      // console.log(amount)
       if (amount ==0) {
         handleRemoveItensToCart({id, name, img, price, amount})
       }else{
         handleAddItensToCart({id, name, img, price, amount})
       }
-
       handleSetTotalAmount(-1)
       handleSetTotalPrice(-price)
-
     }
+
     function handleRemove(){
-      // console.log(id);
       handleSetTotalAmount(-amount)
       handleSetTotalPrice(-price*amount)
       handleRemoveItensToCart({id, name, img, price, amount})
@@ -65,7 +58,8 @@ export function CartItem({id, name, img, price, amount}:CartItemProps){
 
   return (
     <Container>
-        <img src={URLImg+img+'.png'} alt="" />
+        {/* <img src={URLImg+img+'.png'} alt="" /> */}
+        <img src={ArabeImage} alt="" />
         <CenterDiv>
             <p>{name}</p>
             <Buttons>
