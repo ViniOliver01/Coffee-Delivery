@@ -13,8 +13,6 @@ interface CartItemProps{
   amount: number
 }
 
-const URLImg = '../src/assets/CoffeeTypes/'
-
 export function CartItem({id, name, img, price, amount}:CartItemProps){
   const {
     handleAddItensToCart,
@@ -58,7 +56,6 @@ export function CartItem({id, name, img, price, amount}:CartItemProps){
 
   return (
     <Container>
-        {/* <img src={URLImg+img+'.png'} alt="" /> */}
         <img src={getImage(id)} alt="" />
         <CenterDiv>
             <p>{name}</p>

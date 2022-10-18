@@ -2,6 +2,7 @@ import { CartButton, Container, ItensCount, ShopSection, Price, IconCartButton }
 import { Plus, Minus, ShoppingCartSimple} from 'phosphor-react'
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../../../context/CartContext/CartContext";
+import { getImage } from "../../../../assets/CoffeeIndex";
 
 interface CoffeesProps{
     id: number
@@ -12,7 +13,6 @@ interface CoffeesProps{
     price: number
     children?: React.ReactNode
 }
-const URLImg = '../src/assets/CoffeeTypes/'
 
 export function Coffees({id, type, name, img, description, price}: CoffeesProps){
   const [itensCount, setItensCount] = useState(1);
@@ -28,23 +28,22 @@ export function Coffees({id, type, name, img, description, price}: CoffeesProps)
   }
 
   const {
-    ItensAmount,
-    ItensObject,
     handleSetTotalAmount,
     handleAddItensToCart,
     handleSetTotalPrice,
     handleCheckObjectsState
     } = useContext(CartContext)
   
-
   function MinusItem(){
     if (itensCount!=1) {
       setItensCount(state => state-1);
     }
   }
+
   function PlusItem(){
     setItensCount(state => state+1);
   }
+
   function AddItemToCart(e: any){
     triggerEfect()
 
@@ -56,6 +55,7 @@ export function Coffees({id, type, name, img, description, price}: CoffeesProps)
     handleAddItensToCart({id, name, img, price, amount})
     setItensCount(1);
   }
+
   const FormatedPriceToBrazilianReal = new Intl.NumberFormat('pt-BR', {
     style: 'decimal',
     minimumFractionDigits : 2
@@ -63,7 +63,7 @@ export function Coffees({id, type, name, img, description, price}: CoffeesProps)
     
   return (
     <Container>
-        <img src={URLImg+img+'.png'} alt="" />
+        <img src={getImage(id)} alt="" />
         <ul>
           {type.map(item => {
             return(
