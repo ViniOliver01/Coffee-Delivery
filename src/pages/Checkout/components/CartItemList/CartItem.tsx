@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { CartContext } from '../../../../context/CartContext/CartContext';
 import { Buttons, CenterDiv, Container, ItensCountCart, PriceDisplay, RemoveItemButton } from './CartItem.styles';
 import { useState } from 'react';
-import { ArabeImage } from './../../../../assets/CoffeeIndex';
+import { getImage } from './../../../../assets/CoffeeIndex';
 
 interface CartItemProps{
   id: number
@@ -59,7 +59,7 @@ export function CartItem({id, name, img, price, amount}:CartItemProps){
   return (
     <Container>
         {/* <img src={URLImg+img+'.png'} alt="" /> */}
-        <img src={ArabeImage} alt="" />
+        <img src={getImage(id)} alt="" />
         <CenterDiv>
             <p>{name}</p>
             <Buttons>
