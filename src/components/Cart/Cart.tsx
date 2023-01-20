@@ -1,23 +1,28 @@
-import { Container, CountItens } from "./Cart.styles";
-import { ShoppingCart } from 'phosphor-react';
+import { ShoppingCart } from "phosphor-react";
 import { useNavigate } from "react-router-dom";
+import { CartBox, Container, CountItens } from "./Cart.styles";
 
 interface CartProps {
-    itens: number;
+  itens: number;
 }
 
-export function Cart({itens}: CartProps){
+export function Cart({ itens }: CartProps) {
   const navigate = useNavigate();
 
-  function GoToCart(){
-    navigate('/checkout');
+  function GoToCart() {
+    navigate("/checkout");
   }
 
   return (
-    <Container onClick={GoToCart}>
-        <p>Meu Carrinho</p>
-        <ShoppingCart size={22} weight="fill"/>
+    <Container>
+      <CartBox onClick={GoToCart}>
+        <ShoppingCart size={22} weight="fill" />
         <CountItens>{itens}</CountItens>
+      </CartBox>
+      <div>
+        <p>Total</p>
+        <p>R$ 12,25</p>
+      </div>
     </Container>
   );
 }
