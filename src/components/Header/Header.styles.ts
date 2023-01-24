@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import defaultTheme from "./../../styles/themes/Default";
 
 export const Container = styled.div`
   display: flex;
@@ -38,4 +39,14 @@ export const LocationIcon = styled.div`
   p {
     color: ${(props) => props.theme["purple-dark"]};
   }
+`;
+
+export const LoginButton = styled.button`
+  background-color: ${defaultTheme.purple};
+  color: ${defaultTheme.white};
+  font-weight: bold;
+  font-size: 1.125rem;
+  padding-inline: 1.5rem;
+  padding-block: 0.4rem;
+  border-radius: 8px;
 `;

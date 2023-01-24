@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { FieldValues } from "react-hook-form/dist/types/fields";
 import { FcGoogle } from "react-icons/fc";
 import Divider from "../../components/Divider";
-import api from "../../services/api";
+import { api } from "../../services/apiClient";
 import { login } from "../../services/auth";
 import {
   Button,

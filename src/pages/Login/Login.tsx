@@ -1,12 +1,13 @@
 import { Checkbox } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FieldValues } from "react-hook-form/dist/types/fields";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import Divider from "../../components/Divider";
-import { login } from "../../services/auth";
-import api from "./../../services/api";
+import { AuthContext } from "../../context/AuthContext";
 import {
   Button,
   Card,
@@ -43,19 +44,16 @@ export default function Login() {
   });
   console.log("🚀 / Login / errors", errors);
 
+  const { signIn, isAuthenticated } = useContext(AuthContext);
+
+  const navigation = useNavigate();
+
+  if (isAuthenticated) {
+    navigation("/");
+  }
+
   function onSubmit(data: FieldValues) {
-    data.email;
-    api
-      .post("http://localhost:3333" + "/sessions", {
-        email: data.email,
-        password: data.password,
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.data.token) {
-          login(response.data);
-        }
-      });
+    signIn({ email: data.email, password: data.password });
   }
 
   return (

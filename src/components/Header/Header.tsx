@@ -1,19 +1,34 @@
 import { MapPin } from "phosphor-react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo.svg";
+import { AuthContext } from "../../context/AuthContext";
 import { CartContext } from "../../context/CartContext/CartContext";
 import Avatar from "../Avatar/Avatar";
 import { Cart } from "../Cart/Cart";
-import { Container, HeaderContainer, LocationIcon, LogoArea } from "./Header.styles";
+
+import {
+  Container,
+  HeaderContainer,
+  LocationIcon,
+  LoginButton,
+  LogoArea,
+} from "./Header.styles";
 
 export function Header() {
+  const { isAuthenticated, user } = useContext(AuthContext);
   const { ItensAmount } = useContext(CartContext);
+
+  useEffect(() => {}, []);
 
   const navigation = useNavigate();
 
   function GoToHome() {
     navigation("/");
+  }
+
+  function GoToLogin() {
+    navigation("/login");
   }
 
   return (
@@ -29,7 +44,11 @@ export function Header() {
         </LocationIcon>
       </Container>
       <Container>
-        <Avatar name="Vinicius" avatar_url="https://github.com/ViniOliver01.png" />
+        {isAuthenticated ? (
+          <Avatar name={user.name} avatar_url={user.avatar_url} />
+        ) : (
+          <LoginButton onClick={GoToLogin}>Entrar</LoginButton>
+        )}
         <Cart itens={ItensAmount} />
       </Container>
     </HeaderContainer>
