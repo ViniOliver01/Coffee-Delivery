@@ -8,8 +8,13 @@ interface SignInCredentials {
   password: string;
 }
 
+interface ISingInResponse {
+  status: number;
+  message: string;
+}
+
 interface AuthContextData {
-  signIn: (credentials: SignInCredentials) => Promise<void>;
+  signIn: (credentials: SignInCredentials) => Promise<ISingInResponse>;
   signOut: () => void;
   user: User;
   isAuthenticated: boolean;
@@ -77,7 +82,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, []);
 
-  async function signIn({ email, password }: SignInCredentials) {
+  async function signIn({
+    email,
+    password,
+  }: SignInCredentials): Promise<ISingInResponse> {
     try {
       const response = await api.post("/sessions", {
         email,
@@ -111,8 +119,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       // navigation("/dashboard");
       authChannel.postMessage("signIn");
+      return { status: 200, message: "Success" };
     } catch (error) {
       console.log("🚀 / Error: ", error);
+      return { status: 401, message: error.response.data.message };
     }
   }
 

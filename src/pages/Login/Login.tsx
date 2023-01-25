@@ -1,10 +1,9 @@
-import { Checkbox } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FieldValues } from "react-hook-form/dist/types/fields";
 import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import * as yup from "yup";
 import Divider from "../../components/Divider";
 import { AuthContext } from "../../context/AuthContext";
@@ -20,6 +19,9 @@ import {
   Title,
 } from "./Login.styles";
 
+import { Checkbox } from "@chakra-ui/react";
+import FormError from "../../components/Error/Form/FormError";
+
 interface InputFormData {
   email: string;
   password: string;
@@ -28,7 +30,7 @@ interface InputFormData {
 
 const schema = yup.object().shape({
   email: yup.string().required("E-mail obrigatório").email("Tipo de e-mail invalido"),
-  password: yup.string().required("Senha obrigatória").min(4, "Minimo de 4 digitos"),
+  password: yup.string().required("Senha obrigatória"),
   remember: yup.boolean(),
 });
 
@@ -36,24 +38,27 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<InputFormData>({
     resolver: yupResolver(schema),
-    mode: "onChange",
+    mode: "onSubmit",
   });
   console.log("🚀 / Login / errors", errors);
 
   const { signIn, isAuthenticated } = useContext(AuthContext);
 
-  const navigation = useNavigate();
+  const [error, setErrors] = useState("");
 
-  if (isAuthenticated) {
-    navigation("/");
+  async function onSubmit(data: FieldValues) {
+    const response = await signIn({ email: data.email, password: data.password });
+
+    if (response.status === 401) {
+      setErrors(response.message);
+    }
   }
 
-  function onSubmit(data: FieldValues) {
-    signIn({ email: data.email, password: data.password });
+  if (isAuthenticated) {
+    return <Navigate to="/" />;
   }
 
   return (
@@ -73,6 +78,8 @@ export default function Login() {
             <Label htmlFor="">Senha</Label>
             <Input type="password" {...register("password")} />
           </LabelBox>
+
+          {error && <FormError message={error} />}
 
           <Options>
             <Checkbox defaultChecked {...register("remember")}>
