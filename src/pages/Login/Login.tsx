@@ -13,7 +13,7 @@ import { Checkbox } from "@chakra-ui/react";
 import FormError from "../../components/Error/Form/FormError";
 import { Button } from "../../components/Form/Button";
 import { Input } from "../../components/Form/Input";
-import { Label } from "../../components/Form/Label";
+import Label from "../../components/Form/Label";
 
 interface InputFormData {
   email: string;
@@ -63,12 +63,12 @@ export default function Login() {
       <Card>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <LabelBox>
-            <Label htmlFor="">Email</Label>
+            <Label>Email</Label>
             <Input type="email" {...register("email")} />
           </LabelBox>
 
           <LabelBox>
-            <Label htmlFor="">Senha</Label>
+            <Label>Senha</Label>
             <Input type="password" {...register("password")} />
           </LabelBox>
 

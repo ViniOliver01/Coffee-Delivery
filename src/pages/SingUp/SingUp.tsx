@@ -10,7 +10,7 @@ import FormError from "../../components/Error/Form/FormError";
 import InputError from "../../components/Error/Form/InputError";
 import { Button } from "../../components/Form/Button";
 import { Input } from "../../components/Form/Input";
-import { Label } from "../../components/Form/Label";
+import Label from "../../components/Form/Label";
 import { AuthContext } from "../../context/AuthContext";
 import { Card, Container, Form, LabelBox, Title } from "./SingUp.styles";
 
@@ -124,17 +124,17 @@ export default function SingUp() {
       <Card>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <LabelBox>
-            <Label htmlFor="">Nome</Label>
+            <Label>Nome</Label>
             <Input type="text" {...register("name")} />
           </LabelBox>
 
           <LabelBox>
-            <Label htmlFor="">Email</Label>
+            <Label>Email</Label>
             <Input type="email" {...register("email")} />
           </LabelBox>
 
           <LabelBox>
-            <Label htmlFor="">Senha</Label>
+            <Label>Senha</Label>
             <Input type="password" {...register("password")} />
             {errors.password && <InputError message={errors.password.message} />}
             {!passwordCheck.minCharacters && <InputError message="minCharacters" />}
@@ -144,7 +144,7 @@ export default function SingUp() {
           </LabelBox>
 
           <LabelBox>
-            <Label htmlFor="">Confirmar senha</Label>
+            <Label>Confirmar senha</Label>
             <Input type="password" {...register("passwordConfirmation")} />
             {errors.passwordConfirmation && (
               <InputError message={errors.passwordConfirmation.message} />
