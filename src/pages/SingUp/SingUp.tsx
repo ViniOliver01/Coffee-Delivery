@@ -8,17 +8,10 @@ import YupPassword from "yup-password";
 import Divider from "../../components/Divider";
 import FormError from "../../components/Error/Form/FormError";
 import InputError from "../../components/Error/Form/InputError";
+import { Input } from "../../components/Form/Input";
+import { Label } from "../../components/Form/Label";
 import { AuthContext } from "../../context/AuthContext";
-import {
-  Button,
-  Card,
-  Container,
-  Form,
-  Input,
-  Label,
-  LabelBox,
-  Title,
-} from "./SingUp.styles";
+import { Button, Card, Container, Form, LabelBox, Title } from "./SingUp.styles";
 
 interface InputFormData {
   name: string;

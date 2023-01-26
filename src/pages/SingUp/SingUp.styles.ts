@@ -57,27 +57,6 @@ export const LabelBox = styled.div`
   gap: 0.5rem;
 `;
 
-export const Input = styled.input`
-  background-color: ${defaultTheme["base-input"]};
-  border: 2px solid ${defaultTheme.purple};
-  border-radius: 6px;
-  height: 2.2rem;
-  padding: 0.5rem;
-
-  font-size: 1.125rem;
-  color: ${defaultTheme["base-text"]};
-
-  &:focus {
-    outline: 2px solid ${defaultTheme.purple};
-  }
-`;
-
-export const Label = styled.label`
-  font-size: 1.125rem;
-  font-weight: bold;
-  color: ${defaultTheme["base-title"]};
-`;
-
 interface ButtonProps {
   login?: boolean;
 }
