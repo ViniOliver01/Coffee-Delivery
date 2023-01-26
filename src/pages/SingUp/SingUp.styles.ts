@@ -49,10 +49,3 @@ export const Form = styled.form`
   width: 100%;
   gap: 1rem;
 `;
-
-export const LabelBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 0.5rem;
-`;

@@ -7,13 +7,14 @@ import { Navigate } from "react-router-dom";
 import * as yup from "yup";
 import Divider from "../../components/Divider";
 import { AuthContext } from "../../context/AuthContext";
-import { Card, Container, Form, LabelBox, Options, Title } from "./Login.styles";
+import { Card, Container, Form, Options, Title } from "./Login.styles";
 
 import { Checkbox } from "@chakra-ui/react";
 import FormError from "../../components/Error/Form/FormError";
 import { Button } from "../../components/Form/Button";
 import { Input } from "../../components/Form/Input";
 import Label from "../../components/Form/Label";
+import { LabelBox } from "../../components/Form/LabelBox";
 
 interface InputFormData {
   email: string;

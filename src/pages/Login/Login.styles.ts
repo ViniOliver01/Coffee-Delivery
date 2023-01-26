@@ -61,13 +61,6 @@ export const Form = styled.form`
   gap: 1rem;
 `;
 
-export const LabelBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 0.5rem;
-`;
-
 export const Options = styled.div`
   width: 100%;
   display: flex;

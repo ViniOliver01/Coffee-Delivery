@@ -11,8 +11,9 @@ import InputError from "../../components/Error/Form/InputError";
 import { Button } from "../../components/Form/Button";
 import { Input } from "../../components/Form/Input";
 import Label from "../../components/Form/Label";
+import { LabelBox } from "../../components/Form/LabelBox";
 import { AuthContext } from "../../context/AuthContext";
-import { Card, Container, Form, LabelBox, Title } from "./SingUp.styles";
+import { Card, Container, Form, Title } from "./SingUp.styles";
 
 interface InputFormData {
   name: string;
