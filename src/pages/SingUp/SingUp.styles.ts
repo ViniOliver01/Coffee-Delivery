@@ -30,18 +30,6 @@ export const Title = styled.div`
   }
 `;
 
-export const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 60px;
-  min-width: 400px;
-  width: fit-content;
-  border-radius: 6px 44px 6px 44px;
-  background-color: ${defaultTheme["base-card"]};
-  gap: 0.5rem;
-`;
-
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
