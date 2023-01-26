@@ -3,6 +3,12 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { api } from "../services/apiClient";
 
+interface SignUpCredentials {
+  name: string;
+  email: string;
+  password: string;
+}
+
 interface SignInCredentials {
   email: string;
   password: string;
@@ -14,10 +20,12 @@ interface ISingInResponse {
 }
 
 interface AuthContextData {
+  signUp: (credentials: SignUpCredentials) => Promise<ISingInResponse>;
   signIn: (credentials: SignInCredentials) => Promise<ISingInResponse>;
   signOut: () => void;
   user: User;
   isAuthenticated: boolean;
+  isFetching: boolean;
 }
 
 interface AuthProviderProps {
@@ -42,11 +50,26 @@ export function signOut(shouldBroadcast = true) {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const { "coffee.token": token } = parseCookies();
+  let isFetching = true;
+
+  if (!token) {
+    console.log("is Fetching token");
+    isFetching = false;
+  }
+
   const [user, setUser] = useState<User>({
     name: "",
     email: "",
     avatar_url: "",
   });
+
+  if (user.name !== "") {
+    console.log("🚀 / AuthProvider / user", user);
+    console.log("is Fetching user");
+    isFetching = false;
+  }
+
   const isAuthenticated = user.email != "";
 
   useEffect(() => {
@@ -126,8 +149,30 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function signUp({
+    name,
+    email,
+    password,
+  }: SignUpCredentials): Promise<ISingInResponse> {
+    try {
+      const response = await api.post("/users", {
+        name,
+        email,
+        password,
+      });
+
+      if (response.status === 400) {
+        return { message: response.data.message, status: 400 };
+      }
+    } catch (error) {}
+
+    return { message: "Success", status: 201 };
+  }
+
   return (
-    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, user }}>
+    <AuthContext.Provider
+      value={{ signUp, signIn, signOut, isAuthenticated, isFetching, user }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -27,7 +27,8 @@
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.7.0",
     "styled-components": "^5.3.6",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "yup-password": "^0.2.2"
   },
   "devDependencies": {
     "@types/node": "^18.7.3",
