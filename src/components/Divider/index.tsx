@@ -3,7 +3,7 @@ import styled from "styled-components";
 import defaultTheme from "./../../styles/themes/Default";
 
 interface DividerProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export default function Divider({ children }: DividerProps) {
@@ -17,14 +17,17 @@ export default function Divider({ children }: DividerProps) {
   const Container = styled.div`
     display: flex;
     width: 100%;
-    gap: 0.2rem;
+    p {
+      padding-inline: 0.2rem;
+    }
   `;
 
   return (
     <>
       <Container>
         <Line />
-        <p>{children}</p>
+        {children && <p>{children}</p>}
+
         <Line />
       </Container>
     </>
