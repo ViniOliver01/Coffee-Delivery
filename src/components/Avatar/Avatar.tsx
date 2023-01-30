@@ -19,7 +19,7 @@ export default function Avatar({ name, avatar_url }: AvatarProps) {
 
       <div>
         <p>Olá, {name}</p>
-        <a href="">Minha conta</a>
+        <a href="/account">Minha conta</a>
       </div>
     </>
   );
