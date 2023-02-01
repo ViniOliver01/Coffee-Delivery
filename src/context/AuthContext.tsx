@@ -20,6 +20,12 @@ interface UpdatePersonalDataCredentials {
   phone: string;
 }
 
+interface ChangePasswordCredentials {
+  old_password: string;
+  new_password: string;
+  confirm_new_password: string;
+}
+
 interface IStatusResponse {
   status: number;
   message: string;
@@ -33,6 +39,7 @@ interface AuthContextData {
     credentials: UpdatePersonalDataCredentials
   ) => Promise<IStatusResponse>;
   updateAvatar: (avatar_file: FormData) => Promise<IStatusResponse>;
+  changePassword: (credentials: ChangePasswordCredentials) => Promise<IStatusResponse>;
   user: User;
   isAuthenticated: boolean;
   isFetching: boolean;
@@ -233,8 +240,31 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (response.status === 400) {
         return { message: response.data.message, status: 400 };
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log("🚀 / updateAvatar / error", error);
+    }
 
+    return { message: "Success", status: 201 };
+  }
+
+  async function changePassword({
+    old_password,
+    new_password,
+    confirm_new_password,
+  }: ChangePasswordCredentials): Promise<IStatusResponse> {
+    try {
+      const response = await api.patch("/users/password", {
+        old_password,
+        new_password,
+        confirm_new_password,
+      });
+
+      if (response.status === 400) {
+        return { message: response.data.message, status: 400 };
+      }
+    } catch (error) {
+      console.log("🚀 / changePassword / error", error);
+    }
     return { message: "Success", status: 201 };
   }
 
@@ -246,6 +276,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signOut,
         updatePersonalData,
         updateAvatar,
+        changePassword,
         isAuthenticated,
         isFetching,
         user,
