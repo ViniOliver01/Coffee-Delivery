@@ -14,15 +14,25 @@ interface SignInCredentials {
   password: string;
 }
 
-interface ISingInResponse {
+interface UpdatePersonalDataCredentials {
+  name: string;
+  email: string;
+  phone: string;
+}
+
+interface IStatusResponse {
   status: number;
   message: string;
 }
 
 interface AuthContextData {
-  signUp: (credentials: SignUpCredentials) => Promise<ISingInResponse>;
-  signIn: (credentials: SignInCredentials) => Promise<ISingInResponse>;
+  signUp: (credentials: SignUpCredentials) => Promise<IStatusResponse>;
+  signIn: (credentials: SignInCredentials) => Promise<IStatusResponse>;
   signOut: () => void;
+  updatePersonalData: (
+    credentials: UpdatePersonalDataCredentials
+  ) => Promise<IStatusResponse>;
+  updateAvatar: (avatar_file: FormData) => Promise<IStatusResponse>;
   user: User;
   isAuthenticated: boolean;
   isFetching: boolean;
@@ -36,6 +46,7 @@ interface User {
   name: string;
   email: string;
   avatar_url: string;
+  phone: string;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -62,6 +73,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     name: "",
     email: "",
     avatar_url: "",
+    phone: "",
   });
 
   if (user.name !== "") {
@@ -95,9 +107,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       api
         .get("/users/profile")
         .then((response) => {
-          const { name, email, avatar_url } = response.data;
+          const { name, email, avatar_url, phone } = response.data;
 
-          setUser({ name, email, avatar_url });
+          setUser({ name, email, avatar_url, phone });
         })
         .catch(() => {
           signOut();
@@ -108,7 +120,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   async function signIn({
     email,
     password,
-  }: SignInCredentials): Promise<ISingInResponse> {
+  }: SignInCredentials): Promise<IStatusResponse> {
     try {
       const response = await api.post("/sessions", {
         email,
@@ -136,6 +148,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         name: user.name,
         email,
         avatar_url: user.avatar_url,
+        phone: user.phone,
       });
 
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
@@ -153,7 +166,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     name,
     email,
     password,
-  }: SignUpCredentials): Promise<ISingInResponse> {
+  }: SignUpCredentials): Promise<IStatusResponse> {
     try {
       const response = await api.post("/users", {
         name,
@@ -169,9 +182,74 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return { message: "Success", status: 201 };
   }
 
+  async function updatePersonalData({
+    name,
+    email,
+    phone,
+  }: UpdatePersonalDataCredentials): Promise<IStatusResponse> {
+    try {
+      const response = await api.patch("/users/update", {
+        name,
+        email,
+        phone,
+      });
+
+      // const { name, email, avatar_url, phone } = response.data;
+
+      setUser({
+        name: response.data.name,
+        email: response.data.email,
+        avatar_url: response.data.avatar_url,
+        phone: response.data.phone,
+      });
+
+      if (response.status === 400) {
+        return { message: response.data.message, status: 400 };
+      }
+    } catch (error) {}
+
+    return { message: "Success", status: 201 };
+  }
+
+  async function updateAvatar(avatar_file: FormData): Promise<IStatusResponse> {
+    try {
+      const response = await api.patch("/users/avatar", avatar_file, {
+        headers: {
+          accept: "application/json",
+          "Accept-Language": "en-US,en;q=0.8",
+          "Content-Type": `multipart/form-data;`,
+        },
+      });
+
+      const { avatar_url } = response.data;
+
+      setUser({
+        name: user.name,
+        email: user.email,
+        avatar_url,
+        phone: user.phone,
+      });
+
+      if (response.status === 400) {
+        return { message: response.data.message, status: 400 };
+      }
+    } catch (error) {}
+
+    return { message: "Success", status: 201 };
+  }
+
   return (
     <AuthContext.Provider
-      value={{ signUp, signIn, signOut, isAuthenticated, isFetching, user }}
+      value={{
+        signUp,
+        signIn,
+        signOut,
+        updatePersonalData,
+        updateAvatar,
+        isAuthenticated,
+        isFetching,
+        user,
+      }}
     >
       {children}
     </AuthContext.Provider>
