@@ -7,6 +7,7 @@ export const Input = styled.input`
   border-radius: 6px;
   height: 2.2rem;
   padding: 0.5rem;
+  width: 100%;
 
   font-size: 1.125rem;
   color: ${defaultTheme["base-text"]};
