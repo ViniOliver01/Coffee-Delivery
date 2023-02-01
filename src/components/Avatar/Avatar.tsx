@@ -1,5 +1,4 @@
-import { AiOutlineUser } from "react-icons/ai";
-import { AvatarImage, AvatarLogo } from "./Avatar.styles";
+import { Avatar as ChakraAvatar } from "@chakra-ui/react";
 
 interface AvatarProps {
   name: string;
@@ -7,18 +6,13 @@ interface AvatarProps {
 }
 
 export default function Avatar({ name, avatar_url }: AvatarProps) {
+  const [firstName] = name.split(" ");
+
   return (
     <>
-      {!!avatar_url ? (
-        <AvatarImage src={avatar_url} />
-      ) : (
-        <AvatarLogo>
-          <AiOutlineUser />
-        </AvatarLogo>
-      )}
-
+      <ChakraAvatar src={avatar_url} w={"48px"} />
       <div>
-        <p>Olá, {name}</p>
+        <p>Olá, {firstName}</p>
         <a href="/account">Minha conta</a>
       </div>
     </>
