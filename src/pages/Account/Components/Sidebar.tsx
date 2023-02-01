@@ -26,6 +26,7 @@ const Card = styled.div`
   align-items: flex-start;
   padding: 2rem;
   width: fit-content;
+  margin-top: 4rem;
   height: fit-content;
   border-radius: 6px 44px 6px 44px;
   background-color: ${defaultTheme["base-card"]};

@@ -5,6 +5,7 @@ export const Container = styled.div`
   display: flex;
   gap: 2rem;
   padding-inline: 10rem;
+  margin-top: 1rem;
 `;
 
 export const Title = styled.div`

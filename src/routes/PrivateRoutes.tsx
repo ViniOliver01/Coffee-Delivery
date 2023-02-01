@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Account from "../pages/Account/Account";
+import Address from "../pages/Account/pages/Address";
+import ChangePassword from "../pages/Account/pages/ChangePassword";
+import MyAccount from "../pages/Account/pages/MyAccount";
+import Purchases from "../pages/Account/pages/Purchases";
 import { Checkout } from "../pages/Checkout/Checkout";
 import { Success } from "../pages/Success/Success";
-import Address from "./../pages/Account/Address";
-import ChangePassword from "./../pages/Account/ChangePassword";
-import MyAccount from "./../pages/Account/MyAccount";
-import Purchases from "./../pages/Account/Purchases";
 
 export const PrivateRoutes = () => {
   return (

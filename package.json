@@ -17,6 +17,7 @@
     "axios": "^1.2.3",
     "date-fns": "^2.29.1",
     "font-awesome": "^4.7.0",
+    "form-data": "^4.0.0",
     "framer-motion": "^8.5.0",
     "nookies": "^2.5.2",
     "phosphor-react": "^1.4.1",
