@@ -36,6 +36,8 @@ interface IPurchasesResponse {
   status: string;
   cart: ICartResponseProps[];
   total_value: number;
+  products_value: number;
+  delivery_value: number;
 }
 
 export default function Purchases() {
@@ -46,6 +48,8 @@ export default function Purchases() {
     cart: [],
     created_at: new Date(),
     total_value: 0,
+    products_value: 0,
+    delivery_value: 0,
     id: "",
     user_id: "",
     purchase_id: 0,
@@ -104,8 +108,10 @@ export default function Purchases() {
                   );
                 })}
                 <footer>
-                  <p>Total Produto(s): 15,80</p>
-                  <p>Frete: 4,00</p>
+                  <p>
+                    Total Produto(s): {formatCurrency(purchaseModal.products_value / 100)}
+                  </p>
+                  <p>Frete: {formatCurrency(purchaseModal.delivery_value / 100)}</p>
                   <Divider />
                   <p>
                     Total do pedido: {formatCurrency(purchaseModal.total_value / 100)}

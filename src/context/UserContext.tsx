@@ -26,6 +26,8 @@ interface IPurchasesResponse {
   status: string;
   cart: ICartResponseProps[];
   total_value: number;
+  products_value: number;
+  delivery_value: number;
 }
 
 export const UserContext = createContext({} as UserContextData);
