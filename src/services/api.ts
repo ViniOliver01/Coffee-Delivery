@@ -13,7 +13,7 @@ export function setupAPIClient(ctx = undefined) {
   let cookies = parseCookies(ctx);
 
   const api = axios.create({
-    baseURL: "http://localhost:3333",
+    baseURL: import.meta.env.VITE_API_URL,
     headers: {
       Authorization: `Bearer ${cookies["coffee.token"]}`,
     },
