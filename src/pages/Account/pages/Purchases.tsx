@@ -1,107 +1,125 @@
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { CheckCircle, Truck, WarningCircle } from "phosphor-react";
-import styled from "styled-components";
-import defaultTheme from "./../../../styles/themes/Default";
-import { Card, Container, Title } from "./../Components/StyledComponents";
+import { useContext, useEffect, useState } from "react";
+import Divider from "./../../../components/Divider/index";
+import { UserContext } from "./../../../context/UserContext";
+import { formatCurrency, formatDate } from "./../../../utils/format";
+import {
+  Card,
+  Container,
+  ModalCard,
+  PurchaseItemCard,
+  Table,
+  Title,
+} from "./../Components/StyledComponents";
 
-const Table = styled.table`
-  border-collapse: separate;
-  border-spacing: 0 0.5rem;
-  width: 100%;
+interface ICartResponseProps {
+  name: string;
+  coffee_id: string;
+  price: number;
+  quantity: number;
+  img_url: string;
+}
 
-  tr {
-    background-color: ${defaultTheme.white};
-    .Canceled,
-    .Delivery,
-    .PaymentAprove,
-    .Finished {
-      font-size: 1rem;
-      font-family: "Baloo 2", cursive;
-      font-weight: bold;
-
-      div {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        white-space: nowrap;
-        gap: 0.2rem;
-      }
-    }
-
-    .Canceled {
-      color: red;
-    }
-    .Delivery {
-      color: ${defaultTheme["base-text"]};
-    }
-    .PaymentAprove {
-      color: green;
-    }
-    .Finished {
-      color: green;
-    }
-
-    td {
-      padding: 0.5rem 1rem;
-      text-align: center;
-    }
-    th {
-      padding: 0.5rem 1rem;
-      font-size: 1.25rem;
-      font-weight: bold;
-      font-family: "Baloo 2", cursive;
-    }
-  }
-  tr:first-child {
-    th:first-child {
-      border-radius: 44px 0 0 0;
-    }
-    th:last-child {
-      border-radius: 0 44px 0 0;
-    }
-  }
-  tr:last-child {
-    td:first-child {
-      border-radius: 0 0 0 44px;
-    }
-    td:last-child {
-      border-radius: 0 0 44px 0;
-    }
-  }
-`;
-
-const purchasesList = [
-  {
-    id: 2858972802,
-    date: "29/01/2023",
-    totalValue: 1990,
-    status: "Em transporte",
-  },
-  {
-    id: 2201578149,
-    date: "26/01/2023",
-    totalValue: 1578,
-    status: "Pagamento aprovado",
-  },
-  {
-    id: 2506161734,
-    date: "24/01/2023",
-    totalValue: 990,
-    status: "Cancelado",
-  },
-  {
-    id: 1069311468,
-    date: "22/01/2023",
-    totalValue: 1245,
-    status: "Concluído",
-  },
-];
+interface IPurchasesResponse {
+  id: string;
+  purchase_id: number;
+  user_id: string;
+  created_at: Date;
+  status: string;
+  cart: ICartResponseProps[];
+  total_value: number;
+}
 
 export default function Purchases() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { getPurchases } = useContext(UserContext);
+  const [purchasesList, setPurchasesList] = useState<IPurchasesResponse[]>([]);
+  const [purchaseModal, setPurchaseModal] = useState<IPurchasesResponse>({
+    cart: [],
+    created_at: new Date(),
+    total_value: 0,
+    id: "",
+    user_id: "",
+    purchase_id: 0,
+    status: "",
+  });
+  console.log("🚀 / Purchases / modalData", purchaseModal);
+  console.log("🚀 / Purchases / purchasesList", purchasesList);
+
+  useEffect(() => {
+    async function handleGet() {
+      const data = await getPurchases();
+      setPurchasesList(data);
+    }
+    handleGet();
+  }, []);
+
+  function handleOpenPurchase(purchase: IPurchasesResponse) {
+    console.log("🚀 / handleOpenPurchase / purchase", purchase);
+    onOpen();
+    setPurchaseModal(purchase);
+  }
+
   return (
     <Container>
       <Title>Meus pedidos</Title>
-
       <Card display="flex" padding="10px 20px">
+        <Modal isOpen={isOpen} onClose={onClose} isCentered>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalCloseButton />
+
+            <ModalBody>
+              <ModalCard>
+                <p>
+                  Número do pedido: <span>{purchaseModal.purchase_id}</span>
+                </p>
+                <p>
+                  Data do pedido: <span>{formatDate(purchaseModal.created_at)}</span>
+                </p>
+                <p>
+                  Status: <span>{purchaseModal.status}</span>
+                </p>
+                <Divider />
+                {purchaseModal.cart.map((item) => {
+                  return (
+                    <PurchaseItemCard key={item.coffee_id}>
+                      <img src={item.img_url} alt="err" />
+
+                      <div>
+                        <h2>{item.name}</h2>
+                        <p>Quantidade: {item.quantity}</p>
+                      </div>
+
+                      <span>{formatCurrency(item.price / 100)}</span>
+                    </PurchaseItemCard>
+                  );
+                })}
+                <footer>
+                  <p>Total Produto(s): 15,80</p>
+                  <p>Frete: 4,00</p>
+                  <Divider />
+                  <p>
+                    Total do pedido: {formatCurrency(purchaseModal.total_value / 100)}
+                  </p>
+                </footer>
+              </ModalCard>
+            </ModalBody>
+
+            {/* <ModalFooter>
+              <button onClick={onClose}>Close</button>
+              <button>Secondary Action</button>
+            </ModalFooter> */}
+          </ModalContent>
+        </Modal>
         <Table>
           <thead>
             <tr>
@@ -114,14 +132,14 @@ export default function Purchases() {
 
           <tbody>
             {purchasesList.map((p) => {
-              const value = new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(p.totalValue / 100);
+              const value = formatCurrency(p.total_value / 100);
+
+              const date = formatDate(p.created_at);
+
               return (
-                <tr key={p.id}>
-                  <td>{p.id}</td>
-                  <td>{p.date}</td>
+                <tr key={p.id} onClick={() => handleOpenPurchase(p)}>
+                  <td>{p.purchase_id}</td>
+                  <td>{date}</td>
                   <td>{value}</td>
                   {p.status === "Concluído" && (
                     <td className="Finished">
@@ -153,6 +171,11 @@ export default function Purchases() {
                         <Truck size={18} weight="bold" />
                         {p.status}
                       </div>
+                    </td>
+                  )}
+                  {p.status === "Pedido Realizado" && (
+                    <td className="Delivery">
+                      <div>{p.status}</div>
                     </td>
                   )}
                 </tr>
