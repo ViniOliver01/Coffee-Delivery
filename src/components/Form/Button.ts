@@ -21,4 +21,8 @@ export const Button = styled.button<ButtonProps>`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+
+  svg {
+    font-size: 1.25rem;
+  }
 `;

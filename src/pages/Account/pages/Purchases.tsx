@@ -55,8 +55,6 @@ export default function Purchases() {
     purchase_id: 0,
     status: "",
   });
-  console.log("🚀 / Purchases / modalData", purchaseModal);
-  console.log("🚀 / Purchases / purchasesList", purchasesList);
 
   useEffect(() => {
     async function handleGet() {
@@ -67,7 +65,6 @@ export default function Purchases() {
   }, []);
 
   function handleOpenPurchase(purchase: IPurchasesResponse) {
-    console.log("🚀 / handleOpenPurchase / purchase", purchase);
     onOpen();
     setPurchaseModal(purchase);
   }

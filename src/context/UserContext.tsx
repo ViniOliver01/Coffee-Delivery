@@ -4,6 +4,9 @@ import { AuthContext } from "./AuthContext";
 
 interface UserContextData {
   getPurchases: () => Promise<IPurchasesResponse[]>;
+  getAddresses: () => Promise<IAddressesResponse[]>;
+  createAddress: (data: IAddressRequest) => Promise<IAddressRequest>;
+  updateAddress: (data: IUpdateAddressRequest) => Promise<IAddressRequest>;
 }
 
 interface UserProviderProps {
@@ -30,6 +33,40 @@ interface IPurchasesResponse {
   delivery_value: number;
 }
 
+export interface IAddressesResponse {
+  id: string;
+  user_id: string;
+  name: string;
+  cep: string;
+  city: string;
+  state: string;
+  street: string;
+  number: string;
+  complement: string;
+  created_at: Date;
+}
+
+export interface IAddressRequest {
+  name: string;
+  cep: string;
+  city: string;
+  state: string;
+  street: string;
+  number: string;
+  complement?: string;
+}
+
+export interface IUpdateAddressRequest {
+  id: string;
+  name: string;
+  cep: string;
+  city: string;
+  state: string;
+  street: string;
+  number: string;
+  complement?: string;
+}
+
 export const UserContext = createContext({} as UserContextData);
 
 export function UserProvider({ children }: UserProviderProps) {
@@ -40,7 +77,68 @@ export function UserProvider({ children }: UserProviderProps) {
       const response = await api.get("/purchases");
       return response.data;
     } catch (error) {
-      console.log("🚀 / getPurchases / error", error);
+      console.warn("🚀 / getPurchases / error", error);
+    }
+  }
+
+  async function getAddresses(): Promise<IAddressesResponse[]> {
+    try {
+      const response = await api.get("/users/address");
+      return response.data;
+    } catch (error) {
+      console.warn("🚀 / getPurchases / error", error);
+    }
+  }
+
+  async function createAddress({
+    cep,
+    city,
+    name,
+    number,
+    state,
+    street,
+    complement,
+  }: IAddressRequest): Promise<IAddressRequest> {
+    try {
+      const response = await api.post("/users/address", {
+        cep,
+        city,
+        name,
+        number,
+        state,
+        street,
+        complement,
+      });
+      return response.data;
+    } catch (error) {
+      console.warn("🚀 / createAddress / error", error);
+    }
+  }
+
+  async function updateAddress({
+    id,
+    cep,
+    city,
+    name,
+    number,
+    state,
+    street,
+    complement,
+  }: IUpdateAddressRequest): Promise<IAddressRequest> {
+    try {
+      const response = await api.patch("/users/address", {
+        id,
+        cep,
+        city,
+        name,
+        number,
+        state,
+        street,
+        complement,
+      });
+      return response.data;
+    } catch (error) {
+      console.warn("🚀 / createAddress / error", error);
     }
   }
 
@@ -48,6 +146,9 @@ export function UserProvider({ children }: UserProviderProps) {
     <UserContext.Provider
       value={{
         getPurchases,
+        getAddresses,
+        createAddress,
+        updateAddress,
       }}
     >
       {children}
