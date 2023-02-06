@@ -11,7 +11,7 @@ import { Input } from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
 import { AuthContext } from "../../../context/AuthContext";
 import Divider from "./../../../components/Divider/index";
-import { Button } from "./../../../components/Form/Button";
+import Button from "./../../../components/Form/Button";
 import { LabelBox } from "./../../../components/Form/LabelBox";
 import {
   AvatarLabel,
@@ -129,7 +129,7 @@ export default function MyAccount() {
             {errors.phone && <InputError message={errors.phone.message} />}
           </LabelBox>
 
-          <Button login>Salvar</Button>
+          <Button>Salvar</Button>
         </form>
       </Card>
     </Container>

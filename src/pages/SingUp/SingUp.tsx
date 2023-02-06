@@ -8,7 +8,7 @@ import YupPassword from "yup-password";
 import Divider from "../../components/Divider";
 import FormError from "../../components/Error/Form/FormError";
 import InputError from "../../components/Error/Form/InputError";
-import { Button } from "../../components/Form/Button";
+import Button from "../../components/Form/Button";
 import { Card } from "../../components/Form/Card";
 import { Input } from "../../components/Form/Input";
 import Label from "../../components/Form/Label";
@@ -155,9 +155,7 @@ export default function SingUp() {
 
           {error && <FormError message={error} />}
 
-          <Button login type="submit">
-            Criar conta
-          </Button>
+          <Button type="submit">Criar conta</Button>
         </Form>
 
         <Divider>ou</Divider>

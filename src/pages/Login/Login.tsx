@@ -11,7 +11,7 @@ import { Container, Form, Options, Title } from "./Login.styles";
 
 import { Checkbox } from "@chakra-ui/react";
 import FormError from "../../components/Error/Form/FormError";
-import { Button } from "../../components/Form/Button";
+import Button from "../../components/Form/Button";
 import { Card } from "../../components/Form/Card";
 import { Input } from "../../components/Form/Input";
 import Label from "../../components/Form/Label";
@@ -84,9 +84,7 @@ export default function Login() {
             <a href="">Esqueci minha senha</a>
           </Options>
 
-          <Button login type="submit">
-            Login
-          </Button>
+          <Button type="submit">Login</Button>
         </Form>
 
         <Divider>ou</Divider>

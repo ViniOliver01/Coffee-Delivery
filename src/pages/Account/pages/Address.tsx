@@ -6,7 +6,6 @@ import { IAddressesResponse, UserContext } from "../../../context/UserContext";
 
 import { Plus } from "phosphor-react";
 import InputError from "../../../components/Error/Form/InputError";
-import { Button } from "../../../components/Form/Button";
 import { Input } from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
 import { LabelBox } from "../../../components/Form/LabelBox";
@@ -19,6 +18,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import Button from "../../../components/Form/Button";
 import {
   AddressBox,
   AddressCard,
@@ -173,7 +173,7 @@ export default function Address() {
           );
         })}
 
-        <Button login onClick={handleAddNewAddress}>
+        <Button onClick={handleAddNewAddress}>
           <Plus weight="bold" />
           Novo endereço
         </Button>
@@ -235,9 +235,7 @@ export default function Address() {
 
             <ModalFooter gap={4}>
               <Button onClick={onClose}>Cancelar</Button>
-              <Button login type="submit">
-                Salvar
-              </Button>
+              <Button type="submit">Salvar</Button>
             </ModalFooter>
           </form>
         </ModalContent>

@@ -1,4 +1,3 @@
-import { Button } from "../../../components/Form/Button";
 import { Input } from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
 
@@ -9,6 +8,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 import FormError from "../../../components/Error/Form/FormError";
 import InputError from "../../../components/Error/Form/InputError";
+import Button from "../../../components/Form/Button";
 import { PasswordInputBox } from "../../../components/Form/PasswordInputBox";
 import { AuthContext } from "../../../context/AuthContext";
 import { LabelBox } from "./../../../components/Form/LabelBox";
@@ -139,9 +139,7 @@ export default function ChangePassword() {
             )}
           </LabelBox>
 
-          <Button login type="submit">
-            Salvar
-          </Button>
+          <Button type="submit">Salvar</Button>
         </form>
       </Card>
     </Container>
