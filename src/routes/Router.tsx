@@ -8,9 +8,7 @@ import { PrivateRoutes } from "./PrivateRoutes";
 import { PublicRoutes } from "./PublicRoutes";
 
 export function Router() {
-  const { signUp, isAuthenticated, isFetching } = useContext(AuthContext);
-  console.log("🚀 / Router / isFetching", isFetching);
-  console.log("🚀 / Router / isAuthenticated", isAuthenticated);
+  const { isAuthenticated, isFetching } = useContext(AuthContext);
 
   if (isFetching) {
     return (

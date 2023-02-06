@@ -72,7 +72,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   let isFetching = true;
 
   if (!token) {
-    console.log("is Fetching token");
+    // console.log("is Fetching token");
     isFetching = false;
   }
 
@@ -84,8 +84,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   });
 
   if (user.name !== "") {
-    console.log("🚀 / AuthProvider / user", user);
-    console.log("is Fetching user");
+    // console.log("🚀 / AuthProvider / user", user);
+    // console.log("is Fetching user");
     isFetching = false;
   }
 
@@ -164,7 +164,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       authChannel.postMessage("signIn");
       return { status: 200, message: "Success" };
     } catch (error) {
-      console.log("🚀 / Error: ", error);
+      console.warn("🚀 / Error: ", error);
       return { status: 401, message: error.response.data.message };
     }
   }
@@ -241,7 +241,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return { message: response.data.message, status: 400 };
       }
     } catch (error) {
-      console.log("🚀 / updateAvatar / error", error);
+      console.warn("🚀 / updateAvatar / error", error);
     }
 
     return { message: "Success", status: 201 };
@@ -263,7 +263,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return { message: response.data.message, status: 400 };
       }
     } catch (error) {
-      console.log("🚀 / changePassword / error", error);
+      console.warn("🚀 / changePassword / error", error);
     }
     return { message: "Success", status: 201 };
   }
