@@ -17,7 +17,7 @@ import {
 
 export function Header() {
   const { isAuthenticated, user } = useContext(AuthContext);
-  const { ItensAmount } = useContext(CartContext);
+  const { ItensAmount, ItensPrice } = useContext(CartContext);
 
   useEffect(() => {}, []);
 
@@ -49,7 +49,7 @@ export function Header() {
         ) : (
           <LoginButton onClick={GoToLogin}>Entrar</LoginButton>
         )}
-        <Cart itens={ItensAmount} />
+        <Cart totalItens={ItensAmount} totalPrice={ItensPrice} />
       </Container>
     </HeaderContainer>
   );

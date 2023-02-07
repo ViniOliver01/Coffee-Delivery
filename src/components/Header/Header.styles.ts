@@ -1,6 +1,16 @@
 import styled from "styled-components";
 import defaultTheme from "./../../styles/themes/Default";
 
+export const HeaderContainer = styled.div`
+  display: flex;
+  margin-inline: 10rem;
+  justify-content: space-between;
+
+  @media only screen and (max-width: 1200px) {
+    margin-inline: 2rem;
+  }
+`;
+
 export const Container = styled.div`
   display: flex;
   align-items: center;
@@ -21,11 +31,7 @@ export const LogoArea = styled.div`
     cursor: pointer;
   }
 `;
-export const HeaderContainer = styled.div`
-  display: flex;
-  margin-inline: 10rem;
-  justify-content: space-between;
-`;
+
 export const LocationIcon = styled.div`
   display: flex;
   align-items: center;
