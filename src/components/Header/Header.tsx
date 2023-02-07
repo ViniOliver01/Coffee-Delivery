@@ -45,11 +45,15 @@ export function Header() {
       </Container>
       <Container>
         {isAuthenticated ? (
-          <Avatar name={user.name} avatar_url={user.avatar_url} />
+          <>
+            <Avatar name={user.name} avatar_url={user.avatar_url} />
+            <Cart totalItens={ItensAmount} totalPrice={ItensPrice} />
+          </>
         ) : (
-          <LoginButton onClick={GoToLogin}>Entrar</LoginButton>
+          <>
+            <LoginButton onClick={GoToLogin}>Entrar</LoginButton>
+          </>
         )}
-        <Cart totalItens={ItensAmount} totalPrice={ItensPrice} />
       </Container>
     </HeaderContainer>
   );
