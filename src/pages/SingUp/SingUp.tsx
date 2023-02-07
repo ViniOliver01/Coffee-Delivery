@@ -108,10 +108,8 @@ export default function SingUp() {
       ? (passwordCheck.minUppercase = true)
       : (passwordCheck.minUppercase = false);
 
-    console.log("🚀 / verifyPassword / passwordCheck", passwordCheck);
     setPasswordCheck(passwordCheck);
   }
-  console.log("🚀 / verifyPassword / passwordCheck", passwordCheck);
 
   watch((data) => {
     verifyPassword(data.password);
@@ -160,8 +158,7 @@ export default function SingUp() {
 
         <Divider>ou</Divider>
 
-        <Button>
-          <FcGoogle size={24} />
+        <Button leftIcon={<FcGoogle size={24} />} color={"gray"}>
           Entrar com o google
         </Button>
       </Card>

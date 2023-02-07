@@ -89,8 +89,7 @@ export default function Login() {
 
         <Divider>ou</Divider>
 
-        <Button>
-          <FcGoogle size={24} />
+        <Button leftIcon={<FcGoogle size={24} />} color={"gray"}>
           Entrar com o google
         </Button>
 
