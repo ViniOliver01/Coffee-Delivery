@@ -3,25 +3,54 @@ import { ButtonHTMLAttributes, ReactNode } from "react";
 import styled from "styled-components";
 import defaultTheme from "../../styles/themes/Default";
 
-interface ContainerProps {
-  login?: boolean;
-}
-const Container = styled.button`
-  background-color: ${(props: ContainerProps) =>
-    props.login ? defaultTheme.purple : defaultTheme["base-button"]};
+const Container = styled.div`
+  button {
+    background-color: ${(props: ButtonProps) => {
+      switch (props.color) {
+        case "purple":
+          return defaultTheme.purple;
+        case "gray":
+          return defaultTheme["base-input"];
+        default:
+          return defaultTheme.purple;
+      }
+    }};
+    color: ${(props: ButtonProps) => {
+      switch (props.color) {
+        case "purple":
+          return defaultTheme.white;
+        case "gray":
+          return defaultTheme["base-input"];
+        default:
+          return defaultTheme.white;
+      }
+    }};
 
-  color: ${(props: ContainerProps) =>
-    props.login ? defaultTheme.white : defaultTheme["base-text"]};
-  border: none;
-  width: 100%;
-  padding: 0.625rem;
-  border-radius: 6px;
-  font-weight: bold;
+    &:hover,
+    &:hover:disabled,
+    &:disabled {
+      opacity: 0.75;
+      background-color: ${(props: ButtonProps) => {
+        switch (props.color) {
+          case "purple":
+            return defaultTheme.purple;
+          case "gray":
+            return defaultTheme["base-input"];
+          default:
+            return defaultTheme.purple;
+        }
+      }};
+    }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+    border: none;
+    width: 100%;
+    border-radius: 6px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   svg {
     font-size: 1.25rem;
@@ -31,8 +60,30 @@ const Container = styled.button`
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
   variant?: "solid" | "outline";
+  isLoading?: boolean;
+  loadingText?: string;
+  color?: "purple" | "gray";
 }
 
-export default function Button({ children, variant = "solid" }: ButtonProps) {
-  return <ChakraButton variant={variant}> {children} </ChakraButton>;
+export default function Button({
+  children,
+  variant = "solid",
+  isLoading,
+  loadingText = "Carregando...",
+  ...props
+}: ButtonProps) {
+  return (
+    <Container>
+      <ChakraButton
+        variant={variant}
+        isLoading={isLoading}
+        loadingText={loadingText}
+        width="100%"
+        marginTop={0}
+        {...props}
+      >
+        {children}
+      </ChakraButton>
+    </Container>
+  );
 }
