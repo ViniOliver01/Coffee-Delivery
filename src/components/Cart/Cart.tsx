@@ -1,12 +1,14 @@
 import { ShoppingCart } from "phosphor-react";
 import { useNavigate } from "react-router-dom";
+import { formatCurrency } from "../../utils/format";
 import { CartBox, Container, CountItens } from "./Cart.styles";
 
 interface CartProps {
-  itens: number;
+  totalItens: number;
+  totalPrice: number;
 }
 
-export function Cart({ itens }: CartProps) {
+export function Cart({ totalItens, totalPrice }: CartProps) {
   const navigate = useNavigate();
 
   function GoToCart() {
@@ -17,11 +19,11 @@ export function Cart({ itens }: CartProps) {
     <Container>
       <CartBox onClick={GoToCart}>
         <ShoppingCart size={22} weight="fill" />
-        <CountItens>{itens}</CountItens>
+        <CountItens>{totalItens}</CountItens>
       </CartBox>
       <div>
         <p>Total</p>
-        <p>R$ 12,25</p>
+        <p>{formatCurrency(totalPrice)}</p>
       </div>
     </Container>
   );
