@@ -1,4 +1,3 @@
-import { RadioGroup } from "@chakra-ui/react";
 import {
   Bank,
   CreditCard,
@@ -8,11 +7,6 @@ import {
   Package,
   SmileySad,
 } from "phosphor-react";
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Button from "../../components/Form/Button";
-import { IAddressesResponse, UserContext } from "../../context/UserContext";
-import { CartContext } from "./../../context/CartContext/CartContext";
 import {
   AddressBox,
   AddressItem,
@@ -23,106 +17,77 @@ import {
   PaymentButton,
   PaymentButtonList,
 } from "./Checkout.styles";
+
+import { useToast } from "@chakra-ui/react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/Form/Button";
+import { CartContext } from "../../context/CartContext";
+import { IAddressesResponse, UserContext } from "../../context/UserContext";
+import { formatCurrency } from "../../utils/format";
 import { CartItem } from "./components/CartItemList/CartItem";
 
-export interface FormInputs {
-  cep: number;
-  rua: string;
-  numero: number;
-  complemento: string;
-  bairro: string;
-  cidade: string;
-  uf: string;
-  payMethodSelect: string;
-}
-
 export function Checkout() {
-  // const [paymethodSelectError, setPaymethodError] = useState(false);
-  // const [formError, setformError] = useState(false);
-  // const [FormItens, setFormItens] = useState<FormInputs>();
-
-  // const navigation = useNavigate();
-  // function GoToSuccess() {
-  //   navigation("/success");
-  // }
-
-  // // console.log(watch("cep")) // watch input value by passing the name of it
-  // function addPaymenthodToForm(data: FormInputs) {
-  //   if (!!paymethodSelect) {
-  //     if (ItensAmount != 0) {
-  //       setformError(false);
-  //       setFormItens({ ...data, paymethodSelect: paymethodSelect });
-  //       handleSetFormData({ ...data, paymethodSelect: paymethodSelect });
-  //       handleFinishBuy();
-  //       GoToSuccess();
-  //     }
-  //   } else {
-  //     setPaymethodError(true);
-  //     setTimeout(() => {
-  //       setPaymethodError(false);
-  //     }, 4000);
-  //     setformError(true);
-  //     setFormItens({
-  //       bairro: "",
-  //       cep: 0,
-  //       cidade: "",
-  //       complemento: "",
-  //       numero: 0,
-  //       paymethodSelect: "",
-  //       rua: "",
-  //       uf: "",
-  //     });
-  //   }
-  // }
-
-  // function handlePaymethodSelect(e: any) {
-  //   const id = e.target.id;
-  //   // console.log(id)
-  //   if (paymethodSelect == id) {
-  //     setPaymethodSelect("");
-  //   } else {
-  //     setPaymethodSelect(id);
-  //   }
-  // }
-  // const FormatedItensPrice = new Intl.NumberFormat("pt-BR", {
-  //   style: "decimal",
-  //   minimumFractionDigits: 2,
-  // }).format(ItensPrice);
-
-  // const FormatedDeliveryPrice = new Intl.NumberFormat("pt-BR", {
-  //   style: "decimal",
-  //   minimumFractionDigits: 2,
-  // }).format(ItensAmount == 0 ? 0 : deliveryValue);
-
-  // const FormatedTotalPrice = new Intl.NumberFormat("pt-BR", {
-  //   style: "decimal",
-  //   minimumFractionDigits: 2,
-  // }).format(ItensAmount == 0 ? 0 : ItensPrice + deliveryValue);
-
-  // // useEffect(() => {
-  // //   // console.log("Form ERROR: "+formError);
-  // //   // console.log(paymethodSelect);
-  // //   console.log(FormItens);
-  // // });
   const { getAddresses } = useContext(UserContext);
-  const { ItensAmount, ItensObject } = useContext(CartContext);
+  const {
+    products_amount,
+    products_list,
+    products_value,
+    total_value,
+    delivery_value,
+    handleFinishBuy,
+  } = useContext(CartContext);
 
-  const [value, setValue] = useState("1");
   const [addressList, setAddressList] = useState<IAddressesResponse[]>([]);
-  const [paymethodSelect, setPaymethodSelect] = useState(2); // inicia com o dinheiro selecionado
+  const [payMethodSelect, setPayMethodSelect] = useState(2); // inicia com o dinheiro selecionado
   const [addressSelect, setAddressSelect] = useState(0); // inicia com o dinheiro selecionado
   const [isSubmitting, setIsSubmitting] = useState(false); // inicia com o dinheiro selecionado
+
+  const payMethod = ["Cartão de Crédito", "Cartão de Débito", "Dinheiro"];
+
   const navigation = useNavigate();
+  const toast = useToast();
 
   async function onSubmit() {
-    console.log("🚀 / onSubmit / data", paymethodSelect, addressSelect);
-    console.log("🚀 / onSubmit / ItensAmount", ItensAmount);
-    setIsSubmitting(true);
+    if (products_amount === 0) {
+      toast({
+        title: "Carrinho vazio",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      // navigation("/success");
-    }, 1000);
+    if (addressList.length === 0) {
+      toast({
+        title: "Nenhum endereço ativo",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+
+    if (products_amount !== 0 && addressList.length !== 0) {
+      setIsSubmitting(true);
+
+      setTimeout(async () => {
+        const response = await handleFinishBuy(
+          addressList[addressSelect].id,
+          payMethod[payMethodSelect]
+        );
+        console.log("🚀 / setTimeout / response", response);
+        setIsSubmitting(false);
+        if (response === undefined) {
+          toast({
+            title: "Erro ao efetuar a compra",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+        navigation(`/success/${response.id}`);
+      }, 1000);
+    }
   }
 
   useEffect(() => {
@@ -180,13 +145,6 @@ export function Checkout() {
               </div>
             ) : null}
           </div>
-
-          <RadioGroup onChange={setValue} value={value}>
-            <div>
-              {/* <Radio value="1">First</Radio>
-              <Radio value="2">Second</Radio> */}
-            </div>
-          </RadioGroup>
         </AddressBox>
 
         <PaymentBox>
@@ -199,22 +157,22 @@ export function Checkout() {
           </HeaderItem>
           <PaymentButtonList>
             <PaymentButton
-              active={paymethodSelect === 0}
-              onClick={() => setPaymethodSelect(0)}
+              active={payMethodSelect === 0}
+              onClick={() => setPayMethodSelect(0)}
             >
               <CreditCard /> Cartão de Crédito
             </PaymentButton>
 
             <PaymentButton
-              active={paymethodSelect === 1}
-              onClick={() => setPaymethodSelect(1)}
+              active={payMethodSelect === 1}
+              onClick={() => setPayMethodSelect(1)}
             >
               <Bank /> Cartão de Débito
             </PaymentButton>
 
             <PaymentButton
-              active={paymethodSelect === 2}
-              onClick={() => setPaymethodSelect(2)}
+              active={payMethodSelect === 2}
+              onClick={() => setPayMethodSelect(2)}
             >
               <Money /> Dinheiro
             </PaymentButton>
@@ -222,7 +180,7 @@ export function Checkout() {
         </PaymentBox>
       </div>
       <CartList>
-        {ItensObject.map((item) => {
+        {products_list.map((item) => {
           return (
             <CartItem
               key={item.id}
@@ -234,7 +192,7 @@ export function Checkout() {
             />
           );
         })}
-        {ItensObject.length == 0 ? (
+        {products_list.length == 0 ? (
           <span>
             Carrinho Vazio <SmileySad size={32} />{" "}
           </span>
@@ -244,23 +202,22 @@ export function Checkout() {
 
         <div className="InfoPrices">
           <h4 className="left">Total de Itens</h4>
-          <h4 className="right">R$ {}</h4>
+          <h4 className="right">{formatCurrency(products_value / 100)}</h4>
         </div>
 
         <div className="InfoPrices">
           <h4 className="left">Entrega</h4>
-          <h4 className="right">R$ {}</h4>
+          <h4 className="right">{formatCurrency(delivery_value / 100)}</h4>
         </div>
 
         <div className="InfoPrices">
           <h3 className="left">Total</h3>
-          <h3 className="right">R$ {}</h3>
+          <h3 className="right">{formatCurrency(total_value / 100)}</h3>
         </div>
 
         <Button
           onClick={onSubmit}
           isLoading={isSubmitting}
-          isDisabled={ItensAmount === 0 || addressList.length === 0}
           loadingText="Confirmando..."
           color="purple"
           type="submit"

@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo.svg";
 import { AuthContext } from "../../context/AuthContext";
-import { CartContext } from "../../context/CartContext/CartContext";
+import { CartContext } from "../../context/CartContext";
 import Avatar from "../Avatar/Avatar";
 import { Cart } from "../Cart/Cart";
 
@@ -17,7 +17,7 @@ import {
 
 export function Header() {
   const { isAuthenticated, user } = useContext(AuthContext);
-  const { ItensAmount, ItensPrice } = useContext(CartContext);
+  const { products_amount, products_value } = useContext(CartContext);
 
   useEffect(() => {}, []);
 
@@ -47,7 +47,7 @@ export function Header() {
         {isAuthenticated ? (
           <>
             <Avatar name={user.name} avatar_url={user.avatar_url} />
-            <Cart totalItens={ItensAmount} totalPrice={ItensPrice} />
+            <Cart totalItens={products_amount} totalPrice={products_value / 100} />
           </>
         ) : (
           <>

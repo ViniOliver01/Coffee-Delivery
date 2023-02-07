@@ -1,8 +1,8 @@
+import { Spinner } from "@chakra-ui/react";
 import { Coffee, Package, ShoppingCart, Timer } from "phosphor-react";
-import { useContext } from "react";
-import coverimage from "../../assets/home-cover.png";
-import { CartContext } from "../../context/CartContext/CartContext";
-import { coffeesList } from "../../context/CartContext/CoffesList";
+import { useContext, useEffect, useState } from "react";
+import coverImage from "../../assets/home-cover.png";
+import { ICoffeeListResponse, ShoppingContext } from "./../../context/ShoppingContext";
 import { Coffees } from "./components/coffees/Coffees";
 import {
   CoffeesList,
@@ -17,7 +17,21 @@ import {
 } from "./Home.styles";
 
 export default function Home() {
-  const { ItensObject } = useContext(CartContext);
+  const { getCoffees } = useContext(ShoppingContext);
+  const [coffeesList, setCoffeesList] = useState<ICoffeeListResponse[]>([]);
+  console.log("🚀 / Home / coffeesList", coffeesList);
+
+  useEffect(() => {
+    async function getCoffeeList() {
+      try {
+        const response = await getCoffees();
+        setCoffeesList(response);
+      } catch (error) {
+        console.warn("🚀 / getCoffeeList / error", error);
+      }
+    }
+    getCoffeeList();
+  }, []);
 
   return (
     <Container>
@@ -60,25 +74,29 @@ export default function Home() {
             </IconItem>
           </IconsArea>
         </TextArea>
-        <CoverImage src={coverimage} />
+        <CoverImage src={coverImage} />
       </CoverArea>
 
       <CoffeesList>
         <h1>Nossos cafés</h1>
         <ListMap>
-          {coffeesList.map((item) => {
-            return (
-              <Coffees
-                key={item.id}
-                id={item.id}
-                type={item.type}
-                name={item.name}
-                img={item.image}
-                description={item.description}
-                price={item.price}
-              />
-            );
-          })}
+          {coffeesList.length !== 0 ? (
+            coffeesList.map((item) => {
+              return (
+                <Coffees
+                  key={item.id}
+                  id={item.id}
+                  specifications={item.specifications}
+                  name={item.name}
+                  img={item.image_url}
+                  description={item.description}
+                  price={item.price}
+                />
+              );
+            })
+          ) : (
+            <Spinner size="xl" />
+          )}
         </ListMap>
       </CoffeesList>
     </Container>

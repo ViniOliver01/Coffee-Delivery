@@ -18,7 +18,7 @@ export const PrivateRoutes = () => {
         <Route path="purchases" element={<Purchases />} />
       </Route>
       <Route path="checkout" element={<Checkout />} />
-      <Route path="success" element={<Success />} />
+      <Route path="success/:id" element={<Success />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
