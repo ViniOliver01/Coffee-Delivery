@@ -61,6 +61,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
   variant?: "solid" | "outline";
   isLoading?: boolean;
+  isDisabled?: boolean;
   loadingText?: string;
   color?: "purple" | "gray";
 }
@@ -69,6 +70,7 @@ export default function Button({
   children,
   variant = "solid",
   isLoading,
+  isDisabled,
   loadingText = "Carregando...",
   ...props
 }: ButtonProps) {
@@ -80,6 +82,7 @@ export default function Button({
         loadingText={loadingText}
         width="100%"
         marginTop={0}
+        isDisabled={isDisabled}
         {...props}
       >
         {children}
