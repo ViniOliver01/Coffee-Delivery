@@ -73,7 +73,6 @@ export default function MyAccount() {
   }
 
   function onSubmit(data: FieldValues) {
-    console.log(data);
     updatePersonalData({ name: data.name, email: data.email, phone: data.phone });
 
     if (avatarFile) {

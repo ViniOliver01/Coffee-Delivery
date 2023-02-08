@@ -75,7 +75,6 @@ export function Checkout() {
           addressList[addressSelect].id,
           payMethod[payMethodSelect]
         );
-        console.log("🚀 / setTimeout / response", response);
         setIsSubmitting(false);
         if (response === undefined) {
           toast({

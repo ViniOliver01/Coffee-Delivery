@@ -19,7 +19,6 @@ import {
 export default function Home() {
   const { getCoffees } = useContext(ShoppingContext);
   const [coffeesList, setCoffeesList] = useState<ICoffeeListResponse[]>([]);
-  console.log("🚀 / Home / coffeesList", coffeesList);
 
   useEffect(() => {
     async function getCoffeeList() {

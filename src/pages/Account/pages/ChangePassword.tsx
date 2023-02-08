@@ -46,7 +46,6 @@ export default function ChangePassword() {
     resolver: yupResolver(schema),
     mode: "onSubmit",
   });
-  console.log("🚀 / Login / errors", errors);
 
   const { changePassword } = useContext(AuthContext);
   const [error, setErrors] = useState("");
@@ -58,7 +57,6 @@ export default function ChangePassword() {
   function handlePasswordView(
     type: "old_password" | "new_password" | "confirm_new_password"
   ) {
-    console.log(type);
     if (type === "old_password") {
       setShowOldPass(!showOldPass);
     }
@@ -71,7 +69,6 @@ export default function ChangePassword() {
   }
 
   async function onSubmit(data: FieldValues) {
-    console.log(data);
     const { old_password, new_password, confirm_new_password } = data;
 
     const response = await changePassword({

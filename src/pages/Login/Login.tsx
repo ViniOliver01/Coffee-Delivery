@@ -38,7 +38,6 @@ export default function Login() {
     resolver: yupResolver(schema),
     mode: "onSubmit",
   });
-  console.log("🚀 / Login / errors", errors);
 
   const { signIn, isAuthenticated } = useContext(AuthContext);
 

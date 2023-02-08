@@ -67,8 +67,6 @@ export default function Address() {
 
   async function onSubmit(data: FieldValues) {
     if (addressId) {
-      console.log("🚀 / onSubmit / Existent data", data);
-
       const { cep, city, state, street, number, complement } = data;
       const response = await updateAddress({
         id: addressId,
@@ -80,10 +78,8 @@ export default function Address() {
         number,
         complement,
       });
-      console.log("🚀 / onSubmit / response", response);
     }
     if (!addressId) {
-      console.log("🚀 / onSubmit / data", data);
       const { cep, city, state, street, number, complement } = data;
       const response = await createAddress({
         name: data.addressName,
@@ -94,7 +90,6 @@ export default function Address() {
         number,
         complement,
       });
-      console.log("🚀 / onSubmit / response", response);
     }
     setUpdate(!update);
     onClose();

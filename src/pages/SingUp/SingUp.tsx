@@ -59,8 +59,6 @@ export default function SingUp() {
     mode: "onSubmit",
   });
 
-  console.log("🚀 / SingUp / errors", errors);
-
   const { signUp, isAuthenticated } = useContext(AuthContext);
   const [error, setErrors] = useState("");
   const [passwordCheck, setPasswordCheck] = useState<PasswordChecks>({
@@ -71,8 +69,6 @@ export default function SingUp() {
   });
 
   async function onSubmit(data: FieldValues) {
-    console.log(data);
-
     const response = await signUp({
       name: data.name,
       email: data.email,

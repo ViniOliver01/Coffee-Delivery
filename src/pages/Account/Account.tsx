@@ -13,7 +13,6 @@ export default function Account() {
   const callback = (page: string | undefined) => {
     setButton(page);
   };
-  console.log("🚀 / Account / button", button);
 
   return (
     <Container>
