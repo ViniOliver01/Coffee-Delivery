@@ -74,7 +74,9 @@ export default function Home() {
             </IconItem>
           </IconsArea>
         </TextArea>
-        <CoverImage src={coverImage} />
+        <CoverImage>
+          <img src={coverImage} alt="" />
+        </CoverImage>
       </CoverArea>
 
       <CoffeesList>

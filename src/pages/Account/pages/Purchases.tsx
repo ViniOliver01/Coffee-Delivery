@@ -11,6 +11,7 @@ import { useContext, useEffect, useState } from "react";
 import Divider from "./../../../components/Divider/index";
 import { UserContext } from "./../../../context/UserContext";
 import { formatCurrency, formatDate } from "./../../../utils/format";
+import { imgDefault } from "./../../../utils/imgDefault";
 import {
   Card,
   Container,
@@ -91,6 +92,10 @@ export default function Purchases() {
                 </p>
                 <Divider />
                 {purchaseModal.cart.map((item) => {
+                  item.img_url === null
+                    ? (item.img_url = imgDefault({ type: "Coffee" }))
+                    : item.img_url;
+
                   return (
                     <PurchaseItemCard key={item.coffee_id}>
                       <img src={item.img_url} alt="err" />

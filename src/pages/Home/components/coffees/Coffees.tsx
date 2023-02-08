@@ -2,6 +2,7 @@ import { Minus, Plus, ShoppingCartSimple } from "phosphor-react";
 import { useContext, useState } from "react";
 import { CartContext } from "../../../../context/CartContext";
 import { formatCurrency } from "../../../../utils/format";
+import { imgDefault } from "../../../../utils/imgDefault";
 import {
   CartButton,
   Container,
@@ -33,6 +34,8 @@ export function Coffees({
   description,
   price,
 }: CoffeesProps) {
+  console.log("🚀 / img", img);
+
   const [itensCount, setItensCount] = useState(1);
   const [effect, setEffect] = useState(false);
   const [textCartAddButton, setTextCartAddButton] = useState("Adicionar ao carrinho");
@@ -71,6 +74,10 @@ export function Coffees({
     amount = newAmount + amount;
     handleAddItensToCart({ id, name, img, price, amount });
     setItensCount(1);
+  }
+
+  if (img === null) {
+    img = imgDefault({ type: "Coffee" });
   }
 
   return (
