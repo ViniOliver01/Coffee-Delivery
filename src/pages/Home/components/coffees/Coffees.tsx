@@ -34,8 +34,6 @@ export function Coffees({
   description,
   price,
 }: CoffeesProps) {
-  console.log("🚀 / img", img);
-
   const [itensCount, setItensCount] = useState(1);
   const [effect, setEffect] = useState(false);
   const [textCartAddButton, setTextCartAddButton] = useState("Adicionar ao carrinho");
