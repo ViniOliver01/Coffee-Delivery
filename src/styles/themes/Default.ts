@@ -20,6 +20,10 @@ const defaultTheme = {
   purple: "#8047F8",
   "purple-light": "#EBE5F9",
 
+  "red-dark": "#FF0000",
+  red: "#FF5151",
+  "red-light": "#FFADAD",
+
   green: "#0A7441",
   black: "#000000",
 } as const;
