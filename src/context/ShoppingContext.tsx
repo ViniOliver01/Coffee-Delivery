@@ -5,6 +5,7 @@ import { AuthContext } from "./AuthContext";
 interface ShoppingContextData {
   getCoffees: () => Promise<ICoffeeListResponse[]>;
   getPurchaseData: (purchase_id: string) => Promise<IPurchaseResponse>;
+  getSpecs: () => Promise<ISpecListResponse[]>;
 }
 
 interface ShoppingProviderProps {
@@ -26,7 +27,6 @@ export interface ICoffeeListResponse {
   }[];
   created_at: string;
 }
-[];
 
 interface IPurchaseResponse {
   purchaseData: {
@@ -60,6 +60,12 @@ interface IPurchaseResponse {
   };
 }
 
+export interface ISpecListResponse {
+  id: string;
+  name: string;
+  created_at: Date;
+}
+
 export const ShoppingContext = createContext({} as ShoppingContextData);
 
 export function ShoppingProvider({ children }: ShoppingProviderProps) {
@@ -68,6 +74,15 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
   async function getCoffees(): Promise<ICoffeeListResponse[]> {
     try {
       const response = await api.get("/coffee");
+      return response.data;
+    } catch (error) {
+      console.warn("🚀 / getPurchases / error", error);
+    }
+  }
+
+  async function getSpecs(): Promise<ISpecListResponse[]> {
+    try {
+      const response = await api.get("/specifications");
       return response.data;
     } catch (error) {
       console.warn("🚀 / getPurchases / error", error);
@@ -88,6 +103,7 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
       value={{
         getCoffees,
         getPurchaseData,
+        getSpecs,
       }}
     >
       {children}

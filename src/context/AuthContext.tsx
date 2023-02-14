@@ -35,6 +35,7 @@ interface AuthContextData {
   signUp: (credentials: SignUpCredentials) => Promise<IStatusResponse>;
   signIn: (credentials: SignInCredentials) => Promise<IStatusResponse>;
   signOut: () => void;
+  isAdmin: boolean;
   updatePersonalData: (
     credentials: UpdatePersonalDataCredentials
   ) => Promise<IStatusResponse>;
@@ -43,6 +44,7 @@ interface AuthContextData {
   user: User;
   isAuthenticated: boolean;
   isFetching: boolean;
+  isFetchingAdmin: boolean;
 }
 
 interface AuthProviderProps {
@@ -70,12 +72,14 @@ export function signOut(shouldBroadcast = true) {
 export function AuthProvider({ children }: AuthProviderProps) {
   const { "coffee.token": token } = parseCookies();
   let isFetching = true;
+  let isFetchingAdmin = true;
 
   if (!token) {
     // console.log("is Fetching token");
     isFetching = false;
   }
 
+  const [isAdmin, setIsAdmin] = useState(null);
   const [user, setUser] = useState<User>({
     name: "",
     email: "",
@@ -83,9 +87,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     phone: "",
   });
 
-  if (user.name !== "") {
-    // console.log("🚀 / AuthProvider / user", user);
-    // console.log("is Fetching user");
+  if (isAdmin !== null) {
     isFetching = false;
   }
 
@@ -123,6 +125,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (user.email) {
+      api
+        .post("/users/isadmin", { email: user.email })
+        .then((response) => {
+          const { isAdmin } = response.data;
+          setIsAdmin(isAdmin);
+        })
+        .catch(() => {
+          // signOut();
+        });
+    }
+  }, [user]);
 
   async function signIn({
     email,
@@ -279,7 +295,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         changePassword,
         isAuthenticated,
         isFetching,
+        isFetchingAdmin,
         user,
+        isAdmin,
       }}
     >
       {children}
