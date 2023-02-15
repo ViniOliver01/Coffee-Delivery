@@ -6,6 +6,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { CartContext } from "../../context/CartContext";
 import Avatar from "../Avatar/Avatar";
 import { Cart } from "../Cart/Cart";
+import Button from "../Form/Button";
 
 import {
   Container,
@@ -16,7 +17,7 @@ import {
 } from "./Header.styles";
 
 export function Header() {
-  const { isAuthenticated, user } = useContext(AuthContext);
+  const { isAuthenticated, user, isAdmin } = useContext(AuthContext);
   const { products_amount, products_value } = useContext(CartContext);
 
   useEffect(() => {}, []);
@@ -31,6 +32,10 @@ export function Header() {
     navigation("/login");
   }
 
+  function GoToAdmin() {
+    navigation("/admin");
+  }
+
   return (
     <HeaderContainer>
       <Container>
@@ -43,7 +48,13 @@ export function Header() {
           <p>Porto Alegre, RS</p>
         </LocationIcon>
       </Container>
+
       <Container>
+        {isAdmin ? (
+          <div>
+            <Button onClick={GoToAdmin}>Painel de Administrador</Button>
+          </div>
+        ) : null}
         {isAuthenticated ? (
           <>
             <Avatar name={user.name} avatar_url={user.avatar_url} />

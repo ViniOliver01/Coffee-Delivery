@@ -6,6 +6,29 @@ interface ShoppingContextData {
   getCoffees: () => Promise<ICoffeeListResponse[]>;
   getPurchaseData: (purchase_id: string) => Promise<IPurchaseResponse>;
   getSpecs: () => Promise<ISpecListResponse[]>;
+  updateCoffeeImage: (
+    coffee_id: string,
+    coffee_file: FormData
+  ) => Promise<IStatusResponse>;
+  updateCoffeeData: (data: IUpdateCoffee) => Promise<IStatusResponse>;
+  updateSpecName: (data: IUpdateSpec) => Promise<IStatusResponse>;
+  createSpec: (name: string) => Promise<IStatusResponse>;
+  deleteSpec: (id: string) => Promise<IStatusResponse>;
+  deleteCoffee: (id: string) => Promise<IStatusResponse>;
+  createCoffee: (data: ICreateCoffee) => Promise<Coffee>;
+}
+export interface Coffee {
+  id: string;
+  available: boolean;
+  name: string;
+  description: string;
+  price: number;
+  created_at: Date;
+}
+
+interface IStatusResponse {
+  status: number;
+  message: string;
 }
 
 interface ShoppingProviderProps {
@@ -63,7 +86,27 @@ interface IPurchaseResponse {
 export interface ISpecListResponse {
   id: string;
   name: string;
+  updated_at: Date;
   created_at: Date;
+}
+
+interface ICreateCoffee {
+  name: string;
+  description: string;
+  price: number;
+}
+
+interface IUpdateCoffee {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  available: boolean;
+}
+
+interface IUpdateSpec {
+  id: string;
+  name: string;
 }
 
 export const ShoppingContext = createContext({} as ShoppingContextData);
@@ -80,15 +123,6 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
     }
   }
 
-  async function getSpecs(): Promise<ISpecListResponse[]> {
-    try {
-      const response = await api.get("/specifications");
-      return response.data;
-    } catch (error) {
-      console.warn("🚀 / getPurchases / error", error);
-    }
-  }
-
   async function getPurchaseData(purchase_id: string): Promise<IPurchaseResponse> {
     try {
       const response = await api.get(`/purchases/${purchase_id}`);
@@ -98,12 +132,158 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
     }
   }
 
+  async function updateCoffeeImage(
+    coffee_id: string,
+    coffee_file: FormData
+  ): Promise<IStatusResponse> {
+    try {
+      const response = await api.patch("/coffee/image/" + coffee_id, coffee_file, {
+        headers: {
+          accept: "application/json",
+          "Accept-Language": "en-US,en;q=0.8",
+          "Content-Type": `multipart/form-data;`,
+        },
+      });
+      // const { coffee_url } = response.data;
+      if (response.status === 400) {
+        return { message: response.data.message, status: 400 };
+      }
+    } catch (error) {
+      console.warn("🚀 / updateCoffeeImage / error", error);
+    }
+
+    return { message: "Success", status: 201 };
+  }
+
+  async function updateCoffeeData({
+    id,
+    name,
+    description,
+    price,
+    available,
+  }: IUpdateCoffee): Promise<IStatusResponse> {
+    try {
+      console.log({
+        id,
+        name,
+        description,
+        price,
+        available,
+      });
+      const response = await api.patch("/coffee/update", {
+        id,
+        name,
+        description,
+        price,
+        available,
+      });
+      if (response.status === 400) {
+        return { message: response.data.message, status: 400 };
+      }
+    } catch (error) {
+      console.warn("🚀 / updateCoffeeImage / error", error);
+    }
+
+    return { message: "Success", status: 201 };
+  }
+
+  async function createCoffee({
+    name,
+    description,
+    price,
+  }: ICreateCoffee): Promise<Coffee> {
+    try {
+      const response = await api.post("/coffee", {
+        name,
+        description,
+        price,
+      });
+      return response.data;
+    } catch (error) {
+      console.warn("🚀 / updateCoffeeImage / error", error);
+    }
+  }
+
+  async function deleteCoffee(id: string): Promise<IStatusResponse> {
+    try {
+      const response = await api.delete("/coffee/" + id);
+      if (response.status === 400) {
+        return { message: response.data.message, status: 400 };
+      }
+    } catch (error) {
+      console.warn("🚀 / updateCoffeeImage / error", error);
+    }
+
+    return { message: "Success", status: 201 };
+  }
+
+  async function getSpecs(): Promise<ISpecListResponse[]> {
+    try {
+      const response = await api.get("/specifications");
+      return response.data;
+    } catch (error) {
+      console.warn("🚀 / getPurchases / error", error);
+    }
+  }
+
+  async function createSpec(name: string): Promise<IStatusResponse> {
+    try {
+      const response = await api.post("/specifications", {
+        name,
+      });
+      if (response.status === 400) {
+        return { message: response.data.message, status: 400 };
+      }
+    } catch (error) {
+      console.warn("🚀 / updateCoffeeImage / error", error);
+    }
+
+    return { message: "Success", status: 201 };
+  }
+
+  async function deleteSpec(id: string): Promise<IStatusResponse> {
+    try {
+      const response = await api.delete("/specifications/" + id);
+      if (response.status === 400) {
+        return { message: response.data.message, status: 400 };
+      }
+    } catch (error) {
+      console.warn("🚀 / updateCoffeeImage / error", error);
+    }
+
+    return { message: "Success", status: 201 };
+  }
+
+  async function updateSpecName({ id, name }: IUpdateSpec): Promise<IStatusResponse> {
+    console.log("🚀 / updateSpecName / name", id, name);
+    try {
+      const response = await api.patch("/specifications/update", {
+        id,
+        name,
+      });
+      if (response.status === 400) {
+        return { message: response.data.message, status: 400 };
+      }
+    } catch (error) {
+      console.warn("🚀 / updateCoffeeImage / error", error);
+    }
+
+    return { message: "Success", status: 201 };
+  }
+
   return (
     <ShoppingContext.Provider
       value={{
         getCoffees,
         getPurchaseData,
+        updateCoffeeImage,
+        updateCoffeeData,
+        createCoffee,
+        deleteCoffee,
+        createSpec,
+        deleteSpec,
         getSpecs,
+        updateSpecName,
       }}
     >
       {children}
