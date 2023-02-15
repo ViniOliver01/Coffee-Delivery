@@ -10,7 +10,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isDisabled?: boolean;
   loadingText?: string;
   leftIcon?: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
-  color?: "purple" | "gray";
+  color?: "purple" | "gray" | "green" | "green-light" | "red";
 }
 
 export default function Button({
@@ -29,6 +29,12 @@ export default function Button({
         return `${defaultTheme.purple}`;
       case "gray":
         return `${defaultTheme["base-button"]}`;
+      case "green":
+        return `${defaultTheme.green}`;
+      case "green-light":
+        return `${defaultTheme["green-light"]}`;
+      case "red":
+        return `${defaultTheme.red}`;
       default:
         return `${defaultTheme.purple}`;
     }
@@ -40,6 +46,12 @@ export default function Button({
         return `${defaultTheme.white}`;
       case "gray":
         return `${defaultTheme["base-text"]}`;
+      case "green":
+        return `${defaultTheme.white}`;
+      case "green-light":
+        return `${defaultTheme.white}`;
+      case "red":
+        return `${defaultTheme.white}`;
       default:
         return `${defaultTheme.white}`;
     }

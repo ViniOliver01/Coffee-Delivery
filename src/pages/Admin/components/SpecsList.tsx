@@ -150,7 +150,9 @@ export default function SpecsList() {
                 <Button color="gray" onClick={onClose}>
                   Não
                 </Button>
-                <Button onClick={handleDeleteSpecClose}>Sim</Button>
+                <Button onClick={handleDeleteSpecClose} color="red">
+                  Sim
+                </Button>
               </ModalFooter>
             </>
           ) : (
@@ -179,7 +181,7 @@ export default function SpecsList() {
           )}
         </ModalContent>
       </Modal>
-      <div>
+      <div className="NewSpecButton">
         <Button onClick={handleNewSpecOpenModal}>Nova especificação</Button>
       </div>
       {specs.map((spec, index) => {
@@ -198,7 +200,7 @@ export default function SpecsList() {
               <p>{formatDate(spec.created_at)}</p>
             </div>
 
-            <Button color="purple" onClick={() => handleDeleteSpecOpen(spec)}>
+            <Button onClick={() => handleDeleteSpecOpen(spec)} color="red">
               <Trash size={24} />
             </Button>
             <Button onClick={() => handleOpenModal(index)}>

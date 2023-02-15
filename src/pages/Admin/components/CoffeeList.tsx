@@ -226,7 +226,9 @@ export default function CoffeeList() {
                 <Button color="gray" onClick={onClose}>
                   Não
                 </Button>
-                <Button onClick={handleDeleteCoffeeClose}>Sim</Button>
+                <Button onClick={handleDeleteCoffeeClose} color="red">
+                  Sim
+                </Button>
               </ModalFooter>
             </>
           ) : (
@@ -319,9 +321,11 @@ export default function CoffeeList() {
           )}
         </ModalContent>
       </Modal>
-      <div>
-        <Button onClick={handleNewCoffeeOpenModal}>Nova especificação</Button>
+
+      <div className="NewCoffeeButton">
+        <Button onClick={handleNewCoffeeOpenModal}>Adicionar Café</Button>
       </div>
+
       {coffees.length !== 0 ? (
         coffees.map((coffee) => {
           return (
@@ -376,15 +380,11 @@ export default function CoffeeList() {
                 <p>{formatCurrency(coffee.price / 100)}</p>
               </div>
 
-              <Button onClick={() => handleDeleteCoffeeOpen(coffee)}>
+              <Button onClick={() => handleDeleteCoffeeOpen(coffee)} color="red">
                 <Trash size={24} />
               </Button>
 
-              <Button
-                onClick={() => {
-                  handleOpenModal(coffee.id);
-                }}
-              >
+              <Button onClick={() => handleOpenModal(coffee.id)}>
                 <Pencil size={24} />
               </Button>
             </AdminCoffeeItem>

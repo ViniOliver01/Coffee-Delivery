@@ -24,7 +24,10 @@ const defaultTheme = {
   red: "#FF5151",
   "red-light": "#FFADAD",
 
-  green: "#0A7441",
+  "green-dark": "#0A7441",
+  green: "#0CA85D",
+  "green-light": "#92FFCA",
+
   black: "#000000",
 } as const;
 

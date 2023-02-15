@@ -27,12 +27,19 @@ export const CoffeeListItem = styled.div`
   margin-inline: 2rem;
   padding-block: 1rem;
   border-radius: 6px 44px 6px 44px;
+
+  .NewCoffeeButton {
+    margin-top: 0.5rem;
+    margin-inline: 2rem;
+    margin-left: auto;
+    width: fit-content;
+  }
 `;
 
 export const AdminCoffeeItem = styled.div`
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  margin: 1rem;
+  margin: 1rem 2rem;
   border-radius: 8px;
   background-color: ${defaultTheme.white};
 
@@ -167,6 +174,13 @@ export const SpecList = styled.div`
   gap: 1rem;
   display: flex;
   flex-direction: column;
+
+  .NewSpecButton {
+    margin-top: 0.5rem;
+    margin-inline: 2rem;
+    margin-left: auto;
+    width: fit-content;
+  }
 `;
 
 export const SpecItem = styled.div`
