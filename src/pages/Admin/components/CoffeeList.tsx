@@ -21,6 +21,7 @@ import { AdminCoffeeModal, LabelInput } from "./../components/StyledComponents";
 
 import { Pencil, Trash, WarningCircle } from "phosphor-react";
 import InputError from "../../../components/Error/Form/InputError";
+import CurrencyInput from "../../../components/Form/CurrencyInput";
 import { Input } from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
 import { LabelBox } from "../../../components/Form/LabelBox";
@@ -69,6 +70,7 @@ export default function CoffeeList() {
   const {
     register,
     handleSubmit,
+    setError,
     clearErrors,
     setValue,
     formState: { errors },
@@ -89,9 +91,6 @@ export default function CoffeeList() {
     setValue("name", coffee[0].name);
     setValue("description", coffee[0].description);
     setValue("available", coffee[0].available);
-    // setValue("price", coffee[0].price / 100);
-    setPrice(coffee[0].price / 100);
-
     // setValue("specs", coffees[index].specifications[0].name);
   }
 
@@ -149,7 +148,8 @@ export default function CoffeeList() {
   }
 
   async function onSubmit(data: FieldValues) {
-    const { name, description, price, available } = data;
+    const { name, description, available } = data;
+
     var coffee: Coffee;
 
     if (selectCoffee) {
@@ -204,6 +204,16 @@ export default function CoffeeList() {
 
   const [price, setPrice] = useState(0);
 
+  useEffect(() => {
+    if (price > 0) {
+      setValue("price", price);
+    } else {
+      setError("price", {
+        type: "required",
+      });
+    }
+  }, [price]);
+
   return (
     <CoffeeListItem>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -248,7 +258,6 @@ export default function CoffeeList() {
                       <input id="photo-upload" type="file" onChange={handleSetImage} />
                     </LabelInput>
                   </div>
-
                   <LabelBox id="name">
                     <Label>Nome</Label>
                     <Input
@@ -258,7 +267,6 @@ export default function CoffeeList() {
                     />
                     {errors.name && <InputError message={errors.name.message} />}
                   </LabelBox>
-
                   <LabelBox id="description">
                     <Label>Descrição</Label>
                     <TextArea
@@ -271,7 +279,6 @@ export default function CoffeeList() {
                       <InputError message={errors.description.message} />
                     )}
                   </LabelBox>
-
                   <LabelBox id="available">
                     <Label>Disponível?</Label>
                     <Switch
@@ -283,7 +290,6 @@ export default function CoffeeList() {
                       <InputError message={errors.available.message} />
                     )}
                   </LabelBox>
-
                   <div>
                     <h2>Especificações</h2>
                     {selectCoffee && selectCoffee.specifications
@@ -296,18 +302,24 @@ export default function CoffeeList() {
                         })
                       : null}
                   </div>
-
+                  {/* // TODO */}
                   <LabelBox id="price">
                     <Label>Preço</Label>
-                    <Input
-                      type="text"
-                      value={price}
-                      {...register("price", {
-                        onChange: (e) => setPrice(e.target.value),
-                      })}
+
+                    <CurrencyInput
+                      setValue={(value) => setPrice(value)}
+                      defaultValue={selectCoffee?.price}
+                      error={(error) => {
+                        error
+                          ? setError("price", {
+                              message: error,
+                            })
+                          : clearErrors("price");
+                      }}
                     />
                     {errors.price && <InputError message={errors.price.message} />}
                   </LabelBox>
+                  {/* // TODO */}
                 </AdminCoffeeModal>
               </ModalBody>
 

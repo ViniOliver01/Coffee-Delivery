@@ -146,6 +146,15 @@ export const AdminCoffeeModal = styled.div`
   div > button {
     width: fit-content;
   }
+  .CurrencyTextField {
+    div > div {
+      border: none;
+      outline: none;
+
+      display: flex;
+      flex-direction: row;
+    }
+  }
 `;
 
 export const LabelInput = styled.label`

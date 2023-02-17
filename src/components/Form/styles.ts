@@ -60,3 +60,37 @@ export const ButtonContainer = styled.div`
     justify-content: center;
   }
 `;
+
+export const CurrencyInputBox = styled.label`
+  display: flex;
+  flex-direction: row;
+  background-color: ${defaultTheme["base-input"]};
+  border: 2px solid ${defaultTheme.purple};
+  border-radius: 6px;
+  height: fit-content;
+  padding: 0.5rem;
+  width: 35%;
+
+  font-size: 1.125rem;
+  color: ${defaultTheme["base-text"]};
+  gap: 0.3rem;
+
+  font-size: 1.125rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  position: relative;
+
+  input {
+    font-size: 1.125rem;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    color: ${defaultTheme["base-text"]};
+    border-radius: 0px;
+    text-align: center;
+    position: absolute;
+  }
+
+  &.focus {
+    outline: 2px solid ${defaultTheme.purple};
+  }
+`;
