@@ -163,13 +163,6 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
     available,
   }: IUpdateCoffee): Promise<IStatusResponse> {
     try {
-      console.log({
-        id,
-        name,
-        description,
-        price,
-        available,
-      });
       const response = await api.patch("/coffee/update", {
         id,
         name,
