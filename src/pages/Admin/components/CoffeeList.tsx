@@ -40,7 +40,11 @@ const schema = yup.object().shape({
   description: yup.string().strict(true).required("Descrição obrigatória"),
   available: yup.boolean().strict(true).required("Disponibilidade obrigatória"),
   // specs: yup.string().strict(true).required("Especificações obrigatórias"),
-  price: yup.number().required("Preço obrigatório"),
+  price: yup
+    .number()
+    .required("Preço obrigatório")
+    .max(100, "Valor máximo permitido: R$ 100,00")
+    .min(0.01, "Valor mínimo permitido: R$ 0,01"),
 });
 
 interface InputFormData {
@@ -258,6 +262,7 @@ export default function CoffeeList() {
                       <input id="photo-upload" type="file" onChange={handleSetImage} />
                     </LabelInput>
                   </div>
+
                   <LabelBox id="name">
                     <Label>Nome</Label>
                     <Input
@@ -267,6 +272,7 @@ export default function CoffeeList() {
                     />
                     {errors.name && <InputError message={errors.name.message} />}
                   </LabelBox>
+
                   <LabelBox id="description">
                     <Label>Descrição</Label>
                     <TextArea
@@ -279,6 +285,7 @@ export default function CoffeeList() {
                       <InputError message={errors.description.message} />
                     )}
                   </LabelBox>
+
                   <LabelBox id="available">
                     <Label>Disponível?</Label>
                     <Switch
@@ -290,7 +297,8 @@ export default function CoffeeList() {
                       <InputError message={errors.available.message} />
                     )}
                   </LabelBox>
-                  <div>
+
+                  <div className="specs">
                     <h2>Especificações</h2>
                     {selectCoffee && selectCoffee.specifications
                       ? selectCoffee.specifications.map((specification) => {
@@ -302,6 +310,7 @@ export default function CoffeeList() {
                         })
                       : null}
                   </div>
+
                   {/* // TODO */}
                   <LabelBox id="price">
                     <Label>Preço</Label>
@@ -317,6 +326,7 @@ export default function CoffeeList() {
                           : clearErrors("price");
                       }}
                     />
+
                     {errors.price && <InputError message={errors.price.message} />}
                   </LabelBox>
                   {/* // TODO */}

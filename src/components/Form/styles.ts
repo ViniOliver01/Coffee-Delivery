@@ -67,8 +67,9 @@ export const CurrencyInputBox = styled.label`
   background-color: ${defaultTheme["base-input"]};
   border: 2px solid ${defaultTheme.purple};
   border-radius: 6px;
-  padding: 0.5rem;
-  height: 2rem;
+  padding-inline: 0.5rem;
+  align-items: center;
+  height: 2.2rem;
   width: 35%;
 
   gap: 0.3rem;
@@ -77,7 +78,6 @@ export const CurrencyInputBox = styled.label`
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   color: ${defaultTheme["base-text"]};
-  /* position: relative; */
 
   input {
     font-size: 1.125rem;
@@ -86,12 +86,10 @@ export const CurrencyInputBox = styled.label`
     color: ${defaultTheme["base-text"]};
     border-radius: 0px;
     text-align: center;
-    /* position: absolute; */
 
     right: 0;
     top: 0;
     background-color: transparent;
-    padding: 1rem;
   }
 
   &.focus {

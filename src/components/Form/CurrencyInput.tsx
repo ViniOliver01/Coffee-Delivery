@@ -37,6 +37,11 @@ export default function CurrencyInput({
   function handleSetPrice(price: string) {
     if (price.includes(".") || price.split(",").length - 1 > 1) {
       price = price.substring(0, price.length - 1);
+    } else if (
+      formatPrice(price, "Number") === 0 ||
+      formatPrice(price, "Number") === null
+    ) {
+      error("Preço obrigatório");
     } else {
       error(null);
     }
