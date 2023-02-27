@@ -38,7 +38,7 @@ export const CoffeeListItem = styled.div`
 
 export const AdminCoffeeItem = styled.div`
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   margin: 1rem 2rem;
   border-radius: 8px;
   background-color: ${defaultTheme.white};
@@ -83,13 +83,6 @@ export const AdminCoffeeItem = styled.div`
       color: ${defaultTheme.white};
       background-color: ${defaultTheme.red};
     }
-
-    span.tag {
-      font-weight: bold;
-      color: ${defaultTheme["yellow-dark"]};
-      background-color: ${defaultTheme["yellow-light"]};
-      margin-bottom: 0.3rem;
-    }
   }
   div > button {
     width: fit-content;
@@ -132,15 +125,6 @@ export const AdminCoffeeModal = styled.div`
     span.error {
       color: ${defaultTheme.white};
       background-color: ${defaultTheme.red};
-    }
-
-    span.tag {
-      border-radius: 45px;
-      padding-inline: 1rem;
-      font-weight: bold;
-      color: ${defaultTheme["yellow-dark"]};
-      background-color: ${defaultTheme["yellow-light"]};
-      margin-bottom: 0.3rem;
     }
   }
   div > button {
@@ -219,5 +203,39 @@ export const SpecItem = styled.div`
       font-family: "Baloo 2", cursive;
       font-weight: bold;
     }
+  }
+`;
+
+export const SpecsSelectArea = styled.div``;
+
+export const ListSpecs = styled.div`
+  background-color: ${defaultTheme["base-input"]};
+  padding: 1rem;
+  border: 2px solid ${defaultTheme.purple};
+  border-radius: 6px;
+`;
+
+export const SpecTag = styled.span`
+  border: 2px solid transparent;
+  &.clickable {
+    cursor: pointer;
+  }
+
+  &.tag {
+    border-radius: 45px;
+    padding-inline: 1rem;
+    font-weight: bold;
+    color: ${defaultTheme["yellow-dark"]};
+    background-color: ${defaultTheme["yellow-light"]};
+    margin-bottom: 0.3rem;
+  }
+
+  &.active {
+    opacity: 1;
+    border: 2px solid ${defaultTheme["yellow-dark"]};
+  }
+
+  &.available {
+    opacity: 0.4;
   }
 `;

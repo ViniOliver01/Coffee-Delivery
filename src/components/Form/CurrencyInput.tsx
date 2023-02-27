@@ -1,5 +1,5 @@
 import { Input as ChakraInput } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CurrencyInputBox } from "./styles";
 
 interface CurrencyInputProps {
@@ -11,17 +11,13 @@ interface CurrencyInputProps {
 export default function CurrencyInput({
   setValue,
   defaultValue = 0,
-  error,
+  error = null,
 }: CurrencyInputProps) {
   const [price, setPrice] = useState(
     `${formatPrice((defaultValue / 100).toFixed(2), "String")}`
   );
 
   const [isFocus, setIsFocus] = useState(false);
-
-  function handleOnBlur() {
-    setValue(Number(formatPrice(price, "Number")));
-  }
 
   function formatPrice(price: string, format?: "Number" | "String") {
     switch (format) {
@@ -48,6 +44,14 @@ export default function CurrencyInput({
 
     setPrice(price);
   }
+
+  function handleOnBlur() {
+    setValue(Number(formatPrice(price, "Number")));
+  }
+
+  useEffect(() => {
+    setValue(Number(formatPrice(price, "Number")));
+  }, []);
 
   return (
     <>

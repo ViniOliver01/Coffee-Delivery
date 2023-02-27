@@ -16,7 +16,9 @@ interface ShoppingContextData {
   deleteSpec: (id: string) => Promise<IStatusResponse>;
   deleteCoffee: (id: string) => Promise<IStatusResponse>;
   createCoffee: (data: ICreateCoffee) => Promise<Coffee>;
+  addSpecToCoffee: (data: addSpecToCoffeeProps) => Promise<IStatusResponse>;
 }
+
 export interface Coffee {
   id: string;
   available: boolean;
@@ -24,6 +26,11 @@ export interface Coffee {
   description: string;
   price: number;
   created_at: Date;
+}
+
+interface addSpecToCoffeeProps {
+  coffee_id: string;
+  specs_ids: string[];
 }
 
 interface IStatusResponse {
@@ -46,6 +53,7 @@ export interface ICoffeeListResponse {
   specifications: {
     id: string;
     name: string;
+    updated_at: Date;
     created_at: Date;
   }[];
   created_at: string;
@@ -264,6 +272,27 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
     return { message: "Success", status: 201 };
   }
 
+  async function addSpecToCoffee({
+    coffee_id,
+    specs_ids,
+  }: addSpecToCoffeeProps): Promise<IStatusResponse> {
+    try {
+      const response = await api.post("/coffee/specifications", {
+        coffees: [
+          {
+            coffee_id: coffee_id,
+            specifications_ids: specs_ids,
+          },
+        ],
+      });
+      if (response.status === 400) {
+        return { message: response.data.message, status: 400 };
+      }
+    } catch (error) {
+      console.warn("🚀 / addSpecToCoffee / error", error);
+    }
+  }
+
   return (
     <ShoppingContext.Provider
       value={{
@@ -277,6 +306,7 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
         deleteSpec,
         getSpecs,
         updateSpecName,
+        addSpecToCoffee,
       }}
     >
       {children}

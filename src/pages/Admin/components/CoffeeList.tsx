@@ -17,7 +17,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { AdminCoffeeModal, LabelInput } from "./../components/StyledComponents";
+
+import {
+  AdminCoffeeModal,
+  LabelInput,
+  ListSpecs,
+  SpecsSelectArea,
+  SpecTag,
+} from "./../components/StyledComponents";
 
 import { Pencil, Trash, WarningCircle } from "phosphor-react";
 import InputError from "../../../components/Error/Form/InputError";
@@ -29,6 +36,7 @@ import { TextArea } from "../../../components/Form/TextArea";
 import {
   Coffee,
   ICoffeeListResponse,
+  ISpecListResponse,
   ShoppingContext,
 } from "../../../context/ShoppingContext";
 import { formatCurrency } from "../../../utils/format";
@@ -56,8 +64,15 @@ interface InputFormData {
 }
 
 export default function CoffeeList() {
-  const { getCoffees, updateCoffeeImage, updateCoffeeData, deleteCoffee, createCoffee } =
-    useContext(ShoppingContext);
+  const {
+    getCoffees,
+    updateCoffeeImage,
+    updateCoffeeData,
+    deleteCoffee,
+    createCoffee,
+    getSpecs,
+    addSpecToCoffee,
+  } = useContext(ShoppingContext);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -65,6 +80,9 @@ export default function CoffeeList() {
   const [selectCoffee, setSelectCoffee] = useState<ICoffeeListResponse>();
   const [coffeeFile, setCoffeeFile] = useState<File>(null);
   const [coffees, setCoffees] = useState<ICoffeeListResponse[]>([]);
+  const [specList, setSpecs] = useState<ISpecListResponse[]>([]);
+  const [coffeeActiveSpecs, setCoffeeActiveSpecs] = useState<ISpecListResponse[]>([]);
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [confirmModalIsOpen, setConfirmModalIsOpen] = useState(false);
@@ -82,7 +100,6 @@ export default function CoffeeList() {
     resolver: yupResolver(schema),
     mode: "onChange",
   });
-  // console.log("🚀 / CoffeeList / errors", errors);
 
   async function handleOpenModal(coffee_id: string) {
     setConfirmModalIsOpen(false);
@@ -91,6 +108,7 @@ export default function CoffeeList() {
     onOpen();
     setSelectCoffee(coffee[0]);
     setSelectedImage(coffee[0].image_url);
+    setCoffeeActiveSpecs(coffee[0].specifications);
     clearErrors(["name", "description", "available", "price"]);
     setValue("name", coffee[0].name);
     setValue("description", coffee[0].description);
@@ -102,7 +120,6 @@ export default function CoffeeList() {
     event.preventDefault();
     const reader = new FileReader();
     const file = event.target.files[0];
-    console.log("🚀 / handleSetImage / file", file);
 
     reader.onloadend = () => {
       const imagePreviewUrl = reader.result.toString();
@@ -124,12 +141,12 @@ export default function CoffeeList() {
     setConfirmModalIsOpen(false);
     setSelectedImage(null);
     setSelectCoffee(null);
+    setCoffeeActiveSpecs([]);
     onOpen();
     clearErrors(["name", "description", "available", "price"]);
     setValue("name", "");
     setValue("description", "");
     setValue("available", true);
-    // setValue("price", coffee[0].price / 100);
     setPrice(0);
   }
 
@@ -156,6 +173,10 @@ export default function CoffeeList() {
 
     var coffee: Coffee;
 
+    let activeSpecList = [];
+
+    coffeeActiveSpecs.forEach((spec) => activeSpecList.push(spec.id));
+
     if (selectCoffee) {
       await updateCoffeeData({
         id: selectCoffee.id,
@@ -164,6 +185,9 @@ export default function CoffeeList() {
         description,
         price: price * 100,
       });
+
+      await addSpecToCoffee({ coffee_id: selectCoffee.id, specs_ids: activeSpecList });
+
       toast({
         title: "Dados atualizados.",
         description: "Dados atualizados com sucesso.",
@@ -176,6 +200,8 @@ export default function CoffeeList() {
         description,
         price: price * 100,
       });
+
+      await addSpecToCoffee({ coffee_id: coffee.id, specs_ids: activeSpecList });
       toast({
         title: "Café adicionado",
         description: "Café adicionado com sucesso.",
@@ -194,14 +220,25 @@ export default function CoffeeList() {
         await updateCoffeeImage(coffee.id, dataForm);
       }
     }
+
     onClose();
     setRefresh(!refresh);
+  }
+
+  function handleAddSpecification(spec: ISpecListResponse) {
+    if (coffeeActiveSpecs.filter((actSpec) => actSpec.id === spec.id).length > 0) {
+      setCoffeeActiveSpecs(coffeeActiveSpecs.filter((actSpec) => actSpec.id !== spec.id));
+    } else {
+      setCoffeeActiveSpecs((state) => [...state, spec]);
+    }
   }
 
   useEffect(() => {
     async function listCoffees() {
       const coffeeList = await getCoffees();
+      const specList = await getSpecs();
       setCoffees(coffeeList);
+      setSpecs(specList);
     }
     listCoffees();
   }, [refresh]);
@@ -298,20 +335,29 @@ export default function CoffeeList() {
                     )}
                   </LabelBox>
 
-                  <div className="specs">
+                  <SpecsSelectArea id="specifications">
                     <h2>Especificações</h2>
-                    {selectCoffee && selectCoffee.specifications
-                      ? selectCoffee.specifications.map((specification) => {
-                          return (
-                            <span className="tag" key={specification.id}>
-                              {specification.name}
-                            </span>
-                          );
-                        })
-                      : null}
-                  </div>
+                    <ListSpecs>
+                      {specList.map((spec) => {
+                        return (
+                          <SpecTag
+                            className={`tag clickable ${
+                              coffeeActiveSpecs.filter(
+                                (actSpec) => actSpec.id === spec.id
+                              ).length > 0
+                                ? "active"
+                                : "available"
+                            }`}
+                            key={spec.id}
+                            onClick={() => handleAddSpecification(spec)}
+                          >
+                            {spec.name}
+                          </SpecTag>
+                        );
+                      })}
+                    </ListSpecs>
+                  </SpecsSelectArea>
 
-                  {/* // TODO */}
                   <LabelBox id="price">
                     <Label>Preço</Label>
 
@@ -329,7 +375,6 @@ export default function CoffeeList() {
 
                     {errors.price && <InputError message={errors.price.message} />}
                   </LabelBox>
-                  {/* // TODO */}
                 </AdminCoffeeModal>
               </ModalBody>
 
@@ -369,11 +414,6 @@ export default function CoffeeList() {
               </div>
 
               <div>
-                <h2>Descrição</h2>
-                <p>{coffee.description}</p>
-              </div>
-
-              <div>
                 <h2>Disponível?</h2>
                 <p></p>
                 {coffee.available ? (
@@ -389,9 +429,9 @@ export default function CoffeeList() {
                 {coffee.specifications
                   ? coffee.specifications.map((specification) => {
                       return (
-                        <span className="tag" key={specification.id}>
+                        <SpecTag className="tag" key={specification.id}>
                           {specification.name}
-                        </span>
+                        </SpecTag>
                       );
                     })
                   : null}
