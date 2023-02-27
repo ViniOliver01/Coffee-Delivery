@@ -1,7 +1,7 @@
 import { CurrencyDollar, MapPin, Timer } from "phosphor-react";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import successImg from "../../assets/SuccessImg.png";
+import successImg from "../../assets/success-img.png";
 import { ShoppingContext } from "./../../context/ShoppingContext";
 import { Container, IconImage, ImageArea, ListDetails, Textarea } from "./Success.styles";
 
