@@ -4,8 +4,8 @@ import defaultTheme from "../../../styles/themes/Default";
 export const Container = styled.div`
   margin-inline: auto;
   width: 100%;
-  max-width: 1600px;
-  padding-inline: 10rem;
+  max-width: 1400px;
+  padding-inline: 2rem;
 
   nav {
     display: flex;

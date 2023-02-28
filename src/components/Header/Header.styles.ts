@@ -6,8 +6,8 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   margin-inline: auto;
   width: 100%;
-  max-width: 1600px;
-  padding-inline: 10rem;
+  max-width: 1400px;
+  padding-inline: 2rem;
 `;
 
 export const Container = styled.div`

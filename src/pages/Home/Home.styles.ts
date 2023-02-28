@@ -4,11 +4,11 @@ export const Container = styled.div`
   margin-bottom: 5rem;
   margin-inline: auto;
   width: 100%;
-  max-width: 1600px;
+  max-width: 1400px;
+  padding-inline: 2rem;
 `;
 export const CoverArea = styled.div`
   height: fit-content;
-  padding-inline: 10rem;
   padding-block: 5.75rem;
   display: flex;
   gap: 3.5rem;
@@ -16,6 +16,9 @@ export const CoverArea = styled.div`
   position: relative;
 `;
 export const TextArea = styled.div`
+  @media only screen and (max-width: 1160px) {
+    margin: auto;
+  }
   h1 {
     color: ${(props) => props.theme["base-title"]};
     font-family: "Baloo 2", cursive;
@@ -65,9 +68,7 @@ export const IconImage = styled.div`
   color: white;
 `;
 export const CoverImage = styled.div`
-  @media only screen and (max-width: 1420px) {
-    padding-inline: 10rem;
-    padding-block: 5.75rem;
+  @media only screen and (max-width: 1160px) {
     height: 100%;
     width: 100%;
     top: 0;
@@ -75,14 +76,17 @@ export const CoverImage = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    opacity: 0.3;
+    opacity: 0.2;
     z-index: -1;
     position: absolute;
+
+    img {
+      margin: auto;
+    }
   }
 `;
 
 export const CoffeesList = styled.div`
-  margin-inline: 10rem;
   margin-top: 2rem;
   h1 {
     margin-bottom: 3.375rem;
@@ -96,14 +100,18 @@ export const CoffeesList = styled.div`
 export const ListMap = styled.div`
   display: grid;
   row-gap: 4rem;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   div {
     margin: auto;
   }
   @media only screen and (max-width: 1200px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
   @media only screen and (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media only screen and (max-width: 600px) {
     grid-template-columns: repeat(1, 1fr);
   }
 `;
