@@ -1,10 +1,6 @@
-import {
-  Avatar as ChakraAvatar,
-  PopoverCloseButton,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Avatar as ChakraAvatar, useDisclosure } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { AvatarInfo } from "./Avatar.styles";
+import { AvatarInfo, AvatarPopoverStack, BackgroundOpacity } from "./Avatar.styles";
 
 import {
   Popover,
@@ -49,8 +45,8 @@ export default function Avatar({ name, avatar_url }: AvatarProps) {
 
   return (
     <>
+      <BackgroundOpacity isActive={isOpen} />
       <Popover isOpen={isOpen} onClose={onClose}>
-        <PopoverCloseButton />
         <ChakraAvatar src={avatar_url} w={"48px"} />
         <AvatarInfo>
           <p>Olá, {firstName}</p>
@@ -65,21 +61,32 @@ export default function Avatar({ name, avatar_url }: AvatarProps) {
         <PopoverContent>
           <PopoverArrow />
           <PopoverBody>
-            <Link onClick={GoToMyAccount} hasIcon>
-              Ir para minha conta <ArrowSquareOut />
-            </Link>
-            {isAdmin && (
-              <Link onClick={GoToAdmin} hasIcon>
-                Painel de Administrador <ArrowSquareOut />
-              </Link>
-            )}
-            <Button
-              color="red"
-              rightIcon={<SignOut weight="bold" />}
-              onClick={handleSignOut}
-            >
-              Sair
-            </Button>
+            <AvatarPopoverStack>
+              <Button
+                color="purple"
+                rightIcon={<ArrowSquareOut weight="bold" />}
+                onClick={GoToMyAccount}
+              >
+                Ir para minha conta
+              </Button>
+              {isAdmin && (
+                <Button
+                  color="purple"
+                  rightIcon={<ArrowSquareOut weight="bold" />}
+                  onClick={GoToAdmin}
+                >
+                  Painel de Administrador
+                </Button>
+              )}
+              <Button
+                id="SignOut"
+                color="red"
+                rightIcon={<SignOut weight="bold" />}
+                onClick={handleSignOut}
+              >
+                Sair
+              </Button>
+            </AvatarPopoverStack>
           </PopoverBody>
         </PopoverContent>
       </Popover>

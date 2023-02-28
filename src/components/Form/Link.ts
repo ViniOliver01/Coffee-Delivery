@@ -18,6 +18,9 @@ export const Link = styled.a`
   svg {
     font-size: 1rem;
   }
+  &:focus {
+    outline: 1px solid red;
+  }
 
   &:hover {
     background-color: ${defaultTheme["purple-light"]};
