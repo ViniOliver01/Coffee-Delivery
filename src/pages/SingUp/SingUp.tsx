@@ -13,6 +13,7 @@ import { Card } from "../../components/Form/Card";
 import { Input } from "../../components/Form/Input";
 import Label from "../../components/Form/Label";
 import { LabelBox } from "../../components/Form/LabelBox";
+import VerifyLabel from "../../components/Form/VerifyLabel";
 import { AuthContext } from "../../context/AuthContext";
 import { Container, Form, Title } from "./SingUp.styles";
 
@@ -39,9 +40,9 @@ const schema = yup.object().shape({
     .strict(true)
     .required("Senha obrigatória") //(?=.*[!@#\$%\^&\*]) regex special
     .matches(/^(?=.{8,})/, "A senha deve conter no mínimo 8 caracteres")
-    .matches(/^(?=.*[a-z])/, "One Uppercase")
-    .matches(/^(?=.*[A-Z])/, "One Uppercase")
-    .matches(/^(?=.*[0-9])/, "One Number"),
+    .matches(/^(?=.*[a-z])/, "A senha deve conter no mínimo 1 letra minuscula")
+    .matches(/^(?=.*[A-Z])/, "A senha deve conter no mínimo 1 letra maiúscula")
+    .matches(/^(?=.*[0-9])/, "A senha deve conter no mínimo 1 número"),
   passwordConfirmation: yup
     .string()
     .required("Senha obrigatória")
@@ -56,12 +57,12 @@ export default function SingUp() {
     formState: { errors },
   } = useForm<InputFormData>({
     resolver: yupResolver(schema),
-    mode: "onSubmit",
+    mode: "onChange",
   });
 
-  const { signUp, isAuthenticated } = useContext(AuthContext);
+  const { signUp } = useContext(AuthContext);
   const [error, setErrors] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState<PasswordChecks>({
+  const [passCheck, setPasswordCheck] = useState<PasswordChecks>({
     minCharacters: false,
     minLowercase: false,
     minNumbers: false,
@@ -81,7 +82,7 @@ export default function SingUp() {
   }
 
   function verifyPassword(password: string) {
-    let passwordCheck = {
+    let passCheck = {
       minCharacters: false,
       minLowercase: false,
       minNumbers: false,
@@ -89,22 +90,22 @@ export default function SingUp() {
     };
 
     password.length >= 8
-      ? (passwordCheck.minCharacters = true)
-      : (passwordCheck.minCharacters = false);
+      ? (passCheck.minCharacters = true)
+      : (passCheck.minCharacters = false);
 
     /[0-9]/.test(password)
-      ? (passwordCheck.minNumbers = true)
-      : (passwordCheck.minNumbers = false);
+      ? (passCheck.minNumbers = true)
+      : (passCheck.minNumbers = false);
 
     /[a-z]/.test(password)
-      ? (passwordCheck.minLowercase = true)
-      : (passwordCheck.minLowercase = false);
+      ? (passCheck.minLowercase = true)
+      : (passCheck.minLowercase = false);
 
     /[A-Z]/.test(password)
-      ? (passwordCheck.minUppercase = true)
-      : (passwordCheck.minUppercase = false);
+      ? (passCheck.minUppercase = true)
+      : (passCheck.minUppercase = false);
 
-    setPasswordCheck(passwordCheck);
+    setPasswordCheck(passCheck);
   }
 
   watch((data) => {
@@ -132,11 +133,15 @@ export default function SingUp() {
           <LabelBox>
             <Label>Senha</Label>
             <Input type="password" {...register("password")} />
-            {errors.password && <InputError message={errors.password.message} />}
-            {!passwordCheck.minCharacters && <InputError message="minCharacters" />}
-            {!passwordCheck.minUppercase && <InputError message="minUppercase" />}
-            {!passwordCheck.minLowercase && <InputError message="minLowercase" />}
-            {!passwordCheck.minNumbers && <InputError message="minNumbers" />}
+            <span>A senha deve conter no mínimo:</span>
+
+            <VerifyLabel isCheck={passCheck.minCharacters}>8 caracteres</VerifyLabel>
+
+            <VerifyLabel isCheck={passCheck.minUppercase}>1 letra maiúscula</VerifyLabel>
+
+            <VerifyLabel isCheck={passCheck.minLowercase}>1 letra minuscula</VerifyLabel>
+
+            <VerifyLabel isCheck={passCheck.minNumbers}>1 número</VerifyLabel>
           </LabelBox>
 
           <LabelBox>

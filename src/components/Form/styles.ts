@@ -129,3 +129,12 @@ export const MaskedInputBox = styled.div`
     }
   }
 `;
+
+export const VerifyLabelContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  svg {
+    color: ${defaultTheme.green};
+  }
+`;
