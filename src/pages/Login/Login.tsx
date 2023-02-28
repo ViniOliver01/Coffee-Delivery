@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FieldValues } from "react-hook-form/dist/types/fields";
 import { FcGoogle } from "react-icons/fc";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import Divider from "../../components/Divider";
 import { AuthContext } from "../../context/AuthContext";
@@ -16,6 +16,7 @@ import { Card } from "../../components/Form/Card";
 import { Input } from "../../components/Form/Input";
 import Label from "../../components/Form/Label";
 import { LabelBox } from "../../components/Form/LabelBox";
+import { Link } from "./../../components/Form/Link";
 
 interface InputFormData {
   email: string;
@@ -40,8 +41,8 @@ export default function Login() {
   });
 
   const { signIn, isAuthenticated } = useContext(AuthContext);
-
   const [error, setErrors] = useState("");
+  const navigation = useNavigate();
 
   async function onSubmit(data: FieldValues) {
     const response = await signIn({ email: data.email, password: data.password });
@@ -53,6 +54,14 @@ export default function Login() {
 
   if (isAuthenticated) {
     return <Navigate to="/" />;
+  }
+
+  function GoToSingUp() {
+    navigation("/singup");
+  }
+
+  function GoToForgetPassword() {
+    navigation("/singup");
   }
 
   return (
@@ -80,7 +89,7 @@ export default function Login() {
               <p>Lembrar dados de login</p>
             </Checkbox>
 
-            <a href="">Esqueci minha senha</a>
+            <Link onClick={GoToForgetPassword}>Esqueci minha senha</Link>
           </Options>
 
           <Button type="submit">Login</Button>
@@ -93,7 +102,7 @@ export default function Login() {
         </Button>
 
         <h2>
-          Não tem login? <a href="/singup">Cadastre-se</a>{" "}
+          Não tem login? <Link onClick={GoToSingUp}>Cadastre-se</Link>
         </h2>
       </Card>
     </Container>

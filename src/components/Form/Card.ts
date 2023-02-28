@@ -17,10 +17,5 @@ export const Card = styled.div`
     margin-top: 0.5rem;
     color: ${defaultTheme["base-label"]};
     font-size: 1rem;
-
-    a {
-      color: ${defaultTheme.purple};
-      font-size: 1rem;
-    }
   }
 `;
