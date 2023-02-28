@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import defaultTheme from "./../../styles/themes/Default";
 
+export const AvatarContainer = styled.div`
+  display: flex;
+  gap: 0.8rem;
+`;
+
 export const AvatarInfo = styled.div`
   a {
     cursor: pointer;
