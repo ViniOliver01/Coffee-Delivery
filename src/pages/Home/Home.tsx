@@ -1,4 +1,4 @@
-import { Spinner } from "@chakra-ui/react";
+import { Center, Spinner } from "@chakra-ui/react";
 import { Coffee, Package, ShoppingCart, Timer } from "phosphor-react";
 import { useContext, useEffect, useState } from "react";
 import coverImage from "../../assets/home-cover.png";
@@ -31,6 +31,14 @@ export default function Home() {
     }
     getCoffeeList();
   }, []);
+
+  if (coffeesList.length === 0) {
+    return (
+      <Center>
+        <Spinner size="xl" />
+      </Center>
+    );
+  }
 
   return (
     <Container>
