@@ -91,7 +91,7 @@ export function Coffees({
       <ShopSection>
         <Price>
           <p>
-            R$<span>{formatCurrency(price / 100)}</span>
+            <span>{formatCurrency(price / 100)}</span>
           </p>
         </Price>
 
