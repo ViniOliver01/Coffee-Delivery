@@ -6,7 +6,6 @@ import { AuthContext } from "../../context/AuthContext";
 import { CartContext } from "../../context/CartContext";
 import Avatar from "../Avatar/Avatar";
 import { Cart } from "../Cart/Cart";
-import Button from "../Form/Button";
 
 import {
   Container,
@@ -32,10 +31,6 @@ export function Header() {
     navigation("/login");
   }
 
-  function GoToAdmin() {
-    navigation("/admin");
-  }
-
   return (
     <HeaderContainer>
       <Container>
@@ -50,11 +45,6 @@ export function Header() {
       </Container>
 
       <Container>
-        {isAdmin ? (
-          <div>
-            <Button onClick={GoToAdmin}>Painel de Administrador</Button>
-          </div>
-        ) : null}
         {isAuthenticated ? (
           <>
             <Avatar name={user.name} avatar_url={user.avatar_url} />

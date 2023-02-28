@@ -9,6 +9,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isDisabled?: boolean;
   loadingText?: string;
   leftIcon?: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+  rightIcon?: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   color?: "purple" | "gray" | "green" | "green-light" | "red";
 }
 
@@ -18,6 +19,7 @@ export default function Button({
   isLoading,
   isDisabled,
   leftIcon,
+  rightIcon,
   color,
   loadingText = "Carregando...",
   ...props
@@ -32,6 +34,7 @@ export default function Button({
         width="100%"
         marginTop={0}
         leftIcon={leftIcon}
+        rightIcon={rightIcon}
         {...props}
       >
         {children}
