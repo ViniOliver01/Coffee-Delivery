@@ -6,15 +6,11 @@ export const Container = styled.div`
   justify-content: space-between;
   margin-bottom: 5rem;
   gap: 2rem;
-  padding-inline: 10rem;
 
+  margin-inline: auto;
   width: 100%;
   max-width: 1600px;
   padding-inline: 10rem;
-
-  @media only screen and (max-width: 1200px) {
-    /* padding-inline: 2rem; */
-  }
 `;
 
 export const HeaderItem = styled.div`
