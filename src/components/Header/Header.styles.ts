@@ -3,12 +3,11 @@ import defaultTheme from "./../../styles/themes/Default";
 
 export const HeaderContainer = styled.div`
   display: flex;
-  margin-inline: 10rem;
   justify-content: space-between;
-
-  @media only screen and (max-width: 1200px) {
-    margin-inline: 2rem;
-  }
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1600px;
+  padding-inline: 10rem;
 `;
 
 export const Container = styled.div`

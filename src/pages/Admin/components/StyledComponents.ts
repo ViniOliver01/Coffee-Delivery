@@ -2,6 +2,11 @@ import styled from "styled-components";
 import defaultTheme from "../../../styles/themes/Default";
 
 export const Container = styled.div`
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1600px;
+  padding-inline: 10rem;
+
   nav {
     display: flex;
     justify-content: center;
@@ -24,7 +29,6 @@ export const Container = styled.div`
 
 export const CoffeeListItem = styled.div`
   background-color: ${defaultTheme["base-button"]};
-  margin-inline: 2rem;
   padding-block: 1rem;
   border-radius: 6px 44px 6px 44px;
 

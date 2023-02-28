@@ -3,13 +3,17 @@ import defaultTheme from "./../../styles/themes/Default";
 
 export const Container = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   margin-bottom: 5rem;
   gap: 2rem;
   padding-inline: 10rem;
 
+  width: 100%;
+  max-width: 1600px;
+  padding-inline: 10rem;
+
   @media only screen and (max-width: 1200px) {
-    padding-inline: 2rem;
+    /* padding-inline: 2rem; */
   }
 `;
 

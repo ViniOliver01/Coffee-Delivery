@@ -4,8 +4,13 @@ import defaultTheme from "../../styles/themes/Default";
 export const Container = styled.div`
   display: flex;
   gap: 2rem;
-  padding-inline: 10rem;
+  /* padding-inline: 10rem; */
   margin-top: 1rem;
+
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1600px;
+  padding-inline: 10rem;
 `;
 
 export const Title = styled.div`

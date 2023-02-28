@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   margin-bottom: 5rem;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1600px;
 `;
 export const CoverArea = styled.div`
   height: fit-content;
@@ -11,10 +14,6 @@ export const CoverArea = styled.div`
   gap: 3.5rem;
   justify-content: space-between;
   position: relative;
-
-  @media only screen and (max-width: 1300px) {
-    flex-direction: column;
-  }
 `;
 export const TextArea = styled.div`
   h1 {
@@ -66,14 +65,16 @@ export const IconImage = styled.div`
   color: white;
 `;
 export const CoverImage = styled.div`
-  @media only screen and (max-width: 1300px) {
+  @media only screen and (max-width: 1420px) {
+    padding-inline: 10rem;
+    padding-block: 5.75rem;
     height: 100%;
     width: 100%;
     top: 0;
-    left: 0;
+    right: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     opacity: 0.3;
     z-index: -1;
     position: absolute;
@@ -85,24 +86,19 @@ export const CoffeesList = styled.div`
   margin-top: 2rem;
   h1 {
     margin-bottom: 3.375rem;
+    color: ${(props) => props.theme["base-title"]};
+    font-family: "Baloo 2", cursive;
+    font-weight: bold;
+    font-size: 2rem;
+    line-height: 130%;
   }
 `;
 export const ListMap = styled.div`
   display: grid;
   row-gap: 4rem;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   div {
     margin: auto;
-  }
-
-  @media only screen and (max-width: 2000px) {
-    grid-template-columns: repeat(5, 1fr);
-  }
-  @media only screen and (max-width: 1800px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  @media only screen and (max-width: 1600px) {
-    grid-template-columns: repeat(3, 1fr);
   }
   @media only screen and (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
