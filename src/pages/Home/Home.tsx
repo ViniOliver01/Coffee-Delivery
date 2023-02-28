@@ -33,11 +33,13 @@ export default function Home() {
   }, []);
 
   if (coffeesList.length === 0) {
-    return (
-      <Center>
-        <Spinner size="xl" />
-      </Center>
-    );
+    setTimeout(() => {
+      return (
+        <Center>
+          <Spinner size="xl" />
+        </Center>
+      );
+    }, 250);
   }
 
   return (
