@@ -26,6 +26,12 @@ interface ChangePasswordCredentials {
   confirm_new_password: string;
 }
 
+interface ResetPasswordProps {
+  reset_token: string;
+  password: string;
+  password_confirmation: string;
+}
+
 interface IStatusResponse {
   status: number;
   message: string;
@@ -35,6 +41,8 @@ interface AuthContextData {
   signUp: (credentials: SignUpCredentials) => Promise<IStatusResponse>;
   signIn: (credentials: SignInCredentials) => Promise<IStatusResponse>;
   signOut: () => void;
+  sendEmailResetPassword: (email: string) => Promise<IStatusResponse>;
+  resetPassword: (data: ResetPasswordProps) => Promise<IStatusResponse>;
   isAdmin: boolean;
   updatePersonalData: (
     credentials: UpdatePersonalDataCredentials
@@ -284,12 +292,42 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return { message: "Success", status: 201 };
   }
 
+  async function sendEmailResetPassword(email: string): Promise<IStatusResponse> {
+    try {
+      const response = await api.post("/password/forgot", { email });
+      console.log("🚀 / sendEmailResetPassword / response:", response);
+
+      return { message: response.data.message, status: response.status };
+    } catch (error) {
+      console.warn("🚀 / sendEmailResetPassword / error", error);
+    }
+  }
+
+  async function resetPassword({
+    password,
+    password_confirmation,
+    reset_token,
+  }: ResetPasswordProps): Promise<IStatusResponse> {
+    try {
+      const response = await api.post("/password/reset?token=" + reset_token, {
+        password,
+      });
+      console.log("🚀 / resetPassword / response:", response);
+
+      return { message: response.data.message, status: response.status };
+    } catch (error) {
+      console.warn("🚀 / resetPassword / error", error);
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
         signUp,
         signIn,
         signOut,
+        sendEmailResetPassword,
+        resetPassword,
         updatePersonalData,
         updateAvatar,
         changePassword,

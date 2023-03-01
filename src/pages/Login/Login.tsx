@@ -61,7 +61,7 @@ export default function Login() {
   }
 
   function GoToForgetPassword() {
-    navigation("/singup");
+    navigation("/resetpassword");
   }
 
   return (
