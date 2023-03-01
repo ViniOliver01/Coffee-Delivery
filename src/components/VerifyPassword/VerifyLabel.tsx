@@ -1,6 +1,6 @@
 import { Check } from "phosphor-react";
 import { ReactNode } from "react";
-import { VerifyLabelContainer } from "./styles";
+import { LabelContainer } from "./styles";
 
 interface VerifyLabelProps {
   children?: ReactNode;
@@ -9,9 +9,9 @@ interface VerifyLabelProps {
 
 export default function VerifyLabel({ children, isCheck }: VerifyLabelProps) {
   return (
-    <VerifyLabelContainer>
+    <LabelContainer isCheck={isCheck}>
       <p>{children}</p>
       {isCheck && <Check size={20} weight="bold" />}
-    </VerifyLabelContainer>
+    </LabelContainer>
   );
 }

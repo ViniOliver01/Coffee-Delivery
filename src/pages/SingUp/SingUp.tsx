@@ -13,8 +13,9 @@ import GoogleButton from "../../components/Form/GoogleButton";
 import { Input } from "../../components/Form/Input";
 import Label from "../../components/Form/Label";
 import { LabelBox } from "../../components/Form/LabelBox";
-import VerifyLabel from "../../components/Form/VerifyLabel";
+import VerifyPassword from "../../components/VerifyPassword/VerifyPassword";
 import { AuthContext } from "../../context/AuthContext";
+import { verifyPassword } from "../../utils/verifyPassword";
 import { Container, Form, Title } from "./SingUp.styles";
 
 interface InputFormData {
@@ -25,10 +26,10 @@ interface InputFormData {
 }
 
 interface PasswordChecks {
-  minCharacters: boolean;
-  minNumbers: boolean;
-  minLowercase: boolean;
-  minUppercase: boolean;
+  min_characters: boolean;
+  min_numbers: boolean;
+  min_lowercase: boolean;
+  min_uppercase: boolean;
 }
 
 YupPassword(yup);
@@ -63,10 +64,10 @@ export default function SingUp() {
   const { signUp } = useContext(AuthContext);
   const [error, setErrors] = useState("");
   const [passCheck, setPasswordCheck] = useState<PasswordChecks>({
-    minCharacters: false,
-    minLowercase: false,
-    minNumbers: false,
-    minUppercase: false,
+    min_characters: false,
+    min_lowercase: false,
+    min_numbers: false,
+    min_uppercase: false,
   });
 
   async function onSubmit(data: FieldValues) {
@@ -81,35 +82,9 @@ export default function SingUp() {
     }
   }
 
-  function verifyPassword(password: string) {
-    let passCheck = {
-      minCharacters: false,
-      minLowercase: false,
-      minNumbers: false,
-      minUppercase: false,
-    };
-
-    password.length >= 8
-      ? (passCheck.minCharacters = true)
-      : (passCheck.minCharacters = false);
-
-    /[0-9]/.test(password)
-      ? (passCheck.minNumbers = true)
-      : (passCheck.minNumbers = false);
-
-    /[a-z]/.test(password)
-      ? (passCheck.minLowercase = true)
-      : (passCheck.minLowercase = false);
-
-    /[A-Z]/.test(password)
-      ? (passCheck.minUppercase = true)
-      : (passCheck.minUppercase = false);
-
-    setPasswordCheck(passCheck);
-  }
-
   watch((data) => {
-    verifyPassword(data.password);
+    const passCheck = verifyPassword(data.password);
+    setPasswordCheck(passCheck);
   });
 
   return (
@@ -133,15 +108,7 @@ export default function SingUp() {
           <LabelBox>
             <Label>Senha</Label>
             <Input type="password" {...register("password")} />
-            <span>A senha deve conter no mínimo:</span>
-
-            <VerifyLabel isCheck={passCheck.minCharacters}>8 caracteres</VerifyLabel>
-
-            <VerifyLabel isCheck={passCheck.minUppercase}>1 letra maiúscula</VerifyLabel>
-
-            <VerifyLabel isCheck={passCheck.minLowercase}>1 letra minuscula</VerifyLabel>
-
-            <VerifyLabel isCheck={passCheck.minNumbers}>1 número</VerifyLabel>
+            <VerifyPassword check={passCheck} />
           </LabelBox>
 
           <LabelBox>
