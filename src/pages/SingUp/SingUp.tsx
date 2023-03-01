@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FieldValues } from "react-hook-form/dist/types/fields";
-import { FcGoogle } from "react-icons/fc";
 import * as yup from "yup";
 import YupPassword from "yup-password";
 import Divider from "../../components/Divider";
@@ -10,6 +9,7 @@ import FormError from "../../components/Error/Form/FormError";
 import InputError from "../../components/Error/Form/InputError";
 import Button from "../../components/Form/Button";
 import { Card } from "../../components/Form/Card";
+import GoogleButton from "../../components/Form/GoogleButton";
 import { Input } from "../../components/Form/Input";
 import Label from "../../components/Form/Label";
 import { LabelBox } from "../../components/Form/LabelBox";
@@ -159,9 +159,7 @@ export default function SingUp() {
 
         <Divider>ou</Divider>
 
-        <Button leftIcon={<FcGoogle size={24} />} color={"gray"}>
-          Entrar com o google
-        </Button>
+        <GoogleButton />
       </Card>
     </Container>
   );

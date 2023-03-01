@@ -14,6 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@chakra-ui/react";
+import { googleLogout } from "@react-oauth/google";
 import { ArrowSquareOut, CaretDown, SignOut } from "phosphor-react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -43,6 +44,7 @@ export default function Avatar({ name, avatar_url }: AvatarProps) {
   }
 
   function handleSignOut() {
+    googleLogout();
     signOut();
     onClose();
     window.location.reload();

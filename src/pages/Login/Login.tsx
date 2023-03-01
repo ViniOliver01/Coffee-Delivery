@@ -2,17 +2,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FieldValues } from "react-hook-form/dist/types/fields";
-import { FcGoogle } from "react-icons/fc";
 import { Navigate, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import Divider from "../../components/Divider";
 import { AuthContext } from "../../context/AuthContext";
-import { Container, Form, Options, Title } from "./Login.styles";
+import { Container, FooterTitle, Form, Options, Title } from "./Login.styles";
 
 import { Checkbox } from "@chakra-ui/react";
 import FormError from "../../components/Error/Form/FormError";
 import Button from "../../components/Form/Button";
 import { Card } from "../../components/Form/Card";
+import GoogleButton from "../../components/Form/GoogleButton";
 import { Input } from "../../components/Form/Input";
 import Label from "../../components/Form/Label";
 import { LabelBox } from "../../components/Form/LabelBox";
@@ -97,13 +97,11 @@ export default function Login() {
 
         <Divider>ou</Divider>
 
-        <Button leftIcon={<FcGoogle size={24} />} color={"gray"}>
-          Entrar com o google
-        </Button>
-
-        <h2>
-          Não tem login? <Link onClick={GoToSingUp}>Cadastre-se</Link>
-        </h2>
+        <GoogleButton />
+        <FooterTitle>
+          <h2>Não tem login? </h2>
+          <Link onClick={GoToSingUp}>Cadastre-se</Link>
+        </FooterTitle>
       </Card>
     </Container>
   );

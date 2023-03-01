@@ -56,3 +56,15 @@ export const Options = styled.div`
     font-size: 0.875rem;
   }
 `;
+
+export const FooterTitle = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  h2 {
+    margin-top: 0;
+    border: 1px solid transparent;
+  }
+`;
