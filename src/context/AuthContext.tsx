@@ -43,6 +43,7 @@ interface AuthContextData {
   sendEmailResetPassword: (email: string) => Promise<IStatusResponse>;
   resetPassword: (data: ResetPasswordProps) => Promise<IStatusResponse>;
   verifyResetToken: (reset_token: string) => Promise<IStatusResponse>;
+  reeSendConfirmEmail: (data: reeSendConfirmEmailProps) => Promise<IStatusResponse>;
   isAdmin: boolean;
   updatePersonalData: (
     credentials: UpdatePersonalDataCredentials
@@ -59,11 +60,17 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+interface reeSendConfirmEmailProps {
+  name: string;
+  email: string;
+}
+
 interface User {
   name: string;
   email: string;
   avatar_url: string;
   phone: string;
+  email_is_verified: boolean;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -93,6 +100,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     email: "",
     avatar_url: "",
     phone: "",
+    email_is_verified: false,
   });
 
   if (isAdmin !== null) {
@@ -124,9 +132,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       api
         .get("/users/profile")
         .then((response) => {
-          const { name, email, avatar_url, phone } = response.data;
+          const { name, email, avatar_url, phone, email_is_verified } = response.data;
 
-          setUser({ name, email, avatar_url, phone });
+          setUser({ name, email, avatar_url, phone, email_is_verified });
         })
         .catch(() => {
           signOut();
@@ -180,6 +188,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         email,
         avatar_url: user.avatar_url,
         phone: user.phone,
+        email_is_verified: user.email_is_verified,
       });
 
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
@@ -230,6 +239,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         email: response.data.email,
         avatar_url: response.data.avatar_url,
         phone: response.data.phone,
+        email_is_verified: response.data.email_is_verified,
       });
 
       if (response.status === 400) {
@@ -257,6 +267,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         email: user.email,
         avatar_url,
         phone: user.phone,
+        email_is_verified: user.email_is_verified,
       });
 
       if (response.status === 400) {
@@ -328,6 +339,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function reeSendConfirmEmail({
+    name,
+    email,
+  }: reeSendConfirmEmailProps): Promise<IStatusResponse> {
+    try {
+      const response = await api.post("/users/verify-email", { name, email });
+
+      return { message: response.data.message, status: response.status };
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -335,6 +359,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signIn,
         signOut,
         sendEmailResetPassword,
+        reeSendConfirmEmail,
         resetPassword,
         verifyResetToken,
         updatePersonalData,

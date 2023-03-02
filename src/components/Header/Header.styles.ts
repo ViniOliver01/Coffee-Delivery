@@ -1,7 +1,12 @@
 import styled from "styled-components";
 import defaultTheme from "./../../styles/themes/Default";
 
-export const HeaderContainer = styled.div`
+export const HeaderBody = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const HeaderBox = styled.div`
   display: flex;
   justify-content: space-between;
   margin-inline: auto;
@@ -10,10 +15,25 @@ export const HeaderContainer = styled.div`
   padding-inline: 2rem;
 `;
 
+export const VerifyEmail = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-inline: auto;
+  width: 100%;
+  padding: 1rem 2rem;
+  background-color: ${defaultTheme["yellow-light"]};
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+`;
+
 export const Container = styled.div`
   display: flex;
   align-items: center;
-  margin-block: 2rem;
+  margin-block: 1rem;
   height: 10vh;
   gap: 2rem;
 `;
