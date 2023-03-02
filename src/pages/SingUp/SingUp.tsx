@@ -1,7 +1,9 @@
+import { useToast } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FieldValues } from "react-hook-form/dist/types/fields";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import YupPassword from "yup-password";
 import Divider from "../../components/Divider";
@@ -61,8 +63,11 @@ export default function SingUp() {
     mode: "onChange",
   });
 
+  const toast = useToast();
+  const navigation = useNavigate();
   const { signUp } = useContext(AuthContext);
   const [error, setErrors] = useState("");
+  const [isFetching, setIsFetching] = useState(false);
   const [passCheck, setPasswordCheck] = useState<PasswordChecks>({
     min_characters: false,
     min_lowercase: false,
@@ -71,6 +76,7 @@ export default function SingUp() {
   });
 
   async function onSubmit(data: FieldValues) {
+    setIsFetching(true);
     const response = await signUp({
       name: data.name,
       email: data.email,
@@ -80,6 +86,17 @@ export default function SingUp() {
     if (response.status === 400) {
       setErrors(response.message);
     }
+
+    if (response.status === 201) {
+      toast({
+        title: response.message,
+        description: "Favor verifique sua caixa de email",
+        status: "success",
+        duration: 10000,
+      });
+      navigation("/login");
+    }
+    setIsFetching(false);
   }
 
   watch((data) => {
@@ -121,7 +138,9 @@ export default function SingUp() {
 
           {error && <FormError message={error} />}
 
-          <Button type="submit">Criar conta</Button>
+          <Button type="submit" isLoading={isFetching}>
+            Criar conta
+          </Button>
         </Form>
 
         <Divider>ou</Divider>

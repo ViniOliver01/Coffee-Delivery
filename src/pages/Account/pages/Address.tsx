@@ -17,6 +17,7 @@ import {
   ModalFooter,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import Button from "../../../components/Form/Button";
 import {
@@ -49,6 +50,7 @@ const schema = yup.object().shape({
 
 export default function Address() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   const { getAddresses, createAddress, updateAddress } = useContext(UserContext);
   const [addressList, setAddressList] = useState<IAddressesResponse[]>([]);
   const [addressId, setAddressId] = useState("");
@@ -78,6 +80,11 @@ export default function Address() {
         number,
         complement,
       });
+      toast({
+        title: "Endereço Atualizado",
+        status: "success",
+        duration: 10000,
+      });
     }
     if (!addressId) {
       const { cep, city, state, street, number, complement } = data;
@@ -90,7 +97,13 @@ export default function Address() {
         number,
         complement,
       });
+      toast({
+        title: "Endereço criado",
+        status: "success",
+        duration: 10000,
+      });
     }
+
     setUpdate(!update);
     onClose();
   }

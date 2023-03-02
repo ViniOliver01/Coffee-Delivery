@@ -29,7 +29,6 @@ interface ChangePasswordCredentials {
 interface ResetPasswordProps {
   reset_token: string;
   password: string;
-  password_confirmation: string;
 }
 
 interface IStatusResponse {
@@ -205,12 +204,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       });
 
-      if (response.status === 400) {
-        return { message: response.data.message, status: 400 };
-      }
-    } catch (error) {}
-
-    return { message: "Success", status: 201 };
+      return { message: response.data.message, status: response.status };
+    } catch (error) {
+      console.warn(error);
+    }
   }
 
   async function updatePersonalData({
@@ -305,7 +302,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function resetPassword({
     password,
-    password_confirmation,
     reset_token,
   }: ResetPasswordProps): Promise<IStatusResponse> {
     try {
