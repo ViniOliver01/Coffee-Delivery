@@ -42,7 +42,7 @@ export default function MyAccount() {
 
   const [avatarFile, setAvatarFile] = useState<File>(null);
   const [selectedImage, setSelectedImage] = useState(user.avatar_url);
-  const [phoneNumber, setPhoneNumber] = useState(user.phone ? user.phone : "0");
+  const [phoneNumber, setPhoneNumber] = useState(user.phone ? user.phone : "");
 
   const toast = useToast();
 
