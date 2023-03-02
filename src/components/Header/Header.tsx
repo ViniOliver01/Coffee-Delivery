@@ -1,6 +1,6 @@
 import { MapPin, X } from "phosphor-react";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo.svg";
 import { AuthContext } from "../../context/AuthContext";
 import { CartContext } from "../../context/CartContext";
@@ -19,6 +19,9 @@ import {
 } from "./Header.styles";
 
 export function Header() {
+  let { pathname } = useLocation();
+  pathname = pathname.split("/")[1];
+
   const { isAuthenticated, user, reeSendConfirmEmail } = useContext(AuthContext);
   const { products_amount, products_value } = useContext(CartContext);
   const [isEmailVerified, setIsEmailVerified] = useState(true);
@@ -44,6 +47,9 @@ export function Header() {
   useEffect(() => {
     if (isAuthenticated && !user.email_is_verified) {
       setIsEmailVerified(false);
+    }
+    if (pathname === "confirmemail") {
+      setIsEmailVerified(true);
     }
   }, [user]);
 

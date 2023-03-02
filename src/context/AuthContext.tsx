@@ -44,6 +44,7 @@ interface AuthContextData {
   resetPassword: (data: ResetPasswordProps) => Promise<IStatusResponse>;
   verifyResetToken: (reset_token: string) => Promise<IStatusResponse>;
   reeSendConfirmEmail: (data: reeSendConfirmEmailProps) => Promise<IStatusResponse>;
+  confirmEmail: (token: string) => Promise<IStatusResponse>;
   isAdmin: boolean;
   updatePersonalData: (
     credentials: UpdatePersonalDataCredentials
@@ -352,6 +353,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function confirmEmail(token: string): Promise<IStatusResponse> {
+    try {
+      const response = await api.post("/users/confirmation/" + token);
+
+      return { message: response.data.message, status: response.status };
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -360,6 +371,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signOut,
         sendEmailResetPassword,
         reeSendConfirmEmail,
+        confirmEmail,
         resetPassword,
         verifyResetToken,
         updatePersonalData,
