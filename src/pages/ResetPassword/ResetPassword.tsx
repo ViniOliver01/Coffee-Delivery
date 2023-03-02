@@ -1,12 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FieldValues } from "react-hook-form/dist/types/fields";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { AuthContext } from "../../context/AuthContext";
 import { Container, Form, Title } from "./styles";
 
+import { useToast } from "@chakra-ui/react";
 import YupPassword from "yup-password";
 import FormError from "../../components/Error/Form/FormError";
 import Button from "../../components/Form/Button";
@@ -47,8 +48,9 @@ const schema = yup.object().shape({
 });
 
 export default function ResetPassword() {
-  const { id } = useParams();
-  console.log("🚀 / ResetPassword / id:", id);
+  const { reset_token } = useParams();
+  console.log("🚀 / ResetPassword / id:", reset_token);
+
   const {
     register,
     handleSubmit,
@@ -59,8 +61,12 @@ export default function ResetPassword() {
     mode: "onChange",
   });
 
-  const { isAuthenticated, resetPassword } = useContext(AuthContext);
+  const toast = useToast();
+  const navigation = useNavigate();
+  const { isAuthenticated, resetPassword, verifyResetToken } = useContext(AuthContext);
   const [error, setErrors] = useState("");
+  const [isFetchingToken, setIsFetchingToken] = useState(null);
+  const [isFetching, setIsFetching] = useState(false);
   const [passCheck, setPasswordCheck] = useState<PasswordChecks>({
     min_characters: false,
     min_lowercase: false,
@@ -69,15 +75,26 @@ export default function ResetPassword() {
   });
 
   async function onSubmit(data: FieldValues) {
+    setIsFetching(true);
     const response = await resetPassword({
-      reset_token: id,
+      reset_token,
       password: data.password,
-      password_confirmation: data.passwordConfirmation,
     });
 
     if (response.status === 400) {
       setErrors(response.message);
     }
+
+    if (response.status === 201) {
+      toast({
+        title: response.message,
+        description: "Favor verifique sua caixa de email",
+        status: "success",
+        duration: 10000,
+      });
+      navigation("/login");
+    }
+    setIsFetching(false);
   }
 
   watch((data) => {
@@ -87,6 +104,25 @@ export default function ResetPassword() {
 
   if (isAuthenticated) {
     return <Navigate to="/" />;
+  }
+
+  useEffect(() => {
+    async function verifyToken() {
+      const response = await verifyResetToken(reset_token);
+
+      if (response.status === 400) {
+        setIsFetchingToken(false);
+        navigation("/");
+      }
+      if (response.status === 200) {
+        setIsFetchingToken(true);
+      }
+    }
+    verifyToken();
+  }, []);
+
+  if (isFetchingToken === null) {
+    return <></>;
   }
 
   return (
@@ -111,7 +147,9 @@ export default function ResetPassword() {
 
           {error && <FormError message={error} />}
 
-          <Button type="submit">Login</Button>
+          <Button type="submit" isLoading={isFetching}>
+            Login
+          </Button>
         </Form>
       </Card>
     </Container>

@@ -42,6 +42,7 @@ interface AuthContextData {
   signOut: () => void;
   sendEmailResetPassword: (email: string) => Promise<IStatusResponse>;
   resetPassword: (data: ResetPasswordProps) => Promise<IStatusResponse>;
+  verifyResetToken: (reset_token: string) => Promise<IStatusResponse>;
   isAdmin: boolean;
   updatePersonalData: (
     credentials: UpdatePersonalDataCredentials
@@ -308,11 +309,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const response = await api.post("/password/reset?token=" + reset_token, {
         password,
       });
-      console.log("🚀 / resetPassword / response:", response);
 
       return { message: response.data.message, status: response.status };
     } catch (error) {
-      console.warn("🚀 / resetPassword / error", error);
+      console.warn(error);
+    }
+  }
+
+  async function verifyResetToken(reset_token: string): Promise<IStatusResponse> {
+    try {
+      const response = await api.post(
+        "/password/verify-reset-token?token=" + reset_token
+      );
+
+      return { message: response.data.message, status: response.status };
+    } catch (error) {
+      console.warn(error);
     }
   }
 
@@ -324,6 +336,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signOut,
         sendEmailResetPassword,
         resetPassword,
+        verifyResetToken,
         updatePersonalData,
         updateAvatar,
         changePassword,

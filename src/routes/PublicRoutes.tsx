@@ -9,7 +9,7 @@ export const PublicRoutes = () => {
     <Routes>
       <Route path="login" element={<Login />} />
       <Route path="singup" element={<SingUp />} />
-      <Route path="resetpassword/:id" element={<ResetPassword />} />
+      <Route path="resetpassword/:reset_token" element={<ResetPassword />} />
       <Route path="resetpassword" element={<SendEmailResetPassword />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
