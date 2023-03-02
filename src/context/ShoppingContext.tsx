@@ -278,12 +278,8 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
   }: addSpecToCoffeeProps): Promise<IStatusResponse> {
     try {
       const response = await api.post("/coffee/specifications", {
-        coffees: [
-          {
-            coffee_id: coffee_id,
-            specifications_ids: specs_ids,
-          },
-        ],
+        coffee_id: coffee_id,
+        specifications_ids: specs_ids,
       });
       if (response.status === 400) {
         return { message: response.data.message, status: 400 };
