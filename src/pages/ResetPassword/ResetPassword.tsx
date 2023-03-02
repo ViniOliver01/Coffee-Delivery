@@ -85,10 +85,10 @@ export default function ResetPassword() {
       setErrors(response.message);
     }
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       toast({
         title: response.message,
-        description: "Favor verifique sua caixa de email",
+        description: "Senha alterada com sucesso",
         status: "success",
         duration: 10000,
       });

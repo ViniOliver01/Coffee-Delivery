@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { AuthContext } from "../../context/AuthContext";
 import { Container, Form, Title } from "./styles";
 
+import { useToast } from "@chakra-ui/react";
 import FormError from "../../components/Error/Form/FormError";
 import Button from "../../components/Form/Button";
 import { Card } from "../../components/Form/Card";
@@ -33,15 +34,29 @@ export default function SendEmailResetPassword() {
   });
   console.log("🚀 / SendEmailResetPassword / errors:", errors);
 
+  const toast = useToast();
   const { sendEmailResetPassword, isAuthenticated } = useContext(AuthContext);
+  const [isFetching, setIsFetching] = useState(false);
   const [error, setErrors] = useState("");
 
   async function onSubmit(data: FieldValues) {
+    setIsFetching(true);
     const response = await sendEmailResetPassword(data.email);
+
+    if (response.status === 200) {
+      toast({
+        title: "Email enviado",
+        description:
+          "Email de recuperação de senha enviado. Favor verifique sua caixa de email",
+        status: "success",
+        duration: 10000,
+      });
+    }
 
     if (response.status === 400) {
       setErrors(response.message);
     }
+    setIsFetching(false);
   }
 
   if (isAuthenticated) {
@@ -63,7 +78,9 @@ export default function SendEmailResetPassword() {
 
           {error && <FormError message={error} />}
 
-          <Button type="submit">Enviar</Button>
+          <Button type="submit" isLoading={isFetching}>
+            Enviar
+          </Button>
         </Form>
       </Card>
     </Container>
