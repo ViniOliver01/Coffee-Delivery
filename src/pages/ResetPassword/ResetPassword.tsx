@@ -148,7 +148,7 @@ export default function ResetPassword() {
           {error && <FormError message={error} />}
 
           <Button type="submit" isLoading={isFetching}>
-            Login
+            Alterar senha
           </Button>
         </Form>
       </Card>
