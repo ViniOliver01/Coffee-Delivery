@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import defaultTheme from "./../../styles/themes/Default";
 
 export const PasswordInputBox = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ export const PasswordInputBox = styled.div`
     //Icon
     svg {
       font-size: 1.5rem;
-      color: white;
+      color: ${defaultTheme["base-text"]};
     }
   }
 `;
