@@ -127,7 +127,7 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
       const response = await api.get("/coffee");
       return response.data;
     } catch (error) {
-      console.warn("🚀 / getPurchases / error", error);
+      console.warn(error);
     }
   }
 
@@ -136,7 +136,7 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
       const response = await api.get(`/purchases/${purchase_id}`);
       return response.data;
     } catch (error) {
-      console.warn("🚀 / getPurchases / error", error);
+      console.warn(error);
     }
   }
 
@@ -152,15 +152,10 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
           "Content-Type": `multipart/form-data;`,
         },
       });
-      // const { coffee_url } = response.data;
-      if (response.status === 400) {
-        return { message: response.data.message, status: 400 };
-      }
+      return { message: response.data.message, status: response.status };
     } catch (error) {
-      console.warn("🚀 / updateCoffeeImage / error", error);
+      console.warn(error);
     }
-
-    return { message: "Success", status: 201 };
   }
 
   async function updateCoffeeData({
@@ -178,14 +173,10 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
         price,
         available,
       });
-      if (response.status === 400) {
-        return { message: response.data.message, status: 400 };
-      }
+      return { message: response.data.message, status: response.status };
     } catch (error) {
-      console.warn("🚀 / updateCoffeeImage / error", error);
+      console.warn(error);
     }
-
-    return { message: "Success", status: 201 };
   }
 
   async function createCoffee({
@@ -201,21 +192,17 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
       });
       return response.data;
     } catch (error) {
-      console.warn("🚀 / updateCoffeeImage / error", error);
+      console.warn(error);
     }
   }
 
   async function deleteCoffee(id: string): Promise<IStatusResponse> {
     try {
       const response = await api.delete("/coffee/" + id);
-      if (response.status === 400) {
-        return { message: response.data.message, status: 400 };
-      }
+      return { message: response.data.message, status: response.status };
     } catch (error) {
-      console.warn("🚀 / updateCoffeeImage / error", error);
+      console.warn(error);
     }
-
-    return { message: "Success", status: 201 };
   }
 
   async function getSpecs(): Promise<ISpecListResponse[]> {
@@ -223,7 +210,7 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
       const response = await api.get("/specifications");
       return response.data;
     } catch (error) {
-      console.warn("🚀 / getPurchases / error", error);
+      console.warn(error);
     }
   }
 
@@ -232,44 +219,32 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
       const response = await api.post("/specifications", {
         name,
       });
-      if (response.status === 400) {
-        return { message: response.data.message, status: 400 };
-      }
+      return { message: response.data.message, status: response.status };
     } catch (error) {
-      console.warn("🚀 / updateCoffeeImage / error", error);
+      console.warn(error);
     }
-
-    return { message: "Success", status: 201 };
   }
 
   async function deleteSpec(id: string): Promise<IStatusResponse> {
     try {
       const response = await api.delete("/specifications/" + id);
-      if (response.status === 400) {
-        return { message: response.data.message, status: 400 };
-      }
-    } catch (error) {
-      console.warn("🚀 / updateCoffeeImage / error", error);
-    }
 
-    return { message: "Success", status: 201 };
+      return { message: response.data.message, status: response.status };
+    } catch (error) {
+      console.warn(error);
+    }
   }
 
   async function updateSpecName({ id, name }: IUpdateSpec): Promise<IStatusResponse> {
-    console.log("🚀 / updateSpecName / name", id, name);
     try {
       const response = await api.patch("/specifications/update", {
         id,
         name,
       });
-      if (response.status === 400) {
-        return { message: response.data.message, status: 400 };
-      }
+      return { message: response.data.message, status: response.status };
     } catch (error) {
-      console.warn("🚀 / updateCoffeeImage / error", error);
+      console.warn(error);
     }
-
-    return { message: "Success", status: 201 };
   }
 
   async function addSpecToCoffee({
@@ -278,14 +253,12 @@ export function ShoppingProvider({ children }: ShoppingProviderProps) {
   }: addSpecToCoffeeProps): Promise<IStatusResponse> {
     try {
       const response = await api.post("/coffee/specifications", {
-        coffee_id: coffee_id,
+        coffee_id,
         specifications_ids: specs_ids,
       });
-      if (response.status === 400) {
-        return { message: response.data.message, status: 400 };
-      }
+      return { message: response.data.message, status: response.status };
     } catch (error) {
-      console.warn("🚀 / addSpecToCoffee / error", error);
+      console.warn(error);
     }
   }
 
