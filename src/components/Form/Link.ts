@@ -7,26 +7,22 @@ interface LinkProps {
 
 export const Link = styled.a`
   color: ${defaultTheme.purple};
+  background-color: ${defaultTheme["purple-light"]};
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.25rem;
   width: fit-content;
-
-  border-bottom: 1px solid transparent;
+  padding: 0.1rem 0.3rem;
+  border-radius: 8px;
+  transition: all 0.2s;
 
   svg {
     font-size: 1rem;
   }
-  &:focus {
-    outline: 1px solid red;
-  }
 
   &:hover {
-    background-color: ${defaultTheme["purple-light"]};
-
-    border-bottom: 1px solid
-      ${(props: LinkProps) =>
-        props.hasIcon ? defaultTheme["purple-dark"] : "transparent"};
+    background-color: ${defaultTheme.purple};
+    color: ${defaultTheme.white};
   }
 `;

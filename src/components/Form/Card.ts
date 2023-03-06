@@ -14,7 +14,6 @@ export const Card = styled.div`
   gap: 0.5rem;
 
   h2 {
-    margin-top: 0.5rem;
     color: ${defaultTheme["base-label"]};
     font-size: 1rem;
   }

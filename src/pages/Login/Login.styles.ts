@@ -62,8 +62,4 @@ export const FooterTitle = styled.div`
   align-items: center;
   justify-content: center;
   gap: 0.2rem;
-  h2 {
-    margin-top: 0;
-    border: 1px solid transparent;
-  }
 `;

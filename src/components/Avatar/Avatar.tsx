@@ -1,11 +1,6 @@
 import { Avatar as ChakraAvatar, useDisclosure } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import {
-  AvatarContainer,
-  AvatarInfo,
-  AvatarPopoverStack,
-  BackgroundOpacity,
-} from "./Avatar.styles";
+import { AvatarContainer, AvatarPopoverStack, BackgroundOpacity } from "./Avatar.styles";
 
 import {
   Popover,
@@ -56,7 +51,7 @@ export default function Avatar({ name, avatar_url }: AvatarProps) {
       <Popover isOpen={isOpen} onClose={onClose}>
         <AvatarContainer>
           <ChakraAvatar src={avatar_url} w={"48px"} />
-          <AvatarInfo>
+          <div>
             <p>Olá, {firstName}</p>
             <Link onClick={onToggle}>
               Minha conta <CaretDown weight="bold" />
@@ -64,7 +59,7 @@ export default function Avatar({ name, avatar_url }: AvatarProps) {
             <PopoverTrigger>
               <div></div>
             </PopoverTrigger>
-          </AvatarInfo>
+          </div>
         </AvatarContainer>
 
         <PopoverContent>
