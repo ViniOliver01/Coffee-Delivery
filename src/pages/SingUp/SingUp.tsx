@@ -65,7 +65,7 @@ export default function SingUp() {
 
   const toast = useToast();
   const navigation = useNavigate();
-  const { signUp } = useContext(AuthContext);
+  const { signUp, signIn } = useContext(AuthContext);
   const [error, setErrors] = useState("");
   const [isFetching, setIsFetching] = useState(false);
   const [passCheck, setPasswordCheck] = useState<PasswordChecks>({
@@ -94,7 +94,11 @@ export default function SingUp() {
         status: "success",
         duration: 10000,
       });
-      navigation("/login");
+      await signIn({
+        email: data.email,
+        password: data.password,
+        remember: data.remember,
+      });
     }
     setIsFetching(false);
   }
