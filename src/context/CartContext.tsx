@@ -59,11 +59,19 @@ interface IPurchaseResponse {
 }
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-  const [products_list, set_products_list] = useState<CartObjectType[]>([]);
+  const [products_list, set_products_list] = useState<CartObjectType[]>(
+    JSON.parse(localStorage.getItem("@coffee-delivery"))
+  );
   const [products_amount, set_products_amount] = useState(0);
   const [products_value, set_products_value] = useState(0);
   const [total_value, set_total_value] = useState(0);
   const [delivery_value, set_delivery_value] = useState(0);
+
+  useEffect(() => {
+    const products = JSON.stringify(products_list);
+    localStorage.setItem("@coffee-delivery", products);
+    calcProductsAmount();
+  }, [products_list]);
 
   function handleCheckObjectsState({ id, name, img, price, amount }: CartObjectType) {
     let newAmount: number;
@@ -114,6 +122,14 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     set_products_value(
       products_list.reduce((total, product) => {
         return total + product.price * product.amount;
+      }, 0)
+    );
+  }
+
+  function calcProductsAmount() {
+    set_products_amount(
+      products_list.reduce((total, product) => {
+        return total + product.amount;
       }, 0)
     );
   }
