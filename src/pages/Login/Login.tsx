@@ -45,7 +45,11 @@ export default function Login() {
   const navigation = useNavigate();
 
   async function onSubmit(data: FieldValues) {
-    const response = await signIn({ email: data.email, password: data.password });
+    const response = await signIn({
+      email: data.email,
+      password: data.password,
+      remember: data.remember,
+    });
 
     if (response.status === 401) {
       setErrors(response.message);

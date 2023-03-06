@@ -12,6 +12,7 @@ interface SignUpCredentials {
 interface SignInCredentials {
   email: string;
   password: string;
+  remember: boolean;
 }
 
 interface UpdatePersonalDataCredentials {
@@ -160,11 +161,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
   async function signIn({
     email,
     password,
+    remember,
   }: SignInCredentials): Promise<IStatusResponse> {
     try {
       const response = await api.post("/sessions", {
         email,
         password,
+        remember,
       });
 
       const { token, refresh_token, user } = response.data;
