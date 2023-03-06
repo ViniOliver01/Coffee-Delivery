@@ -121,11 +121,6 @@ export default function Purchases() {
                 </footer>
               </ModalCard>
             </ModalBody>
-
-            {/* <ModalFooter>
-              <button onClick={onClose}>Close</button>
-              <button>Secondary Action</button>
-            </ModalFooter> */}
           </ModalContent>
         </Modal>
         {purchasesList.length > 0 && (
