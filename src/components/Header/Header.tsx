@@ -1,3 +1,4 @@
+import { useToast } from "@chakra-ui/react";
 import { MapPin, X } from "phosphor-react";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -22,6 +23,7 @@ export function Header() {
   let { pathname } = useLocation();
   pathname = pathname.split("/")[1];
 
+  const toast = useToast();
   const { isAuthenticated, user, reeSendConfirmEmail } = useContext(AuthContext);
   const { products_amount, products_value } = useContext(CartContext);
   const [isEmailVerified, setIsEmailVerified] = useState(true);
@@ -38,9 +40,33 @@ export function Header() {
     navigation("/login");
   }
 
-  function ResendEmail() {
+  async function ResendEmail() {
     const { name, email } = user;
-    reeSendConfirmEmail({ name, email });
+
+    try {
+      const response = await reeSendConfirmEmail({ name, email });
+      console.log("🚀 / ResendEmail / response:", response);
+
+      if (response.status === 200) {
+        toast({
+          title: "Email enviado",
+          description: "Confirmação de email enviado. Favor verifique sua caixa de email",
+          status: "success",
+          duration: 10000,
+        });
+      }
+
+      if (response.status === 400) {
+        toast({
+          title: "Erro",
+          description:
+            "Erro ao enviar confirmação de email. Favor entre em contato com um administrador",
+          status: "error",
+          duration: 10000,
+        });
+      }
+    } catch (error) {}
+
     setIsEmailVerified(true);
   }
 
