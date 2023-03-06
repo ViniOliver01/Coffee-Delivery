@@ -75,7 +75,18 @@ export const AddressCard = styled.div`
     font-size: 1rem;
   }
   div {
+    display: flex;
+    align-items: center;
+    width: 100%;
     margin-top: 0.6rem;
+    div {
+      align-items: center;
+      justify-content: flex-end;
+      button {
+        margin-top: 0;
+        width: fit-content;
+      }
+    }
   }
   div > a {
     margin-top: 0.6rem;

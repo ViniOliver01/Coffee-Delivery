@@ -4,7 +4,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { IAddressesResponse, UserContext } from "../../../context/UserContext";
 
-import { Plus, SmileySad } from "phosphor-react";
+import { Plus, SmileySad, Trash } from "phosphor-react";
 import InputError from "../../../components/Error/Form/InputError";
 import { Input } from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
@@ -52,7 +52,8 @@ const schema = yup.object().shape({
 export default function Address() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  const { getAddresses, createAddress, updateAddress } = useContext(UserContext);
+  const { getAddresses, createAddress, updateAddress, deleteAddress } =
+    useContext(UserContext);
   const [addressList, setAddressList] = useState<IAddressesResponse[]>([]);
   const [addressId, setAddressId] = useState("");
   const [update, setUpdate] = useState(false);
@@ -151,6 +152,11 @@ export default function Address() {
     setValue("street", addressList[index].street);
   }
 
+  async function handleDeleteAddress(id: string) {
+    await deleteAddress(id);
+    setUpdate(!update);
+  }
+
   useEffect(() => {
     async function handleGet() {
       const data = await getAddresses();
@@ -178,6 +184,9 @@ export default function Address() {
                 </p>
                 <div>
                   <a onClick={() => handleOpenExistentAddress(index)}>Editar</a>
+                  <Button onClick={() => handleDeleteAddress(address.id)} color="red">
+                    <Trash size={20} />
+                  </Button>
                 </div>
               </AddressCard>
             );
@@ -190,8 +199,7 @@ export default function Address() {
           </>
         )}
         <div>
-          <Button onClick={handleAddNewAddress}>
-            <Plus weight="bold" />
+          <Button onClick={handleAddNewAddress} leftIcon={<Plus weight="bold" />}>
             <p>Novo endereço</p>
           </Button>
         </div>

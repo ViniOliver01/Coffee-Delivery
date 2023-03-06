@@ -6,11 +6,17 @@ interface UserContextData {
   getPurchases: () => Promise<IPurchasesResponse[]>;
   getAddresses: () => Promise<IAddressesResponse[]>;
   createAddress: (data: IAddressRequest) => Promise<IAddressRequest>;
+  deleteAddress: (id: string) => Promise<IStatusResponse>;
   updateAddress: (data: IUpdateAddressRequest) => Promise<IAddressRequest>;
 }
 
 interface UserProviderProps {
   children: ReactNode;
+}
+
+interface IStatusResponse {
+  status: number;
+  message: string;
 }
 
 interface ICartResponseProps {
@@ -115,6 +121,17 @@ export function UserProvider({ children }: UserProviderProps) {
     }
   }
 
+  async function deleteAddress(id: string): Promise<IStatusResponse> {
+    try {
+      const response = await api.post("/users/delete-address", {
+        id,
+      });
+      return response.data;
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
   async function updateAddress({
     id,
     cep,
@@ -148,6 +165,7 @@ export function UserProvider({ children }: UserProviderProps) {
         getPurchases,
         getAddresses,
         createAddress,
+        deleteAddress,
         updateAddress,
       }}
     >
