@@ -194,7 +194,11 @@ export default function Purchases() {
             </tbody>
           </Table>
         )}
-        <p>Nenhum pedido encontrado </p> <SmileySad size={32} />
+        {purchasesList.length === 0 && (
+          <>
+            <p>Nenhum pedido encontrado </p> <SmileySad size={32} />
+          </>
+        )}
       </Card>
     </Container>
   );
