@@ -60,7 +60,9 @@ interface IPurchaseResponse {
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const [products_list, set_products_list] = useState<CartObjectType[]>(
-    JSON.parse(localStorage.getItem("@coffee-delivery"))
+    JSON.parse(localStorage.getItem("@coffee-delivery")) === null
+      ? []
+      : JSON.parse(localStorage.getItem("@coffee-delivery"))
   );
   const [products_amount, set_products_amount] = useState(0);
   const [products_value, set_products_value] = useState(0);
