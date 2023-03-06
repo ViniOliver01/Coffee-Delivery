@@ -25,7 +25,7 @@ import { ShoppingContext } from "./../../../context/ShoppingContext";
 import { SpecItem, SpecList } from "./StyledComponents";
 
 const schema = yup.object().shape({
-  name: yup.string().strict(true).required("Nome obrigatório"),
+  name: yup.string().required("Nome obrigatório"),
 });
 
 interface InputFormData {
@@ -69,8 +69,8 @@ export default function SpecsList() {
     setConfirmModalIsOpen(false);
     setSelectSpec(null);
     clearErrors(["name"]);
-    onOpen();
     setValue("name", "");
+    onOpen();
   }
 
   async function handleDeleteSpecOpen(spec: ISpecListResponse) {
@@ -95,24 +95,41 @@ export default function SpecsList() {
     const { name } = data;
 
     if (selectSpec) {
-      await updateSpecName({
+      const response = await updateSpecName({
         id: selectSpec.id,
         name,
       });
-      toast({
-        title: "Dados atualizados.",
-        description: "Dados atualizados com sucesso.",
-        status: "success",
-        duration: 5000,
-      });
+
+      if (response.status === 400) {
+        toast({
+          title: response.message,
+          status: "error",
+          duration: 5000,
+        });
+      } else {
+        toast({
+          title: "Dados atualizados.",
+          description: "Dados atualizados com sucesso.",
+          status: "success",
+          duration: 5000,
+        });
+      }
     } else {
-      await createSpec(name);
-      toast({
-        title: "Especificação adicionada.",
-        description: "Especificação adicionada com sucesso.",
-        status: "success",
-        duration: 5000,
-      });
+      const response = await createSpec(name);
+      if (response.status === 400) {
+        toast({
+          title: response.message,
+          status: "error",
+          duration: 5000,
+        });
+      } else {
+        toast({
+          title: "Especificação adicionada.",
+          description: "Especificação adicionada com sucesso.",
+          status: "success",
+          duration: 5000,
+        });
+      }
     }
 
     onClose();
@@ -120,11 +137,11 @@ export default function SpecsList() {
   }
 
   useEffect(() => {
-    async function listCoffeesAndSpecs() {
+    async function listSpecs() {
       const SpecList = await getSpecs();
       setSpecs(SpecList);
     }
-    listCoffeesAndSpecs();
+    listSpecs();
   }, [refresh]);
 
   return (
@@ -162,9 +179,9 @@ export default function SpecsList() {
                   <Label>Nome da Especificação</Label>
                   <Input
                     type="text"
-                    {...register("name")}
                     defaultValue={selectSpec && selectSpec.name}
                     ref={initialRef}
+                    {...register("name")}
                   />
 
                   {errors.name && <InputError message={errors.name.message} />}
@@ -191,13 +208,15 @@ export default function SpecsList() {
               <h2>Nome</h2>
               <p>{spec.name}</p>
             </div>
-            <div>
-              <h2>Data de atualização</h2>
-              <p>{formatDate(spec.updated_at)}</p>
-            </div>
+
             <div>
               <h2>Data de criação</h2>
               <p>{formatDate(spec.created_at)}</p>
+            </div>
+
+            <div>
+              <h2>Data de atualização</h2>
+              <p>{formatDate(spec.updated_at)}</p>
             </div>
 
             <Button onClick={() => handleDeleteSpecOpen(spec)} color="red">
