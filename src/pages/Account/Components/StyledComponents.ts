@@ -22,10 +22,9 @@ interface CardProps {
 }
 
 export const Card = styled.div`
-  display: ${(props: CardProps) => props.display};
+  display: flex;
   flex-direction: column;
   align-items: center;
-  grid-template-columns: repeat(2, 1fr);
   padding: ${(props: CardProps) => props.padding};
   min-width: 400px;
   width: fit-content;
@@ -41,6 +40,21 @@ export const Card = styled.div`
   form {
     width: 100%;
   }
+  div {
+  }
+`;
+
+export const AddressCardList = styled.div`
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(2, 1fr);
+  min-width: 400px;
+  width: fit-content;
+  max-width: 600px;
+  border-radius: 6px 44px 6px 44px;
+  background-color: ${defaultTheme["base-card"]};
+  gap: 0.75rem;
+  margin: auto;
 `;
 
 export const AddressCard = styled.div`

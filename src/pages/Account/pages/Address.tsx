@@ -4,7 +4,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { IAddressesResponse, UserContext } from "../../../context/UserContext";
 
-import { Plus } from "phosphor-react";
+import { Plus, SmileySad } from "phosphor-react";
 import InputError from "../../../components/Error/Form/InputError";
 import { Input } from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
@@ -23,6 +23,7 @@ import Button from "../../../components/Form/Button";
 import {
   AddressBox,
   AddressCard,
+  AddressCardList,
   Card,
   Container,
   Title,
@@ -162,34 +163,43 @@ export default function Address() {
   return (
     <Container>
       <Title>Endereços de entrega</Title>
-      <Card display="grid" padding="20px 30px">
-        {addressList.map((address, index) => {
-          return (
-            <AddressCard key={address.id}>
-              <h2>{address.name}</h2>
-              <p>
-                {address.street}, {address.number}
-              </p>
-              <p>
-                {address.city} - {address.state}, CEP: {address.cep}
-              </p>
-              <div>
-                <a onClick={() => handleOpenExistentAddress(index)}>Editar</a>
-              </div>
-              {/* <Button onClick={onOpen}>Open Modal</Button> */}
-            </AddressCard>
-          );
-        })}
 
-        <Button onClick={handleAddNewAddress}>
-          <Plus weight="bold" />
-          Novo endereço
-        </Button>
+      <Card display="flex" padding="20px 30px">
+        <AddressCardList>
+          {addressList.map((address, index) => {
+            return (
+              <AddressCard key={address.id}>
+                <h2>{address.name}</h2>
+                <p>
+                  {address.street}, {address.number}
+                </p>
+                <p>
+                  {address.city} - {address.state}, CEP: {address.cep}
+                </p>
+                <div>
+                  <a onClick={() => handleOpenExistentAddress(index)}>Editar</a>
+                </div>
+              </AddressCard>
+            );
+          })}
+        </AddressCardList>
+        {addressList.length === 0 && (
+          <>
+            <p>Nenhum endereço encontrado</p>
+            <SmileySad size={32} />
+          </>
+        )}
+        <div>
+          <Button onClick={handleAddNewAddress}>
+            <Plus weight="bold" />
+            <p>Novo endereço</p>
+          </Button>
+        </div>
       </Card>
+
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
         <ModalContent>
-          {/* <ModalHeader>Modal Title</ModalHeader> */}
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody>
               <AddressBox>
