@@ -7,10 +7,11 @@ import { useContext, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 import FormError from "../../../components/Error/Form/FormError";
-import InputError from "../../../components/Error/Form/InputError";
 import Button from "../../../components/Form/Button";
 import { PasswordInputBox } from "../../../components/Form/PasswordInputBox";
+import VerifyPassword from "../../../components/VerifyPassword/VerifyPassword";
 import { AuthContext } from "../../../context/AuthContext";
+import { verifyPassword } from "../../../utils/verifyPassword";
 import { LabelBox } from "./../../../components/Form/LabelBox";
 import { Card, Container, Title } from "./../Components/StyledComponents";
 
@@ -20,6 +21,13 @@ interface InputFormData {
   confirm_new_password: string;
 }
 
+interface PasswordChecks {
+  min_characters: boolean;
+  min_numbers: boolean;
+  min_lowercase: boolean;
+  min_uppercase: boolean;
+}
+
 const schema = yup.object().shape({
   old_password: yup.string().strict(true).required("Senha antiga obrigatória"),
   new_password: yup
@@ -27,9 +35,9 @@ const schema = yup.object().shape({
     .strict(true)
     .required("Senha obrigatória") //(?=.*[!@#\$%\^&\*]) regex special
     .matches(/^(?=.{8,})/, "A senha deve conter no mínimo 8 caracteres")
-    .matches(/^(?=.*[a-z])/, "One Uppercase")
-    .matches(/^(?=.*[A-Z])/, "One Uppercase")
-    .matches(/^(?=.*[0-9])/, "One Number"),
+    .matches(/^(?=.*[a-z])/, "A senha deve conter no mínimo 1 letra minuscula")
+    .matches(/^(?=.*[A-Z])/, "A senha deve conter no mínimo 1 letra maiúscula")
+    .matches(/^(?=.*[0-9])/, "A senha deve conter no mínimo 1 número"),
   confirm_new_password: yup
     .string()
     .strict(true)
@@ -41,6 +49,7 @@ export default function ChangePassword() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<InputFormData>({
     resolver: yupResolver(schema),
@@ -48,11 +57,17 @@ export default function ChangePassword() {
   });
 
   const { changePassword } = useContext(AuthContext);
-  const [error, setErrors] = useState("");
+  const [error, setErrors] = useState(undefined);
 
   const [showOldPass, setShowOldPass] = useState(false);
   const [showNewPass, setShowNewPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
+  const [passCheck, setPasswordCheck] = useState<PasswordChecks>({
+    min_characters: false,
+    min_lowercase: false,
+    min_numbers: false,
+    min_uppercase: false,
+  });
 
   function handlePasswordView(
     type: "old_password" | "new_password" | "confirm_new_password"
@@ -78,9 +93,14 @@ export default function ChangePassword() {
     });
 
     if (response.status === 400) {
-      setErrors("Senha invalida");
+      setErrors(response.message);
     }
   }
+
+  watch((data) => {
+    const passCheck = verifyPassword(data.new_password);
+    setPasswordCheck(passCheck);
+  });
 
   return (
     <Container>
@@ -93,13 +113,17 @@ export default function ChangePassword() {
               <Input
                 type={showOldPass ? "text" : "password"}
                 {...register("old_password")}
+                error={!!errors.old_password}
               />
-              <button type="button" onClick={() => handlePasswordView("old_password")}>
+              <button
+                type="button"
+                onClick={() => handlePasswordView("old_password")}
+                tabIndex={-1}
+              >
                 {showOldPass ? <EyeSlash /> : <Eye />}
               </button>
             </PasswordInputBox>
-            {errors.old_password && <InputError message={errors.old_password.message} />}
-            {error && <FormError message={error} />}
+            <FormError message={error} />
           </LabelBox>
 
           <LabelBox>
@@ -108,12 +132,17 @@ export default function ChangePassword() {
               <Input
                 type={showNewPass ? "text" : "password"}
                 {...register("new_password")}
+                error={!!errors.new_password}
               />
-              <button type="button" onClick={() => handlePasswordView("new_password")}>
+              <button
+                type="button"
+                onClick={() => handlePasswordView("new_password")}
+                tabIndex={-1}
+              >
                 {showNewPass ? <EyeSlash /> : <Eye />}
               </button>
             </PasswordInputBox>
-            {errors.new_password && <InputError message={errors.new_password.message} />}
+            <VerifyPassword check={passCheck} redErrorMessage={!!errors.new_password} />
           </LabelBox>
 
           <LabelBox>
@@ -122,18 +151,18 @@ export default function ChangePassword() {
               <Input
                 type={showConfirmPass ? "text" : "password"}
                 {...register("confirm_new_password")}
+                error={!!errors.confirm_new_password}
               />
               <button
                 type="button"
                 onClick={() => handlePasswordView("confirm_new_password")}
+                tabIndex={-1}
               >
                 {showConfirmPass ? <EyeSlash /> : <Eye />}
               </button>
             </PasswordInputBox>
 
-            {errors.confirm_new_password && (
-              <InputError message={errors.confirm_new_password.message} />
-            )}
+            <FormError message={errors.confirm_new_password?.message} />
           </LabelBox>
 
           <Button type="submit">Salvar</Button>

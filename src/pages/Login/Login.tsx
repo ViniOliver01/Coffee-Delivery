@@ -41,7 +41,7 @@ export default function Login() {
   });
 
   const { signIn, isAuthenticated } = useContext(AuthContext);
-  const [error, setErrors] = useState("");
+  const [error, setErrors] = useState(undefined);
   const navigation = useNavigate();
 
   async function onSubmit(data: FieldValues) {
@@ -86,7 +86,7 @@ export default function Login() {
             <Input type="password" {...register("password")} />
           </LabelBox>
 
-          {error && <FormError message={error} />}
+          <FormError message={error} />
 
           <Options>
             <Checkbox defaultChecked {...register("remember")}>

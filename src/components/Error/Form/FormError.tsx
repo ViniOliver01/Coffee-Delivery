@@ -23,15 +23,14 @@ interface FormErrorProps {
 }
 
 export default function FormError(error: FormErrorProps) {
-  console.log("🚀 / FormError / error:", error);
   return (
-    <Container>
-      <Collapse in={error.message != undefined} animateOpacity>
+    <Collapse in={error.message != undefined} animateOpacity>
+      <Container>
         <ErrorBox>
           <MdError size={24} />
           <p>{error.message}</p>
         </ErrorBox>
-      </Collapse>
-    </Container>
+      </Container>
+    </Collapse>
   );
 }

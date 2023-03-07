@@ -16,6 +16,7 @@ export const Title = styled.h3`
 
 interface LabelProps {
   isCheck: boolean;
+  showError: boolean;
 }
 export const LabelContainer = styled.div`
   display: flex;
@@ -25,8 +26,12 @@ export const LabelContainer = styled.div`
   border-radius: 8px;
   width: fit-content;
 
-  background-color: ${({ isCheck }: LabelProps) =>
-    isCheck ? defaultTheme["green-light"] : defaultTheme["base-button"]};
+  background-color: ${({ isCheck, showError }: LabelProps) =>
+    isCheck
+      ? defaultTheme["green-light"]
+      : showError
+      ? defaultTheme["red-light"]
+      : defaultTheme["base-button"]};
 
   p {
     font-size: 1rem !important;
@@ -35,6 +40,7 @@ export const LabelContainer = styled.div`
     color: ${defaultTheme["base-text"]};
   }
   svg {
-    color: ${defaultTheme.green};
+    color: ${({ isCheck, showError }: LabelProps) =>
+      isCheck ? defaultTheme.green : showError && defaultTheme.red};
   }
 `;

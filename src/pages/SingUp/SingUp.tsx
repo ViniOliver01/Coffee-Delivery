@@ -8,7 +8,6 @@ import * as yup from "yup";
 import YupPassword from "yup-password";
 import Divider from "../../components/Divider";
 import FormError from "../../components/Error/Form/FormError";
-import InputError from "../../components/Error/Form/InputError";
 import Button from "../../components/Form/Button";
 import { Card } from "../../components/Form/Card";
 import GoogleButton from "../../components/Form/GoogleButton";
@@ -60,13 +59,13 @@ export default function SingUp() {
     formState: { errors },
   } = useForm<InputFormData>({
     resolver: yupResolver(schema),
-    mode: "onChange",
+    mode: "onBlur",
   });
 
   const toast = useToast();
   const navigation = useNavigate();
   const { signUp, signIn } = useContext(AuthContext);
-  const [error, setErrors] = useState("");
+  const [error, setErrors] = useState(undefined);
   const [isFetching, setIsFetching] = useState(false);
   const [passCheck, setPasswordCheck] = useState<PasswordChecks>({
     min_characters: false,
@@ -118,29 +117,33 @@ export default function SingUp() {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <LabelBox>
             <Label>Nome</Label>
-            <Input type="text" {...register("name")} />
+            <Input type="text" {...register("name")} error={!!errors.name} />
+            <FormError message={errors.name?.message} />
           </LabelBox>
 
           <LabelBox>
             <Label>Email</Label>
-            <Input type="email" {...register("email")} />
+            <Input type="email" {...register("email")} error={!!errors.email} />
+            <FormError message={errors.email?.message} />
           </LabelBox>
 
           <LabelBox>
             <Label>Senha</Label>
-            <Input type="password" {...register("password")} />
-            <VerifyPassword check={passCheck} />
+            <Input type="password" {...register("password")} error={!!errors.password} />
+            <VerifyPassword check={passCheck} redErrorMessage={!!errors.password} />
           </LabelBox>
 
           <LabelBox>
             <Label>Confirmar senha</Label>
-            <Input type="password" {...register("passwordConfirmation")} />
-            {errors.passwordConfirmation && (
-              <InputError message={errors.passwordConfirmation.message} />
-            )}
+            <Input
+              type="password"
+              {...register("passwordConfirmation")}
+              error={!!errors.passwordConfirmation}
+            />
+            <FormError message={errors.passwordConfirmation?.message} />
           </LabelBox>
 
-          {error && <FormError message={error} />}
+          <FormError message={error} />
 
           <Button type="submit" isLoading={isFetching}>
             Criar conta

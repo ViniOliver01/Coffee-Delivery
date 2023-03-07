@@ -8,20 +8,29 @@ interface VerifyPasswordProps {
     min_lowercase: boolean;
     min_numbers: boolean;
   };
+  redErrorMessage?: boolean;
 }
 
-export default function VerifyPassword({ check }: VerifyPasswordProps) {
+export default function VerifyPassword({ check, redErrorMessage }: VerifyPasswordProps) {
   return (
     <Container>
       <Title>A senha deve conter no mínimo:</Title>
 
-      <VerifyLabel isCheck={check.min_characters}>8 caracteres</VerifyLabel>
+      <VerifyLabel isCheck={check.min_characters} showError={redErrorMessage}>
+        8 caracteres
+      </VerifyLabel>
 
-      <VerifyLabel isCheck={check.min_uppercase}>1 letra maiúscula</VerifyLabel>
+      <VerifyLabel isCheck={check.min_uppercase} showError={redErrorMessage}>
+        1 letra maiúscula
+      </VerifyLabel>
 
-      <VerifyLabel isCheck={check.min_lowercase}>1 letra minuscula</VerifyLabel>
+      <VerifyLabel isCheck={check.min_lowercase} showError={redErrorMessage}>
+        1 letra minuscula
+      </VerifyLabel>
 
-      <VerifyLabel isCheck={check.min_numbers}>1 número</VerifyLabel>
+      <VerifyLabel isCheck={check.min_numbers} showError={redErrorMessage}>
+        1 número
+      </VerifyLabel>
     </Container>
   );
 }

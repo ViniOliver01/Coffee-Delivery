@@ -2,11 +2,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
-import InputError from "../../../components/Error/Form/InputError";
 
 import { Avatar, useToast } from "@chakra-ui/react";
 import { Pencil } from "phosphor-react";
 import { ChangeEvent } from "react";
+import FormError from "../../../components/Error/Form/FormError";
 import { Input } from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
 import { MaskedInput } from "../../../components/Form/MaskedInput";
@@ -32,13 +32,20 @@ interface InputFormData {
 
 const schema = yup.object().shape({
   name: yup.string().strict(true).required("Nome obrigatório"),
-  email: yup.string().strict(true).required("E-mail obrigatório"),
-  phone: yup.string().strict(true).required("Número de telefone obrigatório"),
+  email: yup
+    .string()
+    .strict(true)
+    .required("E-mail obrigatório")
+    .email("Tipo de e-mail invalido"),
+  phone: yup
+    .string()
+    .strict(true)
+    .required("Número de telefone obrigatório")
+    .length(11, "Número de telefone inválido"),
 });
 
 export default function MyAccount() {
-  const { isAuthenticated, user, updatePersonalData, updateAvatar } =
-    useContext(AuthContext);
+  const { user, updatePersonalData, updateAvatar } = useContext(AuthContext);
 
   const [avatarFile, setAvatarFile] = useState<File>(null);
   const [selectedImage, setSelectedImage] = useState(user.avatar_url);
@@ -53,22 +60,23 @@ export default function MyAccount() {
     formState: { errors },
   } = useForm<InputFormData>({
     resolver: yupResolver(schema),
-    mode: "onSubmit",
+    mode: "onBlur",
   });
-  console.log("🚀 / MyAccount / errors", errors);
 
   function handleSetImage(event: ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
+
     const reader = new FileReader();
     const file = event.target.files[0];
+
     reader.onloadend = () => {
       const imagePreviewUrl = reader.result.toString();
-
       setSelectedImage(imagePreviewUrl);
     };
-    reader.readAsDataURL(file);
 
+    reader.readAsDataURL(file);
     setAvatarFile(file);
+
     toast({
       title: "Imagem carregada.",
       description: "Imagem carregada com sucesso.",
@@ -78,16 +86,14 @@ export default function MyAccount() {
   }
 
   async function onSubmit(data: FieldValues) {
-    console.log("🚀 / onSubmit / data", data);
-
     await updatePersonalData({ name: data.name, email: data.email, phone: phoneNumber });
 
     if (avatarFile) {
       let dataForm = new FormData();
       dataForm.append("avatar", avatarFile, avatarFile.name);
-
       updateAvatar(dataForm);
     }
+
     toast({
       title: "Dados atualizados.",
       description: "Dados atualizados com sucesso.",
@@ -95,6 +101,7 @@ export default function MyAccount() {
       duration: 5000,
     });
   }
+
   useEffect(() => {
     setValue("phone", phoneNumber);
   }, [phoneNumber]);
@@ -119,17 +126,17 @@ export default function MyAccount() {
         <h3>Dados Pessoais</h3>
         <Divider />
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <LabelBox>
             <Label>Nome</Label>
             <Input type="text" {...register("name")} defaultValue={user.name} />
-            {errors.name && <InputError message={errors.name.message} />}
+            <FormError message={errors.name?.message} />
           </LabelBox>
 
           <LabelBox>
             <Label>E-mail</Label>
             <Input type="email" {...register("email")} defaultValue={user.email} />
-            {errors.email && <InputError message={errors.email.message} />}
+            <FormError message={errors.email?.message} />
           </LabelBox>
 
           <LabelBox>
@@ -141,7 +148,7 @@ export default function MyAccount() {
               onValueChange={(e) => setPhoneNumber(e)}
               {...register("phone")}
             />
-            {errors.phone && <InputError message={errors.phone.message} />}
+            <FormError message={errors.phone?.message} />
           </LabelBox>
 
           <Button type="submit">Salvar</Button>
