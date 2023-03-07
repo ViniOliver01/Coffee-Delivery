@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { IAddressesResponse, UserContext } from "../../../context/UserContext";
 
 import { Plus, SmileySad, Trash } from "phosphor-react";
-import InputError from "../../../components/Error/Form/InputError";
 import { Input } from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
 import { LabelBox } from "../../../components/Form/LabelBox";
@@ -19,6 +18,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import FormError from "../../../components/Error/Form/FormError";
 import Button from "../../../components/Form/Button";
 import {
   AddressBox,
@@ -213,48 +213,52 @@ export default function Address() {
               <AddressBox>
                 <LabelBox id="nomeEndereco">
                   <Label>Nome do endereço</Label>
-                  <Input type="text" {...register("addressName")} />
-                  {errors.addressName && (
-                    <InputError message={errors.addressName.message} />
-                  )}
+                  <Input
+                    type="text"
+                    {...register("addressName")}
+                    error={!!errors.addressName}
+                  />
+                  <FormError message={errors.addressName?.message} />
                 </LabelBox>
 
                 <LabelBox id="cep">
                   <Label>Cep</Label>
-                  <Input type="text" {...register("cep")} />
-                  {errors.cep && <InputError message={errors.cep.message} />}
+                  <Input type="text" {...register("cep")} error={!!errors.cep} />
+                  <FormError message={errors.cep?.message} />
                 </LabelBox>
 
                 <LabelBox id="cidade">
                   <Label>Cidade</Label>
-                  <Input type="text" {...register("city")} />
-                  {errors.city && <InputError message={errors.city.message} />}
+                  <Input type="text" {...register("city")} error={!!errors.city} />
+                  <FormError message={errors.city?.message} />
                 </LabelBox>
 
                 <LabelBox id="estado">
                   <Label>Estado</Label>
-                  <Input type="text" {...register("state")} />
-                  {errors.state && <InputError message={errors.state.message} />}
+                  <Input type="text" {...register("state")} error={!!errors.state} />
+                  <FormError message={errors.state?.message} />
                 </LabelBox>
 
                 <LabelBox id="rua">
                   <Label>Rua</Label>
-                  <Input type="text" {...register("street")} />
-                  {errors.street && <InputError message={errors.street.message} />}
+                  <Input type="text" {...register("street")} error={!!errors.street} />
+                  <FormError message={errors.street?.message} />
                 </LabelBox>
 
                 <LabelBox id="numero">
                   <Label>Número</Label>
-                  <Input type="text" {...register("number")} />
-                  {errors.number && <InputError message={errors.number.message} />}
+                  <Input type="text" {...register("number")} error={!!errors.number} />
+                  <FormError message={errors.number?.message} />
                 </LabelBox>
 
                 <LabelBox id="complemento">
                   <Label opcional>Complemento</Label>
-                  <Input type="text" {...register("complement")} />
-                  {errors.complement && (
-                    <InputError message={errors.complement.message} />
-                  )}
+                  <Input
+                    type="text"
+                    {...register("complement")}
+                    error={!!errors.complement}
+                  />
+                  <FormError message={errors.complement?.message} />
                 </LabelBox>
               </AddressBox>
             </ModalBody>
