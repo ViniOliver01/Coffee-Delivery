@@ -102,10 +102,10 @@ export const AddressBox = styled.div`
   padding-block: 1rem;
   grid-template-areas:
     "nomeEndereco nomeEndereco nomeEndereco nomeEndereco"
-    "cep _ _ _"
+    "cep cep _ _"
     "cidade cidade estado estado"
     "rua rua rua rua"
-    "numero complemento complemento complemento";
+    "numero numero complemento complemento";
   grid-template-rows: repeat(5, 1fr);
   grid-template-columns: repeat(4, 20%);
   column-gap: 1rem;
