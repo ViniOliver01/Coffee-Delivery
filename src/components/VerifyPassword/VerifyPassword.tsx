@@ -12,6 +12,11 @@ interface VerifyPasswordProps {
 }
 
 export default function VerifyPassword({ check, redErrorMessage }: VerifyPasswordProps) {
+<<<<<<< HEAD
+=======
+  console.log("🚀 / VerifyPassword / error:", redErrorMessage);
+
+>>>>>>> e6d0fe1b3dd9dc52ed7eed72a50cc423fbaafbf8
   return (
     <Container>
       <Title>A senha deve conter no mínimo:</Title>
