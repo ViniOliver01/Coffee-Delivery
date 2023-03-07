@@ -13,6 +13,7 @@ import {
   CartList,
   Container,
   HeaderItem,
+  NoAddressMessage,
   PaymentBox,
   PaymentButton,
   PaymentButtonList,
@@ -25,6 +26,7 @@ import Button from "../../components/Form/Button";
 import { CartContext } from "../../context/CartContext";
 import { IAddressesResponse, UserContext } from "../../context/UserContext";
 import { formatCurrency } from "../../utils/format";
+import { Link } from "./../../components/Form/Link";
 import { CartItem } from "./components/CartItemList/CartItem";
 
 export function Checkout() {
@@ -89,6 +91,10 @@ export function Checkout() {
     }
   }
 
+  function GoToAddress() {
+    navigation("/account/address");
+  }
+
   useEffect(() => {
     async function listAddresses() {
       const data = await getAddresses();
@@ -109,10 +115,20 @@ export function Checkout() {
             </div>
           </HeaderItem>
           {addressList.length > 0 ? (
-            <p>
-              Para editar seus endereços clique <a href="/account/address">AQUI</a>
-            </p>
-          ) : null}
+            <NoAddressMessage>
+              <p> Para editar seus endereços vá para</p>
+              <Link onClick={GoToAddress}>meus endereços</Link>
+            </NoAddressMessage>
+          ) : (
+            <div className="noAddresses">
+              <SmileySad size={32} />
+              <NoAddressMessage>
+                <p>Você ainda não tem um endereço cadastrado, </p>
+                <p>para cadastrar vá até </p>
+                <Link onClick={GoToAddress}>meus endereços</Link>
+              </NoAddressMessage>
+            </div>
+          )}
 
           <div>
             {addressList.map((address, index) => {
@@ -133,16 +149,6 @@ export function Checkout() {
                 </AddressItem>
               );
             })}
-            {addressList.length == 0 ? (
-              <div className="noAddresses">
-                <SmileySad size={32} />
-                <h2>
-                  Você ainda não tem um endereço cadastrado, vá até
-                  <a href="/account/address"> Meus endereços </a>e adicione um novo
-                  endereço
-                </h2>
-              </div>
-            ) : null}
           </div>
         </AddressBox>
 

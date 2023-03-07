@@ -42,6 +42,17 @@ export const HeaderItem = styled.div`
   }
 `;
 
+export const NoAddressMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  text-align: center;
+`;
+
 export const AddressBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -50,14 +61,13 @@ export const AddressBox = styled.div`
   padding: 2rem;
 
   & > p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
     width: 100%;
     margin-bottom: 1rem;
     text-align: center;
-    a {
-      &:hover {
-        color: ${defaultTheme.purple};
-      }
-    }
   }
 
   .noAddresses {
