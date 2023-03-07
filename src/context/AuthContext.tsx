@@ -295,14 +295,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         new_password,
         confirm_new_password,
       });
+      console.log("🚀 / AuthProvider / response:", response);
 
-      if (response.status === 400) {
-        return { message: response.data.message, status: 400 };
-      }
+      return { message: response.data.message, status: response.status };
     } catch (error) {
       console.warn("🚀 / changePassword / error", error);
     }
-    return { message: "Success", status: 201 };
   }
 
   async function sendEmailResetPassword(email: string): Promise<IStatusResponse> {
