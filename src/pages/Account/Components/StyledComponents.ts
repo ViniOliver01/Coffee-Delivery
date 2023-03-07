@@ -1,6 +1,40 @@
 import styled from "styled-components";
 import defaultTheme from "../../../styles/themes/Default";
 
+export const SideBarLink = styled.li`
+  list-style-type: none;
+`;
+
+export const SideBarNav = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+export const SideBarCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2rem;
+  width: fit-content;
+  margin-top: 4rem;
+  height: fit-content;
+  border-radius: 6px 44px 6px 44px;
+  background-color: ${defaultTheme["base-card"]};
+  gap: 0.5rem;
+
+  h2 {
+    margin-top: 0.5rem;
+    color: ${defaultTheme["base-label"]};
+    font-size: 1rem;
+
+    a {
+      color: ${defaultTheme.purple};
+      font-size: 1rem;
+    }
+  }
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;

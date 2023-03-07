@@ -1,88 +1,48 @@
 import { ClipboardText, IdentificationCard, Key, Truck } from "phosphor-react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useLocation } from "react-router-dom";
-import styled from "styled-components";
 import NavLink from "../../../components/Form/NavLink";
 import { AuthContext } from "../../../context/AuthContext";
-import defaultTheme from "../../../styles/themes/Default";
+import { SideBarCard, SideBarLink, SideBarNav } from "./StyledComponents";
 
-interface SidebarProps {
-  onClick: (page: string | undefined) => void;
-}
-
-const Link = styled.li`
-  list-style-type: none;
-`;
-
-const Nav = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 2rem;
-  width: fit-content;
-  margin-top: 4rem;
-  height: fit-content;
-  border-radius: 6px 44px 6px 44px;
-  background-color: ${defaultTheme["base-card"]};
-  gap: 0.5rem;
-
-  h2 {
-    margin-top: 0.5rem;
-    color: ${defaultTheme["base-label"]};
-    font-size: 1rem;
-
-    a {
-      color: ${defaultTheme.purple};
-      font-size: 1rem;
-    }
-  }
-`;
-
-export default function Sidebar({ onClick }: SidebarProps) {
-  const [button, setButton] = useState("MyAccount");
+export default function Sidebar() {
   const { user } = useContext(AuthContext);
   const { pathname } = useLocation();
 
   const [, path] = pathname.toLowerCase().split("/account");
 
   return (
-    <Card>
+    <SideBarCard>
       <div>
         <h2>Bem vindo(a)</h2>
-        <h2>{user.name}</h2>
+        <h1>{user.name}</h1>
       </div>
-      <Nav>
-        <Link>
+      <SideBarNav>
+        <SideBarLink>
           <NavLink link={""} active={(path === "/" || path === "") && true}>
             <IdentificationCard size={32} weight="fill" />
             Minha conta
           </NavLink>
-        </Link>
-        <Link>
+        </SideBarLink>
+        <SideBarLink>
           <NavLink link={"changepassword"} active={path === "/changepassword" && true}>
             <Key size={32} weight="fill" />
             Alterar senha
           </NavLink>
-        </Link>
-        <Link>
+        </SideBarLink>
+        <SideBarLink>
           <NavLink link={"address"} active={path === "/address" && true}>
             <Truck size={32} weight="fill" />
             Endereços de entrega
           </NavLink>
-        </Link>
-        <Link>
+        </SideBarLink>
+        <SideBarLink>
           <NavLink link={"purchases"} active={path === "/purchases" && true}>
             <ClipboardText size={32} weight="fill" />
             Meus pedidos
           </NavLink>
-        </Link>
-      </Nav>
-    </Card>
+        </SideBarLink>
+      </SideBarNav>
+    </SideBarCard>
   );
 }
