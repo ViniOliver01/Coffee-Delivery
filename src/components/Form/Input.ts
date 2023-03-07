@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import defaultTheme from "../../styles/themes/Default";
 
+interface InputProps {
+  error?: boolean;
+}
+
 export const Input = styled.input`
   background-color: ${defaultTheme["base-input"]};
-  border: 2px solid ${defaultTheme.purple};
+  border: 2px solid
+    ${({ error }: InputProps) => (error ? defaultTheme.red : defaultTheme.purple)};
   border-radius: 6px;
   height: 2.2rem;
   padding: 0.5rem;
@@ -13,6 +18,8 @@ export const Input = styled.input`
   color: ${defaultTheme["base-text"]};
 
   &:focus {
-    outline: 2px solid ${defaultTheme.purple};
+    border: 2px solid ${defaultTheme.purple};
+    outline: 2px solid
+      ${({ error }: InputProps) => (error ? defaultTheme.purple : defaultTheme.purple)};
   }
 `;
