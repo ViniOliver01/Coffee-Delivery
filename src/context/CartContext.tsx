@@ -1,5 +1,6 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { api } from "../services/apiClient";
+import { AuthContext } from "./AuthContext";
 
 export const CartContext = createContext({} as CartContextType);
 
@@ -32,15 +33,6 @@ interface CartObjectType {
   amount: number;
 }
 
-interface FinishCartProps {
-  address_id: string;
-  delivery_value: number;
-  cart: {
-    coffee_id: string;
-    quantity: number;
-  }[];
-}
-
 interface IPurchaseResponse {
   id: string;
   purchase_id: string;
@@ -59,19 +51,32 @@ interface IPurchaseResponse {
 }
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-  const [products_list, set_products_list] = useState<CartObjectType[]>(
-    JSON.parse(localStorage.getItem("@coffee-delivery")) === null
-      ? []
-      : JSON.parse(localStorage.getItem("@coffee-delivery"))
-  );
+  const { isAuthenticated } = useContext(AuthContext);
+  console.log("🚀 / CartContextProvider / isAuthenticated:", isAuthenticated);
+
+  const [products_list, set_products_list] = useState<CartObjectType[]>([]);
+
   const [products_amount, set_products_amount] = useState(0);
   const [products_value, set_products_value] = useState(0);
   const [total_value, set_total_value] = useState(0);
   const [delivery_value, set_delivery_value] = useState(0);
 
   useEffect(() => {
-    const products = JSON.stringify(products_list);
-    localStorage.setItem("@coffee-delivery", products);
+    if (localStorage.getItem("@coffee-delivery") == null) {
+      localStorage.setItem("@coffee-delivery", "[]");
+    }
+
+    let get = JSON.parse(localStorage.getItem("@coffee-delivery"));
+
+    if (products_list.length === 0 && get.length > 0) {
+      set_products_list(get);
+    }
+
+    if (products_list !== get) {
+      const products = JSON.stringify(products_list);
+      localStorage.setItem("@coffee-delivery", products);
+    }
+
     calcProductsAmount();
   }, [products_list]);
 
