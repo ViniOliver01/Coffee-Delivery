@@ -4,18 +4,24 @@ import { ButtonContainer } from "./Button.styles";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
-  variant?: "solid" | "outline";
   isLoading?: boolean;
   isDisabled?: boolean;
   loadingText?: string;
   leftIcon?: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   rightIcon?: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+
+  //styles
+  variant?: "solid" | "outline";
   color?: "purple" | "gray" | "green" | "green-light" | "red";
   fontSize?: string;
+  paddingInline?: string;
+  paddingBlock?: string;
 }
 
 /**
  * @param fontSize value in pixels, rem or em
+ * @param paddingInline value in pixels, rem or em
+ * @param paddingBlock value in pixels, rem or em
  * @returns button component
  */
 
@@ -29,6 +35,8 @@ export default function Button({
   color,
   loadingText = "Carregando...",
   fontSize = "1rem",
+  paddingInline = "",
+  paddingBlock = "",
   ...props
 }: ButtonProps) {
   return (
@@ -43,6 +51,8 @@ export default function Button({
         leftIcon={leftIcon}
         rightIcon={rightIcon}
         fontSize={fontSize}
+        paddingBlock={paddingBlock}
+        paddingInline={paddingInline}
         _hover={{ transform: "scale(1.05)" }}
         {...props}
       >
