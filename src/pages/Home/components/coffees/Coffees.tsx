@@ -54,9 +54,9 @@ export function Coffees({
     setTimeout(() => {
       setIsLoading(false);
       setIsFinishLoading(true);
+      addItem();
       setTimeout(() => {
         setIsFinishLoading(false);
-        addItem();
       }, 1500);
     }, 800);
   }
