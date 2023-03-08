@@ -39,7 +39,7 @@ interface ButtonProps {
   color: "purple" | "gray" | "green" | "green-light" | "red";
 }
 
-export const Container = styled.div`
+export const ButtonContainer = styled.div`
   width: 100%;
   button {
     background-color: ${(props: ButtonProps) => handleBackgroundColor(props)};
@@ -62,5 +62,19 @@ export const Container = styled.div`
     div > div {
       font-size: 1.3rem;
     }
+  }
+`;
+interface LinkProps {
+  active?: boolean;
+}
+
+export const NavLinkContainer = styled.button`
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    color: ${(props: LinkProps) =>
+      props.active ? defaultTheme.purple : defaultTheme["base-text"]};
   }
 `;

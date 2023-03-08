@@ -1,6 +1,6 @@
 import { Button as ChakraButton } from "@chakra-ui/react";
 import { ButtonHTMLAttributes, ReactNode } from "react";
-import { Container } from "./Button.styles";
+import { ButtonContainer } from "./Button.styles";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -32,7 +32,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   return (
-    <Container color={color}>
+    <ButtonContainer color={color}>
       <ChakraButton
         variant={variant}
         isDisabled={isDisabled}
@@ -48,6 +48,6 @@ export default function Button({
       >
         {children}
       </ChakraButton>
-    </Container>
+    </ButtonContainer>
   );
 }

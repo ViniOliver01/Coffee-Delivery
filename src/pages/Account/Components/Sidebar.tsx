@@ -1,7 +1,7 @@
 import { ClipboardText, IdentificationCard, Key, Truck } from "phosphor-react";
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
-import NavLink from "../../../components/Form/NavLink";
+import NavLink from "../../../components/Form/Button/NavLink";
 import { AuthContext } from "../../../context/AuthContext";
 import { SideBarCard, SideBarLink, SideBarNav } from "./StyledComponents";
 
