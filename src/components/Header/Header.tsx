@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { CartContext } from "../../context/CartContext";
 import Avatar from "../Avatar/Avatar";
 import { Cart } from "../Cart/Cart";
+import Button from "../Form/Button/Button";
 import { Link } from "../Form/Button/Link";
 
 import {
@@ -14,7 +15,6 @@ import {
   HeaderBody,
   HeaderBox,
   LocationIcon,
-  LoginButton,
   LogoArea,
   VerifyEmail,
 } from "./Header.styles";
@@ -116,7 +116,9 @@ export function Header() {
             </>
           ) : (
             <>
-              <LoginButton onClick={GoToLogin}>Entrar</LoginButton>
+              <Button onClick={GoToLogin} fontSize="1.15rem" paddingInline="1.5rem">
+                Entrar
+              </Button>
             </>
           )}
         </Container>
