@@ -44,6 +44,7 @@ export const ButtonContainer = styled.div`
   button {
     background-color: ${(props: ButtonContainerProps) => handleBackgroundColor(props)};
     color: ${(props: ButtonContainerProps) => fontColor(props)};
+    transition: all 0.3s;
 
     &:hover,
     &:hover:disabled,
@@ -58,6 +59,9 @@ export const ButtonContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    div > div {
+      font-size: 1.3rem;
+    }
   }
 `;
 

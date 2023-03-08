@@ -11,7 +11,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   leftIcon?: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   rightIcon?: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   color?: "purple" | "gray" | "green" | "green-light" | "red";
+  fontSize?: string;
 }
+
+/**
+ * @param fontSize value in pixels, rem or em
+ * @returns button component
+ */
 
 export default function Button({
   children,
@@ -22,6 +28,7 @@ export default function Button({
   rightIcon,
   color,
   loadingText = "Carregando...",
+  fontSize = "1rem",
   ...props
 }: ButtonProps) {
   return (
@@ -35,6 +42,8 @@ export default function Button({
         marginTop={0}
         leftIcon={leftIcon}
         rightIcon={rightIcon}
+        fontSize={fontSize}
+        _hover={{ transform: "scale(1.05)" }}
         {...props}
       >
         {children}
