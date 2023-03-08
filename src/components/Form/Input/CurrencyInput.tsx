@@ -1,6 +1,6 @@
 import { Input as ChakraInput } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { CurrencyInputBox } from "./styles";
+import { CurrencyInputBox } from "./Input.styles";
 
 interface CurrencyInputProps {
   setValue: (value: number) => void;

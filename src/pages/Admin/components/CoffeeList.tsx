@@ -29,8 +29,8 @@ import {
 import { Pencil, Trash, WarningCircle } from "phosphor-react";
 import InputError from "../../../components/Error/Form/InputError";
 import Button from "../../../components/Form/Button/Button";
-import CurrencyInput from "../../../components/Form/CurrencyInput";
-import { Input } from "../../../components/Form/Input";
+import CurrencyInput from "../../../components/Form/Input/CurrencyInput";
+import { Input } from "../../../components/Form/Input/Input";
 import Label from "../../../components/Form/Label";
 import { LabelBox } from "../../../components/Form/LabelBox";
 import { TextArea } from "../../../components/Form/TextArea";

@@ -12,7 +12,7 @@ import YupPassword from "yup-password";
 import FormError from "../../components/Error/Form/FormError";
 import Button from "../../components/Form/Button/Button";
 import { Card } from "../../components/Form/Card";
-import { Input } from "../../components/Form/Input";
+import { Input } from "../../components/Form/Input/Input";
 import Label from "../../components/Form/Label";
 import { LabelBox } from "../../components/Form/LabelBox";
 import VerifyPassword from "../../components/VerifyPassword/VerifyPassword";

@@ -1,4 +1,4 @@
-import { Input } from "../../../components/Form/Input";
+import { Input } from "../../../components/Form/Input/Input";
 import Label from "../../../components/Form/Label";
 
 import { yupResolver } from "@hookform/resolvers/yup";

@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { IAddressesResponse, UserContext } from "../../../context/UserContext";
 
 import { Plus, SmileySad, Trash } from "phosphor-react";
-import { Input } from "../../../components/Form/Input";
+import { Input } from "../../../components/Form/Input/Input";
 import Label from "../../../components/Form/Label";
 import { LabelBox } from "../../../components/Form/LabelBox";
 
