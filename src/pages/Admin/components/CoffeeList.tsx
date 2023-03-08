@@ -31,8 +31,8 @@ import InputError from "../../../components/Error/Form/InputError";
 import Button from "../../../components/Form/Button/Button";
 import CurrencyInput from "../../../components/Form/Input/CurrencyInput";
 import { Input } from "../../../components/Form/Input/Input";
-import Label from "../../../components/Form/Label";
-import { LabelBox } from "../../../components/Form/LabelBox";
+import Label from "../../../components/Form/Label/Label";
+import { LabelBox } from "../../../components/Form/Label/LabelBox";
 import { TextArea } from "../../../components/Form/TextArea";
 import {
   Coffee,

@@ -1,5 +1,5 @@
 import { Input } from "../../../components/Form/Input/Input";
-import Label from "../../../components/Form/Label";
+import Label from "../../../components/Form/Label/Label";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Eye, EyeSlash } from "phosphor-react";
@@ -8,11 +8,11 @@ import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 import FormError from "../../../components/Error/Form/FormError";
 import Button from "../../../components/Form/Button/Button";
+import { LabelBox } from "../../../components/Form/Label/LabelBox";
 import { PasswordInputBox } from "../../../components/Form/PasswordInputBox";
 import VerifyPassword from "../../../components/VerifyPassword/VerifyPassword";
 import { AuthContext } from "../../../context/AuthContext";
 import { verifyPassword } from "../../../utils/verifyPassword";
-import { LabelBox } from "./../../../components/Form/LabelBox";
 import { Card, Container, Title } from "./../Components/StyledComponents";
 
 interface InputFormData {

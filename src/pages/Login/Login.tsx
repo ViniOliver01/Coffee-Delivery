@@ -14,8 +14,8 @@ import Button from "../../components/Form/Button/Button";
 import GoogleButton from "../../components/Form/Button/GoogleButton";
 import { Card } from "../../components/Form/Card";
 import { Input } from "../../components/Form/Input/Input";
-import Label from "../../components/Form/Label";
-import { LabelBox } from "../../components/Form/LabelBox";
+import Label from "../../components/Form/Label/Label";
+import { LabelBox } from "../../components/Form/Label/LabelBox";
 import { Link } from "./../../components/Form/Link";
 
 interface InputFormData {

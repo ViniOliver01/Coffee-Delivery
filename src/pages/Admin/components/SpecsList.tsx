@@ -18,9 +18,9 @@ import * as yup from "yup";
 import InputError from "../../../components/Error/Form/InputError";
 import Button from "../../../components/Form/Button/Button";
 import { Input } from "../../../components/Form/Input/Input";
+import Label from "../../../components/Form/Label/Label";
 import { ISpecListResponse } from "../../../context/ShoppingContext";
 import { formatDate } from "../../../utils/format";
-import Label from "./../../../components/Form/Label";
 import { ShoppingContext } from "./../../../context/ShoppingContext";
 import { SpecItem, SpecList } from "./StyledComponents";
 
