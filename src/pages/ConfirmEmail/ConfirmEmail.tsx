@@ -9,6 +9,7 @@ export default function ConfirmEmail() {
   const { confirmEmail } = useContext(AuthContext);
 
   const [isFetching, setIsFetching] = useState(true);
+  const [timeLeft, setTimeLeft] = useState(10);
 
   useEffect(() => {
     async function confirm() {
@@ -20,9 +21,17 @@ export default function ConfirmEmail() {
       }
 
       if (response.status === 200) {
-        setTimeout(() => {
-          navigation("/");
-        }, 10000);
+        let countdown = 10;
+        const interval = setInterval(() => {
+          if (countdown > 0) {
+            countdown -= 1;
+            setTimeLeft(countdown);
+          } else {
+            clearInterval(interval);
+            navigation("/");
+          }
+        }, 1000);
+        return () => clearInterval(interval);
       }
     }
     confirm();
@@ -36,7 +45,9 @@ export default function ConfirmEmail() {
     <>
       <Title>
         <h1>Email confirmado</h1>
-        <p>Nós já confirmamos seu email, você será redirecionado em 10 segundos</p>
+        <p>
+          Nós já confirmamos seu email, você será redirecionado em {timeLeft} segundos
+        </p>
       </Title>
     </>
   );
