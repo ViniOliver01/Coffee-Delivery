@@ -1,16 +1,10 @@
-import { Minus, Plus, ShoppingCartSimple } from "phosphor-react";
+import { Check, Minus, Plus, ShoppingCartSimple } from "phosphor-react";
 import { useContext, useState } from "react";
+import Button from "../../../../components/Form/Button";
 import { CartContext } from "../../../../context/CartContext";
 import { formatCurrency } from "../../../../utils/format";
 import { imgDefault } from "../../../../utils/imgDefault";
-import {
-  CartButton,
-  Container,
-  IconCartButton,
-  ItensCount,
-  Price,
-  ShopSection,
-} from "./Coffees.styles";
+import { Container, ItensCount, Price, ShopSection } from "./Coffees.styles";
 
 interface CoffeesProps {
   id: string;
@@ -35,15 +29,8 @@ export function Coffees({
   price,
 }: CoffeesProps) {
   const [itensCount, setItensCount] = useState(1);
-  const [effect, setEffect] = useState(false);
-  const [textCartAddButton, setTextCartAddButton] = useState("Adicionar ao carrinho");
-
-  const triggerEffect = () => {
-    setEffect(true);
-    setTextCartAddButton("Adicionado com sucesso");
-    setTimeout(() => setEffect(false), 2000);
-    setTimeout(() => setTextCartAddButton("Adicionar ao carrinho"), 2000);
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFinishLoading, setIsFinishLoading] = useState(false);
 
   const {
     handleSetProductsAmount,
@@ -62,9 +49,19 @@ export function Coffees({
     setItensCount((state) => state + 1);
   }
 
-  function AddItemToCart(e: any) {
-    triggerEffect();
+  function AddItemToCart() {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsFinishLoading(true);
+      setTimeout(() => {
+        setIsFinishLoading(false);
+        addItem();
+      }, 1500);
+    }, 800);
+  }
 
+  function addItem() {
     let amount = itensCount;
     handleSetProductsPrice(price * amount);
     const newAmount = handleCheckObjectsState({ id, name, img, price, amount });
@@ -105,18 +102,23 @@ export function Coffees({
           </a>
         </ItensCount>
 
-        <CartButton
+        <Button
           onClick={AddItemToCart}
-          onAnimationEnd={triggerEffect}
-          className={effect ? "addCartEfect" : ""}
+          rightIcon={
+            isFinishLoading ? (
+              <Check size={22} weight="bold" />
+            ) : (
+              <ShoppingCartSimple size={18} weight="fill" />
+            )
+          }
+          isDisabled={isLoading || isFinishLoading}
+          color={isFinishLoading ? "green" : "purple"}
+          isLoading={isLoading}
+          loadingText=""
+          fontSize="0.85rem"
         >
-          <p>{textCartAddButton}</p>
-
-          <IconCartButton>
-            <span> {effect ? <Plus size={10} /> : ""} </span>
-            <ShoppingCartSimple size={16} weight="fill"></ShoppingCartSimple>
-          </IconCartButton>
-        </CartButton>
+          {isFinishLoading ? "ADICIONADO AO CARRINHO" : "ADICIONAR AO CARRINHO"}
+        </Button>
       </ShopSection>
     </Container>
   );
