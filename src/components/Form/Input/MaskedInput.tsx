@@ -1,7 +1,7 @@
 import { InputProps as ChakraInputProps } from "@chakra-ui/react";
 import { forwardRef, ForwardRefRenderFunction, useState } from "react";
 import { IMaskInput } from "react-imask";
-import { MaskedInputBox } from "./styles";
+import { MaskedInputBox } from "./Input.styles";
 
 interface MaskedInputProps extends ChakraInputProps {
   mask: string;

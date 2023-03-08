@@ -9,9 +9,9 @@ import { ChangeEvent } from "react";
 import FormError from "../../../components/Error/Form/FormError";
 import Button from "../../../components/Form/Button/Button";
 import { Input } from "../../../components/Form/Input/Input";
+import { MaskedInput } from "../../../components/Form/Input/MaskedInput";
 import Label from "../../../components/Form/Label/Label";
 import { LabelBox } from "../../../components/Form/Label/LabelBox";
-import { MaskedInput } from "../../../components/Form/MaskedInput";
 import { AuthContext } from "../../../context/AuthContext";
 import Divider from "./../../../components/Divider/index";
 import {
