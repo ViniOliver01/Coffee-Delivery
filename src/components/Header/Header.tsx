@@ -45,7 +45,6 @@ export function Header() {
 
     try {
       const response = await reeSendConfirmEmail({ name, email });
-      console.log("🚀 / ResendEmail / response:", response);
 
       if (response.status === 200) {
         toast({
