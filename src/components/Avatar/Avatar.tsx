@@ -14,7 +14,7 @@ import { ArrowSquareOut, CaretDown, SignOut } from "phosphor-react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import Button from "../Form/Button/Button";
-import { Link } from "./../Form/Link";
+import { Link } from "../Form/Button/Link";
 
 interface AvatarProps {
   name: string;

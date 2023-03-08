@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import defaultTheme from "../../styles/themes/Default";
+import defaultTheme from "../../../styles/themes/Default";
 
 interface LinkProps {
   hasIcon?: boolean;

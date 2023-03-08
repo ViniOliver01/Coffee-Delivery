@@ -12,11 +12,11 @@ import { Checkbox } from "@chakra-ui/react";
 import FormError from "../../components/Error/Form/FormError";
 import Button from "../../components/Form/Button/Button";
 import GoogleButton from "../../components/Form/Button/GoogleButton";
+import { Link } from "../../components/Form/Button/Link";
 import { Card } from "../../components/Form/Card";
 import { Input } from "../../components/Form/Input/Input";
 import Label from "../../components/Form/Label/Label";
 import { LabelBox } from "../../components/Form/Label/LabelBox";
-import { Link } from "./../../components/Form/Link";
 
 interface InputFormData {
   email: string;

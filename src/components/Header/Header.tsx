@@ -7,7 +7,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { CartContext } from "../../context/CartContext";
 import Avatar from "../Avatar/Avatar";
 import { Cart } from "../Cart/Cart";
-import { Link } from "../Form/Link";
+import { Link } from "../Form/Button/Link";
 
 import {
   Container,
