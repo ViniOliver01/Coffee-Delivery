@@ -104,7 +104,8 @@ export function Header() {
 
           <LocationIcon>
             <MapPin size={24} weight="fill" />
-            <p>Porto Alegre, RS</p>
+            <p>São Paulo, SP</p>
+            {/* No futuro adicionar uma lista de cidades disponíveis para seleção */}
           </LocationIcon>
         </Container>
 
