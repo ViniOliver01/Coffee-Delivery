@@ -15,7 +15,7 @@ import { Card } from "../../components/Form/Card";
 import { Input } from "../../components/Form/Input/Input";
 import Label from "../../components/Form/Label/Label";
 import { LabelBox } from "../../components/Form/Label/LabelBox";
-import VerifyPassword from "../../components/VerifyPassword/VerifyPassword";
+import VerifyPassword from "../../components/Form/VerifyPassword/VerifyPassword";
 import { verifyPassword } from "../../utils/verifyPassword";
 
 interface InputFormData {

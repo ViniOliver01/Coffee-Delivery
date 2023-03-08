@@ -10,7 +10,7 @@ import FormError from "../../../components/Error/Form/FormError";
 import Button from "../../../components/Form/Button/Button";
 import { PasswordInputBox } from "../../../components/Form/Input/PasswordInputBox";
 import { LabelBox } from "../../../components/Form/Label/LabelBox";
-import VerifyPassword from "../../../components/VerifyPassword/VerifyPassword";
+import VerifyPassword from "../../../components/Form/VerifyPassword/VerifyPassword";
 import { AuthContext } from "../../../context/AuthContext";
 import { verifyPassword } from "../../../utils/verifyPassword";
 import { Card, Container, Title } from "./../Components/StyledComponents";
