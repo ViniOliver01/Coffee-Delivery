@@ -76,11 +76,6 @@ export const AddressBox = styled.div`
     align-items: center;
     text-align: center;
     padding: 2rem;
-
-    a {
-      color: ${defaultTheme.purple};
-      font-weight: bold;
-    }
   }
 `;
 
