@@ -9,7 +9,7 @@ import { Container, Form, Title } from "./styles";
 
 import { useToast } from "@chakra-ui/react";
 import FormError from "../../components/Error/Form/FormError";
-import Button from "../../components/Form/Button";
+import Button from "../../components/Form/Button/Button";
 import { Card } from "../../components/Form/Card";
 import { Input } from "../../components/Form/Input";
 import Label from "../../components/Form/Label";

@@ -7,7 +7,7 @@ import { useContext, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 import FormError from "../../../components/Error/Form/FormError";
-import Button from "../../../components/Form/Button";
+import Button from "../../../components/Form/Button/Button";
 import { PasswordInputBox } from "../../../components/Form/PasswordInputBox";
 import VerifyPassword from "../../../components/VerifyPassword/VerifyPassword";
 import { AuthContext } from "../../../context/AuthContext";

@@ -8,7 +8,7 @@ import * as yup from "yup";
 import YupPassword from "yup-password";
 import Divider from "../../components/Divider";
 import FormError from "../../components/Error/Form/FormError";
-import Button from "../../components/Form/Button";
+import Button from "../../components/Form/Button/Button";
 import { Card } from "../../components/Form/Card";
 import GoogleButton from "../../components/Form/GoogleButton";
 import { Input } from "../../components/Form/Input";

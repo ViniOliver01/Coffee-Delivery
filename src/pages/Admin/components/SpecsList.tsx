@@ -16,7 +16,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 import InputError from "../../../components/Error/Form/InputError";
-import Button from "../../../components/Form/Button";
+import Button from "../../../components/Form/Button/Button";
 import { ISpecListResponse } from "../../../context/ShoppingContext";
 import { formatDate } from "../../../utils/format";
 import { Input } from "./../../../components/Form/Input";

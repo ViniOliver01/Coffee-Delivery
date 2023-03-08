@@ -22,7 +22,7 @@ import {
 import { useToast } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/Form/Button";
+import Button from "../../components/Form/Button/Button";
 import { CartContext } from "../../context/CartContext";
 import { IAddressesResponse, UserContext } from "../../context/UserContext";
 import { formatCurrency } from "../../utils/format";

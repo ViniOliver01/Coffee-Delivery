@@ -3,7 +3,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import Button from "./Button";
+import Button from "./Button/Button";
 
 interface UserData {
   email: string;

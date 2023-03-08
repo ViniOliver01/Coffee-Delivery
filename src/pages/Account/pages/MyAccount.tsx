@@ -7,12 +7,12 @@ import { Avatar, useToast } from "@chakra-ui/react";
 import { Pencil } from "phosphor-react";
 import { ChangeEvent } from "react";
 import FormError from "../../../components/Error/Form/FormError";
+import Button from "../../../components/Form/Button/Button";
 import { Input } from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
 import { MaskedInput } from "../../../components/Form/MaskedInput";
 import { AuthContext } from "../../../context/AuthContext";
 import Divider from "./../../../components/Divider/index";
-import Button from "./../../../components/Form/Button";
 import { LabelBox } from "./../../../components/Form/LabelBox";
 import {
   AvatarLabel,

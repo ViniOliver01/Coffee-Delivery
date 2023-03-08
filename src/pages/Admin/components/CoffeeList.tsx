@@ -28,6 +28,7 @@ import {
 
 import { Pencil, Trash, WarningCircle } from "phosphor-react";
 import InputError from "../../../components/Error/Form/InputError";
+import Button from "../../../components/Form/Button/Button";
 import CurrencyInput from "../../../components/Form/CurrencyInput";
 import { Input } from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
@@ -40,7 +41,6 @@ import {
   ShoppingContext,
 } from "../../../context/ShoppingContext";
 import { formatCurrency } from "../../../utils/format";
-import Button from "./../../../components/Form/Button";
 import { AdminCoffeeItem, CoffeeListItem } from "./StyledComponents";
 
 const schema = yup.object().shape({

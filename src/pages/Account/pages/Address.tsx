@@ -19,7 +19,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import FormError from "../../../components/Error/Form/FormError";
-import Button from "../../../components/Form/Button";
+import Button from "../../../components/Form/Button/Button";
 import {
   AddressBox,
   AddressCard,

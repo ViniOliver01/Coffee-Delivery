@@ -1,6 +1,6 @@
 import { Check, Minus, Plus, ShoppingCartSimple } from "phosphor-react";
 import { useContext, useState } from "react";
-import Button from "../../../../components/Form/Button";
+import Button from "../../../../components/Form/Button/Button";
 import { CartContext } from "../../../../context/CartContext";
 import { formatCurrency } from "../../../../utils/format";
 import { imgDefault } from "../../../../utils/imgDefault";

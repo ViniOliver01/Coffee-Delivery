@@ -10,7 +10,7 @@ import { Container, FooterTitle, Form, Options, Title } from "./Login.styles";
 
 import { Checkbox } from "@chakra-ui/react";
 import FormError from "../../components/Error/Form/FormError";
-import Button from "../../components/Form/Button";
+import Button from "../../components/Form/Button/Button";
 import { Card } from "../../components/Form/Card";
 import GoogleButton from "../../components/Form/GoogleButton";
 import { Input } from "../../components/Form/Input";
