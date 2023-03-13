@@ -1,4 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components";
+import Background from "../assets/Background.png";
 
 export const GlobalStyle = createGlobalStyle`
     *{
@@ -7,8 +8,10 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
     body{
-        background-color: ${(props) => props.theme['background']};
-        color: ${(props) => props.theme['base-text']};
+        background-image: url(${Background});
+        background-repeat: no-repeat; 
+        background-size: cover; 
+        color: ${(props) => props.theme["base-text"]};
     }
     header {
         font-family: 'Baloo 2', cursive;
