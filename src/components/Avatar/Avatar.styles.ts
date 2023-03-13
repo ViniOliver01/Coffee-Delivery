@@ -1,8 +1,20 @@
 import styled from "styled-components";
+import defaultTheme from "./../../styles/themes/Default";
 
 export const AvatarContainer = styled.div`
   display: flex;
   gap: 0.8rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+  }
+
+  span {
+    font-size: 0.875rem;
+    color: ${defaultTheme["base-label"]};
+  }
 `;
 
 export const AvatarPopoverStack = styled.div`

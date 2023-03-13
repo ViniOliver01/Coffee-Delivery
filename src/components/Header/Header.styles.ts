@@ -4,6 +4,12 @@ import defaultTheme from "./../../styles/themes/Default";
 export const HeaderBody = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media only screen and (max-width: 700px) {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2rem;
+  }
 `;
 
 export const HeaderBox = styled.div`
@@ -74,4 +80,33 @@ export const LoginButton = styled.button`
   padding-inline: 1.5rem;
   padding-block: 0.4rem;
   border-radius: 8px;
+`;
+
+//Mobile version
+interface LinkProps {
+  isActive?: boolean;
+  isAuthenticated?: boolean;
+}
+
+export const PageLinks = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 80%;
+  margin-top: 3rem;
+
+  div:last-child {
+    color: ${({ isAuthenticated }: LinkProps) =>
+      isAuthenticated ? defaultTheme.red : defaultTheme["base-text"]};
+
+    margin-top: ${({ isAuthenticated }: LinkProps) => (isAuthenticated ? "auto" : "0")};
+  }
+`;
+
+export const LinkWithIcon = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: ${({ isActive }: LinkProps) =>
+    isActive ? defaultTheme.purple : defaultTheme["base-text"]};
 `;

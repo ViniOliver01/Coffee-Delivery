@@ -1,4 +1,4 @@
-import { Avatar as ChakraAvatar, useDisclosure } from "@chakra-ui/react";
+import { Avatar as ChakraAvatar, useDisclosure, useMediaQuery } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { AvatarContainer, AvatarPopoverStack, BackgroundOpacity } from "./Avatar.styles";
 
@@ -45,6 +45,11 @@ export default function Avatar({ name, avatar_url }: AvatarProps) {
     window.location.reload();
   }
 
+  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   return (
     <>
       <BackgroundOpacity isActive={isOpen} />
@@ -53,12 +58,19 @@ export default function Avatar({ name, avatar_url }: AvatarProps) {
           <ChakraAvatar src={avatar_url} w={"48px"} />
           <div>
             <p>Olá, {firstName}</p>
-            <Link onClick={onToggle}>
-              Minha conta <CaretDown weight="bold" />
-            </Link>
-            <PopoverTrigger>
-              <div></div>
-            </PopoverTrigger>
+
+            {isMobile ? (
+              <span>{user.email}</span>
+            ) : (
+              <>
+                <Link onClick={onToggle}>
+                  Minha conta <CaretDown weight="bold" />
+                </Link>
+                <PopoverTrigger>
+                  <div></div>
+                </PopoverTrigger>
+              </>
+            )}
           </div>
         </AvatarContainer>
 
