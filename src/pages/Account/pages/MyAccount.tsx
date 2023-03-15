@@ -4,6 +4,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { Avatar, useToast } from "@chakra-ui/react";
+import heic2any from "heic2any";
 import { Pencil } from "phosphor-react";
 import { ChangeEvent } from "react";
 import FormError from "../../../components/Error/Form/FormError";
@@ -63,11 +64,27 @@ export default function MyAccount() {
     mode: "onBlur",
   });
 
-  function handleSetImage(event: ChangeEvent<HTMLInputElement>) {
+  async function handleSetImage(event: ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
 
     const reader = new FileReader();
-    const file = event.target.files[0];
+    var file = event.target.files[0];
+    const [, path] = file.name.split(".");
+
+    if (path === "heic") {
+      await heic2any({
+        blob: file,
+        toType: "image/jpeg",
+        quality: 0.7,
+      }).then(
+        (blob) => {
+          file = new File([blob as BlobPart], "photo.jpg", { type: "image/jpeg" });
+        },
+        (error) => {
+          //handle errors
+        }
+      );
+    }
 
     reader.onloadend = () => {
       const imagePreviewUrl = reader.result.toString();
