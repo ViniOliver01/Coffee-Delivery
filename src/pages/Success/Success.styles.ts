@@ -17,6 +17,7 @@ export const Container = styled.div`
   }
 
   @media only screen and (max-width: 700px) {
+    margin-top: 2rem;
     grid-template-areas:
       "Textarea Textarea "
       "ImageArea ImageArea"

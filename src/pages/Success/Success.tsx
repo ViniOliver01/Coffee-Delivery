@@ -1,4 +1,3 @@
-import { useMediaQuery } from "@chakra-ui/react";
 import { CurrencyDollar, MapPin, Timer } from "phosphor-react";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -44,11 +43,6 @@ export function Success() {
     }
     getPurchase();
   }, []);
-
-  const [isMobile] = useMediaQuery("(max-width: 700px)", {
-    ssr: true,
-    fallback: false,
-  });
 
   return (
     <Container>
