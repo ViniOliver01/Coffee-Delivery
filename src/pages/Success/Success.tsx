@@ -1,9 +1,17 @@
+import { useMediaQuery } from "@chakra-ui/react";
 import { CurrencyDollar, MapPin, Timer } from "phosphor-react";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import successImg from "../../assets/success-img.png";
 import { ShoppingContext } from "./../../context/ShoppingContext";
-import { Container, IconImage, ImageArea, ListDetails, Textarea } from "./Success.styles";
+import {
+  Container,
+  GradientBox,
+  IconImage,
+  ImageArea,
+  ListDetails,
+  Textarea,
+} from "./Success.styles";
 
 interface CheckoutData {
   address: {
@@ -37,11 +45,18 @@ export function Success() {
     getPurchase();
   }, []);
 
+  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   return (
     <Container>
-      <Textarea>
+      <Textarea className="Textarea">
         <h1>Uhu! Pedido confirmado</h1>
         <h2>Agora é só aguardar que logo o café chegará até você</h2>
+      </Textarea>
+      <GradientBox className="GradientBox">
         <section>
           <ListDetails>
             <IconImage className="purple">
@@ -80,8 +95,8 @@ export function Success() {
             </div>
           </ListDetails>
         </section>
-      </Textarea>
-      <ImageArea>
+      </GradientBox>
+      <ImageArea className="ImageArea">
         <img src={successImg} alt="" />
       </ImageArea>
     </Container>
