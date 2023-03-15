@@ -47,9 +47,7 @@ import {
 export function Header() {
   let { pathname } = useLocation();
   const [, subpath] = pathname.toLowerCase().split("/account");
-  console.log("🚀 / Header / subpath:", subpath);
   pathname = pathname.split("/")[1];
-  console.log("🚀 / Header / pathname:", pathname);
 
   const toast = useToast();
   const { isAuthenticated, user, reeSendConfirmEmail, signOut } = useContext(AuthContext);
@@ -134,12 +132,7 @@ export function Header() {
           <Cart totalItens={products_amount} totalPrice={products_value / 100} />
         </HeaderBox>
 
-        <Drawer
-          isOpen={isOpen}
-          placement="left"
-          onClose={onClose}
-          onOverlayClick={() => console.log("s")}
-        >
+        <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
           <DrawerOverlay />
           <DrawerContent>
             <DrawerCloseButton />

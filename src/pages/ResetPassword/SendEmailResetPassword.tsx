@@ -32,7 +32,6 @@ export default function SendEmailResetPassword() {
     resolver: yupResolver(schema),
     mode: "onSubmit",
   });
-  console.log("🚀 / SendEmailResetPassword / errors:", errors);
 
   const toast = useToast();
   const { sendEmailResetPassword, isAuthenticated } = useContext(AuthContext);

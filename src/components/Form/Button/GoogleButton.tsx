@@ -48,7 +48,6 @@ export default function GoogleButton() {
           const response = await axios.post(
             import.meta.env.VITE_GOOGLE_TOKEN_INFO_URL + token
           );
-          console.log("🚀 / getGoogleData / response:", response);
         } catch (error) {
           console.warn("🚀 / error:", error);
         }

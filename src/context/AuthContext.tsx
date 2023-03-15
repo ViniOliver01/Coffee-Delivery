@@ -92,7 +92,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   let isFetchingAdmin = true;
 
   if (!token) {
-    // console.log("is Fetching token");
     isFetching = false;
   }
 
@@ -295,7 +294,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         new_password,
         confirm_new_password,
       });
-      console.log("🚀 / AuthProvider / response:", response);
 
       return { message: response.data.message, status: response.status };
     } catch (error) {
@@ -306,7 +304,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   async function sendEmailResetPassword(email: string): Promise<IStatusResponse> {
     try {
       const response = await api.post("/password/forgot", { email });
-      console.log("🚀 / sendEmailResetPassword / response:", response);
 
       return { message: response.data.message, status: response.status };
     } catch (error) {

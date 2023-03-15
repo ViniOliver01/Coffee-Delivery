@@ -49,7 +49,6 @@ const schema = yup.object().shape({
 
 export default function ResetPassword() {
   const { reset_token } = useParams();
-  console.log("🚀 / ResetPassword / id:", reset_token);
 
   const {
     register,

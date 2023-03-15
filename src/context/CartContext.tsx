@@ -52,7 +52,6 @@ interface IPurchaseResponse {
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const { isAuthenticated } = useContext(AuthContext);
-  console.log("🚀 / CartContextProvider / isAuthenticated:", isAuthenticated);
 
   const [products_list, set_products_list] = useState<CartObjectType[]>([]);
 
