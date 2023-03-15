@@ -69,9 +69,8 @@ export default function MyAccount() {
 
     const reader = new FileReader();
     var file = event.target.files[0];
-    const [, path] = file.name.split(".");
 
-    if (path === "heic") {
+    if (file.name.includes(".heic" || ".heif")) {
       await heic2any({
         blob: file,
         toType: "image/jpeg",
