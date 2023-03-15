@@ -249,10 +249,17 @@ export const ImageChangeArea = styled.div`
 
 export const ImgWarp = styled.div`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 128px;
   height: 128px;
   overflow: hidden;
   border-radius: 50%;
+
+  div {
+    position: absolute;
+  }
 
   img {
     width: auto;

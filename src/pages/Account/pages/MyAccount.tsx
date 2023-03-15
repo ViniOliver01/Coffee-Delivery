@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 
-import { Avatar, useToast } from "@chakra-ui/react";
+import { Avatar, Spinner, useToast } from "@chakra-ui/react";
 import heic2any from "heic2any";
 import { Pencil } from "phosphor-react";
 import { ChangeEvent } from "react";
@@ -50,6 +50,7 @@ export default function MyAccount() {
 
   const [avatarFile, setAvatarFile] = useState<File>(null);
   const [selectedImage, setSelectedImage] = useState(user.avatar_url);
+  const [isFetchingImg, setIsFetchingImg] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(user.phone ? user.phone : "");
 
   const toast = useToast();
@@ -70,7 +71,8 @@ export default function MyAccount() {
     const reader = new FileReader();
     var file = event.target.files[0];
 
-    if (file.name.includes(".heic" || ".heif")) {
+    if (file.name.includes(".heic") || file.name.includes(".heif")) {
+      setIsFetchingImg(true);
       await heic2any({
         blob: file,
         toType: "image/jpeg",
@@ -83,6 +85,7 @@ export default function MyAccount() {
           //handle errors
         }
       );
+      setIsFetchingImg(false);
     }
 
     reader.onloadend = () => {
@@ -130,7 +133,8 @@ export default function MyAccount() {
         <ImageChangeArea>
           <AvatarLabel htmlFor="photo-upload" className="custom-file-upload fas">
             <ImgWarp>
-              <Avatar size="2xl" src={selectedImage} />
+              <Avatar size="2xl" src={isFetchingImg ? null : selectedImage} />
+              {isFetchingImg && <Spinner thickness="4px" color="blue.500" size="xl" />}
             </ImgWarp>
             <LabelTest className="custom-file-upload">
               <Pencil size={24} />
