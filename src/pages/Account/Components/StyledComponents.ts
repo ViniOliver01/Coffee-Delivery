@@ -252,18 +252,11 @@ export const ImgWarp = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 128px;
-  height: 128px;
   overflow: hidden;
   border-radius: 50%;
 
   div {
     position: absolute;
-  }
-
-  img {
-    width: auto;
-    height: 100%;
   }
 `;
 

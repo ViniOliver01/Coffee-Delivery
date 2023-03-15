@@ -75,8 +75,8 @@ export default function MyAccount() {
       setIsFetchingImg(true);
       await heic2any({
         blob: file,
-        toType: "image/jpeg",
-        quality: 0.7,
+        toType: "image/jpg",
+        quality: 1,
       }).then(
         (blob) => {
           file = new File([blob as BlobPart], "photo.jpg", { type: "image/jpeg" });
