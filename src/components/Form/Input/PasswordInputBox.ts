@@ -16,7 +16,7 @@ export const PasswordInputBox = styled.div`
 
     //Icon
     svg {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       color: ${defaultTheme["base-text"]};
     }
   }

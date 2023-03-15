@@ -16,6 +16,7 @@ import {
   ModalFooter,
   ModalOverlay,
   useDisclosure,
+  useMediaQuery,
   useToast,
 } from "@chakra-ui/react";
 import FormError from "../../../components/Error/Form/FormError";
@@ -165,6 +166,11 @@ export default function Address() {
     }
     handleGet();
   }, [update]);
+
+  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   return (
     <Container>
