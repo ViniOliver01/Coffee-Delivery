@@ -9,12 +9,14 @@ import { AuthContext } from "../../context/AuthContext";
 import { Container, FooterTitle, Form, Options, Title } from "./Login.styles";
 
 import { Checkbox } from "@chakra-ui/react";
+import { Eye, EyeSlash } from "phosphor-react";
 import FormError from "../../components/Error/Form/FormError";
 import Button from "../../components/Form/Button/Button";
 import GoogleButton from "../../components/Form/Button/GoogleButton";
 import { Link } from "../../components/Form/Button/Link";
 import { Card } from "../../components/Form/Card";
 import { Input } from "../../components/Form/Input/Input";
+import { PasswordInputBox } from "../../components/Form/Input/PasswordInputBox";
 import Label from "../../components/Form/Label/Label";
 import { LabelBox } from "../../components/Form/Label/LabelBox";
 
@@ -42,6 +44,7 @@ export default function Login() {
 
   const { signIn, isAuthenticated } = useContext(AuthContext);
   const [error, setErrors] = useState(undefined);
+  const [showOldPass, setShowOldPass] = useState(false);
   const navigation = useNavigate();
 
   async function onSubmit(data: FieldValues) {
@@ -83,7 +86,21 @@ export default function Login() {
 
           <LabelBox>
             <Label>Senha</Label>
-            <Input type="password" {...register("password")} />
+            <PasswordInputBox>
+              <Input
+                type={showOldPass ? "text" : "password"}
+                {...register("password")}
+                error={!!errors.password}
+              />
+              <button
+                type="button"
+                onClick={() => setShowOldPass(!showOldPass)}
+                tabIndex={-1}
+              >
+                {showOldPass ? <EyeSlash /> : <Eye />}
+              </button>
+            </PasswordInputBox>
+            <FormError message={error} />
           </LabelBox>
 
           <FormError message={error} />

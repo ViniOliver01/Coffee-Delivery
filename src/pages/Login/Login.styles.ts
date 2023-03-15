@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import defaultTheme from "./../../styles/themes/Default";
 
-export const Container = styled.li`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-inline: auto;
@@ -53,6 +53,10 @@ export const Options = styled.div`
   a {
     color: ${defaultTheme.purple};
     font-size: 0.875rem;
+  }
+
+  @media only screen and (max-width: 450px) {
+    flex-direction: column;
   }
 `;
 

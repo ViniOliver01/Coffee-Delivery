@@ -17,4 +17,9 @@ export const Card = styled.div`
     color: ${defaultTheme["base-label"]};
     font-size: 1rem;
   }
+
+  @media only screen and (max-width: 400px) {
+    min-width: 200px;
+    padding: 20px 40px;
+  }
 `;
