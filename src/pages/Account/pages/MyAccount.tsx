@@ -69,6 +69,8 @@ export default function MyAccount() {
 
     const reader = new FileReader();
     var file = event.target.files[0];
+    console.log(file.name);
+    console.log(file.name.includes(".heic" || ".heif"));
 
     if (file.name.includes(".heic" || ".heif")) {
       await heic2any({
