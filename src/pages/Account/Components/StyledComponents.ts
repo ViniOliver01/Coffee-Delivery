@@ -48,6 +48,13 @@ export const Title = styled.h2`
   font-weight: 900;
   height: 3rem;
   margin-bottom: 1rem;
+
+  @media only screen and (max-width: 700px) {
+    font-size: 1.75rem;
+  }
+  @media only screen and (max-width: 320px) {
+    font-size: 1.5rem;
+  }
 `;
 
 interface CardProps {
@@ -71,10 +78,27 @@ export const Card = styled.div`
   button {
     margin-top: 1rem;
   }
+
   form {
     width: 100%;
   }
-  div {
+
+  span {
+    color: ${defaultTheme["base-label"]};
+    font-size: 1rem;
+    font-style: italic;
+  }
+
+  @media only screen and (max-width: 700px) {
+    min-width: 200px;
+    max-width: 600px;
+    width: 100%;
+    padding: 2rem 4rem;
+  }
+
+  @media only screen and (max-width: 450px) {
+    width: 100%;
+    padding: 1rem 2rem;
   }
 `;
 
@@ -89,9 +113,54 @@ export const AddressCardList = styled.div`
   background-color: ${defaultTheme["base-card"]};
   gap: 0.75rem;
   margin: auto;
+
+  @media only screen and (max-width: 700px) {
+    min-width: 0px;
+    width: 100%;
+    grid-template-columns: auto;
+  }
 `;
 
 export const AddressCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+  border-radius: 6px 44px 6px 44px;
+  background-color: ${defaultTheme.white};
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    font-family: "Baloo 2", cursive;
+    margin-bottom: 0.6rem;
+  }
+  p {
+    font-size: 1rem;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 0.6rem;
+    div {
+      align-items: center;
+      justify-content: flex-end;
+      button {
+        margin-top: 0;
+        width: fit-content;
+      }
+    }
+  }
+  div > a {
+    margin-top: 0.6rem;
+    font-size: 1rem;
+    cursor: pointer;
+    color: ${defaultTheme.purple};
+  }
+`;
+
+export const MobileAddressCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -173,8 +242,6 @@ export const AddressBox = styled.div`
     grid-area: nomeEndereco;
   }
 `;
-
-//TODO My Account Components
 
 export const ImageChangeArea = styled.div`
   position: relative;

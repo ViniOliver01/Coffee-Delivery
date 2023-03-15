@@ -5,6 +5,7 @@ import {
   ModalContent,
   ModalOverlay,
   useDisclosure,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { CheckCircle, SmileySad, Truck, WarningCircle } from "phosphor-react";
 import { useContext, useEffect, useState } from "react";
@@ -70,10 +71,16 @@ export default function Purchases() {
     setPurchaseModal(purchase);
   }
 
+  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   return (
     <Container>
       <Title>Meus pedidos</Title>
       <Card display="flex" padding="2rem 4rem">
+        <span>Clique para ver mais</span>
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
           <ModalContent>
@@ -123,14 +130,19 @@ export default function Purchases() {
             </ModalBody>
           </ModalContent>
         </Modal>
+
         {purchasesList.length > 0 && (
           <Table>
             <thead>
               <tr>
                 <th>Nº do pedido</th>
                 <th>Data</th>
-                <th>Valor total</th>
-                <th>Status</th>
+                {!isMobile && (
+                  <>
+                    <th>Valor total</th>
+                    <th>Status</th>
+                  </>
+                )}
               </tr>
             </thead>
 
@@ -145,43 +157,47 @@ export default function Purchases() {
                     <tr key={p.id} onClick={() => handleOpenPurchase(p)}>
                       <td>{p.purchase_id}</td>
                       <td>{date}</td>
-                      <td>{value}</td>
-                      {p.status === "Concluído" && (
-                        <td className="Finished">
-                          <div>
-                            <CheckCircle size={18} weight="bold" />
-                            {p.status}
-                          </div>
-                        </td>
-                      )}
-                      {p.status === "Cancelado" && (
-                        <td className="Canceled">
-                          <div>
-                            <WarningCircle size={18} weight="bold" />
-                            {p.status}
-                          </div>
-                        </td>
-                      )}
-                      {p.status === "Pagamento aprovado" && (
-                        <td className="PaymentAprove">
-                          <div>
-                            <CheckCircle size={18} weight="bold" />
-                            {p.status}
-                          </div>
-                        </td>
-                      )}
-                      {p.status === "Em transporte" && (
-                        <td className="Delivery">
-                          <div>
-                            <Truck size={18} weight="bold" />
-                            {p.status}
-                          </div>
-                        </td>
-                      )}
-                      {p.status === "Pedido Realizado" && (
-                        <td className="Delivery">
-                          <div>{p.status}</div>
-                        </td>
+                      {!isMobile && (
+                        <>
+                          <td>{value}</td>
+                          {p.status === "Concluído" && (
+                            <td className="Finished">
+                              <div>
+                                <CheckCircle size={18} weight="bold" />
+                                {p.status}
+                              </div>
+                            </td>
+                          )}
+                          {p.status === "Cancelado" && (
+                            <td className="Canceled">
+                              <div>
+                                <WarningCircle size={18} weight="bold" />
+                                {p.status}
+                              </div>
+                            </td>
+                          )}
+                          {p.status === "Pagamento aprovado" && (
+                            <td className="PaymentAprove">
+                              <div>
+                                <CheckCircle size={18} weight="bold" />
+                                {p.status}
+                              </div>
+                            </td>
+                          )}
+                          {p.status === "Em transporte" && (
+                            <td className="Delivery">
+                              <div>
+                                <Truck size={18} weight="bold" />
+                                {p.status}
+                              </div>
+                            </td>
+                          )}
+                          {p.status === "Pedido Realizado" && (
+                            <td className="Delivery">
+                              <div>{p.status}</div>
+                            </td>
+                          )}
+                        </>
                       )}
                     </tr>
                   );
