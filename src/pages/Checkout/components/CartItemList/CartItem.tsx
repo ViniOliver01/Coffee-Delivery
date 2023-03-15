@@ -59,7 +59,7 @@ export function CartItem({ id, name, img, price, amount }: CartItemProps) {
     <Container>
       <img src={img} alt="" />
       <CenterDiv>
-        <p>{name}</p>
+        <h2>{name}</h2>
         <Buttons>
           <ItensCountCart>
             <a onClick={handleMinus}>
@@ -72,7 +72,7 @@ export function CartItem({ id, name, img, price, amount }: CartItemProps) {
           </ItensCountCart>
 
           <RemoveItemButton onClick={handleRemove}>
-            <Trash size={16} />
+            <Trash size={16} weight="bold" />
             <p>REMOVER</p>
           </RemoveItemButton>
         </Buttons>

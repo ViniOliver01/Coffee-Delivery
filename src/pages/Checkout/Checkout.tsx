@@ -27,10 +27,12 @@ import { Link } from "../../components/Form/Button/Link";
 import { CartContext } from "../../context/CartContext";
 import { IAddressesResponse, UserContext } from "../../context/UserContext";
 import { formatCurrency } from "../../utils/format";
+import { AuthContext } from "./../../context/AuthContext";
 import { CartItem } from "./components/CartItemList/CartItem";
 
 export function Checkout() {
   const { getAddresses } = useContext(UserContext);
+  const { isAuthenticated } = useContext(AuthContext);
   const {
     products_amount,
     products_list,
@@ -51,18 +53,27 @@ export function Checkout() {
   const toast = useToast();
 
   async function onSubmit() {
-    if (products_amount === 0) {
+    isAuthenticated;
+
+    if (!isAuthenticated) {
       toast({
-        title: "Carrinho vazio",
+        title: "Você ainda não está logado",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else if (addressList.length === 0) {
+      toast({
+        title: "Nenhum endereço ativo",
         status: "error",
         duration: 9000,
         isClosable: true,
       });
     }
 
-    if (addressList.length === 0) {
+    if (products_amount === 0) {
       toast({
-        title: "Nenhum endereço ativo",
+        title: "Carrinho vazio",
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -95,15 +106,21 @@ export function Checkout() {
     navigation("/account/address");
   }
 
+  function GoToLogin() {
+    navigation("/login");
+  }
+
   useEffect(() => {
     async function listAddresses() {
       const data = await getAddresses();
       setAddressList(data);
     }
-    listAddresses();
+    if (isAuthenticated) {
+      listAddresses();
+    }
   }, []);
 
-  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+  const [isMobile] = useMediaQuery("(max-width: 900px)", {
     ssr: true,
     fallback: false,
   });
@@ -161,13 +178,20 @@ export function Checkout() {
               <p> Para editar seus endereços vá para</p>
               <Link onClick={GoToAddress}>meus endereços</Link>
             </NoAddressMessage>
+          ) : isAuthenticated ? (
+            <div className="noAddresses">
+              <SmileySad size={32} />
+              <NoAddressMessage>
+                <p>Você ainda não tem um endereço cadastrado, para cadastrar vá até </p>
+                <Link onClick={GoToAddress}>meus endereços</Link>
+              </NoAddressMessage>
+            </div>
           ) : (
             <div className="noAddresses">
               <SmileySad size={32} />
               <NoAddressMessage>
-                <p>Você ainda não tem um endereço cadastrado, </p>
-                <p>para cadastrar vá até </p>
-                <Link onClick={GoToAddress}>meus endereços</Link>
+                <p>Parece que você não está logado, para entrar clique em</p>
+                <Link onClick={GoToLogin}>Entrar</Link>
               </NoAddressMessage>
             </div>
           )}
@@ -254,13 +278,20 @@ export function Checkout() {
                 <p> Para editar seus endereços vá para</p>
                 <Link onClick={GoToAddress}>meus endereços</Link>
               </NoAddressMessage>
+            ) : isAuthenticated ? (
+              <div className="noAddresses">
+                <SmileySad size={32} />
+                <NoAddressMessage>
+                  <p>Você ainda não tem um endereço cadastrado, para cadastrar vá até </p>
+                  <Link onClick={GoToAddress}>meus endereços</Link>
+                </NoAddressMessage>
+              </div>
             ) : (
               <div className="noAddresses">
                 <SmileySad size={32} />
                 <NoAddressMessage>
-                  <p>Você ainda não tem um endereço cadastrado, </p>
-                  <p>para cadastrar vá até </p>
-                  <Link onClick={GoToAddress}>meus endereços</Link>
+                  <p>Parece que você não está logado, para entrar clique em</p>
+                  <Link onClick={GoToLogin}>Entrar</Link>
                 </NoAddressMessage>
               </div>
             )}

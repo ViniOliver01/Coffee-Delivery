@@ -3,16 +3,15 @@ import defaultTheme from "./../../styles/themes/Default";
 
 export const Container = styled.div`
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   margin-bottom: 5rem;
   gap: 2rem;
 
   margin-inline: auto;
-  width: 100%;
   max-width: 1600px;
-  padding-inline: 10rem;
+  padding-inline: 1rem;
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 900px) {
     flex-direction: column;
     padding-inline: 1rem;
     margin-top: 2rem;
@@ -87,6 +86,10 @@ export const AddressBox = styled.div`
     text-align: center;
     padding: 2rem;
   }
+
+  @media only screen and (max-width: 900px) {
+    padding: 1rem;
+  }
 `;
 
 interface AddressItemProps {
@@ -129,7 +132,7 @@ export const PaymentBox = styled.div`
   border-radius: 8px;
   padding: 2rem;
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 900px) {
     padding: 1rem;
   }
 `;
@@ -141,6 +144,7 @@ interface PaymentButtonProps {
 export const PaymentButton = styled.button`
   display: flex;
   align-items: center;
+  width: 200px;
   padding: 1rem;
   gap: 0.75rem;
   border-radius: 8px;
@@ -165,12 +169,13 @@ export const PaymentButton = styled.button`
 `;
 
 export const PaymentButtonList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   grid-gap: 0.5rem;
   width: 100%;
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 900px) {
     display: flex;
     flex-direction: column;
     padding-inline: 0.5rem;
@@ -179,7 +184,7 @@ export const PaymentButtonList = styled.div`
 
 export const CartList = styled.div`
   background-color: ${(props) => props.theme["base-card"]};
-  padding: 2.5rem;
+  padding: 2rem 0.8rem;
   min-width: 400px;
   border-radius: 6px 44px 6px 44px;
   height: fit-content;
@@ -224,7 +229,7 @@ export const CartList = styled.div`
     color: ${(props) => props.theme["base-subtitle"]};
   }
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 900px) {
     min-width: 100px;
   }
 `;

@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { Checkout } from "../pages/Checkout/Checkout";
 import Login from "../pages/Login/Login";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import SendEmailResetPassword from "../pages/ResetPassword/SendEmailResetPassword";
@@ -9,6 +10,7 @@ export const PublicRoutes = () => {
     <Routes>
       <Route path="login" element={<Login />} />
       <Route path="singup" element={<SingUp />} />
+      <Route path="checkout" element={<Checkout />} />
       <Route path="resetpassword/:reset_token" element={<ResetPassword />} />
       <Route path="resetpassword" element={<SendEmailResetPassword />} />
       <Route path="*" element={<Navigate to="/" replace />} />
