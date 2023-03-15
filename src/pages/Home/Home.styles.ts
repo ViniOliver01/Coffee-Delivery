@@ -6,7 +6,14 @@ export const Container = styled.div`
   width: 100%;
   max-width: 1400px;
   padding-inline: 2rem;
+
+  @media only screen and (max-width: 700px) {
+    margin-top: 2rem;
+    margin-bottom: 5rem;
+    padding-inline: 0.5rem;
+  }
 `;
+
 export const CoverArea = styled.div`
   height: fit-content;
   padding-block: 5.75rem;
@@ -15,10 +22,8 @@ export const CoverArea = styled.div`
   justify-content: space-between;
   position: relative;
 `;
+
 export const TextArea = styled.div`
-  @media only screen and (max-width: 1160px) {
-    margin: auto;
-  }
   h1 {
     color: ${(props) => props.theme["base-title"]};
     font-family: "Baloo 2", cursive;
@@ -34,6 +39,20 @@ export const TextArea = styled.div`
     font-size: 1.25rem;
     line-height: 130%;
   }
+
+  @media only screen and (max-width: 1160px) {
+    margin: auto;
+  }
+
+  @media only screen and (max-width: 700px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+      text-align: center;
+      font-size: 1.5rem;
+    }
+  }
 `;
 export const IconsArea = styled.div`
   display: grid;
@@ -41,11 +60,19 @@ export const IconsArea = styled.div`
   row-gap: 1.25rem;
   column-gap: 2.5rem;
   margin-top: 4.125rem;
+
+  @media only screen and (max-width: 700px) {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+  }
 `;
+
 export const IconItem = styled.div`
   display: flex;
   align-items: center;
   gap: 0.75rem;
+
   #orange {
     background-color: ${(props) => props.theme["yellow-dark"]};
   }
@@ -59,6 +86,7 @@ export const IconItem = styled.div`
     background-color: ${(props) => props.theme["purple"]};
   }
 `;
+
 export const IconImage = styled.div`
   display: flex;
   align-items: center;
@@ -67,6 +95,7 @@ export const IconImage = styled.div`
   border-radius: 50%;
   color: white;
 `;
+
 export const CoverImage = styled.div`
   @media only screen and (max-width: 1160px) {
     height: 100%;
@@ -95,8 +124,14 @@ export const CoffeesList = styled.div`
     font-weight: bold;
     font-size: 2rem;
     line-height: 130%;
+
+    @media only screen and (max-width: 700px) {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
   }
 `;
+
 export const ListMap = styled.div`
   display: grid;
   row-gap: 4rem;
@@ -110,8 +145,9 @@ export const ListMap = styled.div`
   @media only screen and (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  @media only screen and (max-width: 600px) {
-    grid-template-columns: repeat(1, 1fr);
+  @media only screen and (max-width: 700px) {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 `;

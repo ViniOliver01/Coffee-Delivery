@@ -1,6 +1,7 @@
 import {
   Drawer,
   DrawerBody,
+  DrawerCloseButton,
   DrawerContent,
   DrawerOverlay,
   useDisclosure,
@@ -21,7 +22,7 @@ import {
   Truck,
   X,
 } from "phosphor-react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo.svg";
 import { AuthContext } from "../../context/AuthContext";
@@ -54,6 +55,9 @@ export function Header() {
   const { isAuthenticated, user, reeSendConfirmEmail, signOut } = useContext(AuthContext);
   const { products_amount, products_value } = useContext(CartContext);
   const [isEmailVerified, setIsEmailVerified] = useState(true);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef();
 
   useEffect(() => {}, []);
 
@@ -122,13 +126,11 @@ export function Header() {
     fallback: false,
   });
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   if (isMobile) {
     return (
       <HeaderBody>
         <HeaderBox>
-          <List size={32} weight="fill" onClick={onOpen} />
+          <List size={32} weight="fill" onClick={onOpen} ref={btnRef} />
           <Cart totalItens={products_amount} totalPrice={products_value / 100} />
         </HeaderBox>
 
@@ -136,10 +138,11 @@ export function Header() {
           isOpen={isOpen}
           placement="left"
           onClose={onClose}
-          closeOnOverlayClick={true}
+          onOverlayClick={() => console.log("s")}
         >
           <DrawerOverlay />
           <DrawerContent>
+            <DrawerCloseButton />
             <DrawerBody paddingBlock={"3rem"}>
               {isAuthenticated ? (
                 <>
