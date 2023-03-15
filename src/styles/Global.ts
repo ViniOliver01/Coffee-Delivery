@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import Background from "../assets/Background.png";
+import Background from "../assets/Background.svg";
 
 export const GlobalStyle = createGlobalStyle`
     *{
@@ -8,9 +8,9 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
     body{
-        background-image: url(${Background});
-        background-repeat: no-repeat; 
-        background-size: cover; 
+        background-image: url(${Background}) !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
         color: ${(props) => props.theme["base-text"]};
     }
     header {
