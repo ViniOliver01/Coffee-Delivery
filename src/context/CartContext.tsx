@@ -72,6 +72,12 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       set_products_list(get);
     }
 
+    calcProductsAmount();
+  }, []);
+
+  useEffect(() => {
+    let get = JSON.parse(localStorage.getItem("@coffee-delivery"));
+
     if (products_list !== get) {
       const products = JSON.stringify(products_list);
       localStorage.setItem("@coffee-delivery", products);
