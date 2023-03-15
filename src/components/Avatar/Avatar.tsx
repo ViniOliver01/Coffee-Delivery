@@ -51,7 +51,7 @@ export default function Avatar({ name, avatar_url }: AvatarProps) {
   });
 
   return (
-    <>
+    <div>
       <BackgroundOpacity isActive={isOpen} />
       <Popover isOpen={isOpen} onClose={onClose}>
         <AvatarContainer>
@@ -106,6 +106,6 @@ export default function Avatar({ name, avatar_url }: AvatarProps) {
           </PopoverBody>
         </PopoverContent>
       </Popover>
-    </>
+    </div>
   );
 }

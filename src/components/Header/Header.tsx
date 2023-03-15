@@ -145,9 +145,13 @@ export function Header() {
             <DrawerCloseButton />
             <DrawerBody paddingBlock={"3rem"}>
               {isAuthenticated ? (
-                <>
+                <div
+                  onClick={() => {
+                    isMobile ? GoTo("/account") : null;
+                  }}
+                >
                   <Avatar name={user.name} avatar_url={user.avatar_url} />
-                </>
+                </div>
               ) : (
                 <>
                   <Button
