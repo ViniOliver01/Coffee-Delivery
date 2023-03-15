@@ -11,6 +11,14 @@ export const Container = styled.div`
   width: 100%;
   max-width: 1600px;
   padding-inline: 10rem;
+
+  @media only screen and (max-width: 700px) {
+    flex-direction: column;
+    padding-inline: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    max-width: 450px;
+  }
 `;
 
 export const HeaderItem = styled.div`
@@ -20,20 +28,22 @@ export const HeaderItem = styled.div`
   .icon {
     margin-right: 0.5rem;
   }
+
   .yellow {
     color: ${defaultTheme["yellow-dark"]};
   }
+
   .purple {
     color: ${defaultTheme["purple"]};
   }
-  div {
-  }
+
   h2 {
     color: ${defaultTheme["base-subtitle"]};
     font-size: 16px;
 
     font-weight: normal;
   }
+
   p {
     color: ${defaultTheme["base-text"]};
     font-size: 14px;
@@ -118,6 +128,10 @@ export const PaymentBox = styled.div`
   background-color: ${defaultTheme["base-card"]};
   border-radius: 8px;
   padding: 2rem;
+
+  @media only screen and (max-width: 700px) {
+    padding: 1rem;
+  }
 `;
 
 interface PaymentButtonProps {
@@ -155,6 +169,12 @@ export const PaymentButtonList = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 0.5rem;
   width: 100%;
+
+  @media only screen and (max-width: 700px) {
+    display: flex;
+    flex-direction: column;
+    padding-inline: 0.5rem;
+  }
 `;
 
 export const CartList = styled.div`
@@ -202,5 +222,9 @@ export const CartList = styled.div`
     font-size: 20px;
     font-weight: bold;
     color: ${(props) => props.theme["base-subtitle"]};
+  }
+
+  @media only screen and (max-width: 700px) {
+    min-width: 100px;
   }
 `;

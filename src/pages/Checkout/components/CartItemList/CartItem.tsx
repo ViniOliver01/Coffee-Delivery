@@ -77,7 +77,7 @@ export function CartItem({ id, name, img, price, amount }: CartItemProps) {
           </RemoveItemButton>
         </Buttons>
       </CenterDiv>
-      <PriceDisplay>R$ {formatCurrency(totalPrice)}</PriceDisplay>
+      <PriceDisplay>{formatCurrency(totalPrice)}</PriceDisplay>
     </Container>
   );
 }

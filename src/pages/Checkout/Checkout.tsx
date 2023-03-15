@@ -19,7 +19,7 @@ import {
   PaymentButtonList,
 } from "./Checkout.styles";
 
-import { useToast } from "@chakra-ui/react";
+import { useMediaQuery, useToast } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Form/Button/Button";
@@ -103,9 +103,51 @@ export function Checkout() {
     listAddresses();
   }, []);
 
-  return (
-    <Container>
-      <div>
+  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+    ssr: true,
+    fallback: false,
+  });
+
+  if (isMobile) {
+    return (
+      <Container>
+        <CartList>
+          {products_list.map((item) => {
+            return (
+              <CartItem
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                img={item.img}
+                price={item.price}
+                amount={item.amount}
+              />
+            );
+          })}
+          {products_list.length == 0 ? (
+            <span>
+              Carrinho Vazio <SmileySad size={32} />{" "}
+            </span>
+          ) : (
+            ""
+          )}
+
+          <div className="InfoPrices">
+            <h4 className="left">Total de Itens</h4>
+            <h4 className="right">{formatCurrency(products_value / 100)}</h4>
+          </div>
+
+          <div className="InfoPrices">
+            <h4 className="left">Entrega</h4>
+            <h4 className="right">{formatCurrency(delivery_value / 100)}</h4>
+          </div>
+
+          <div className="InfoPrices">
+            <h3 className="left">Total</h3>
+            <h3 className="right">{formatCurrency(total_value / 100)}</h3>
+          </div>
+        </CartList>
+
         <AddressBox>
           <HeaderItem>
             <MapPinLine className="icon yellow" size={22} />
@@ -183,42 +225,6 @@ export function Checkout() {
             </PaymentButton>
           </PaymentButtonList>
         </PaymentBox>
-      </div>
-      <CartList>
-        {products_list.map((item) => {
-          return (
-            <CartItem
-              key={item.id}
-              id={item.id}
-              name={item.name}
-              img={item.img}
-              price={item.price}
-              amount={item.amount}
-            />
-          );
-        })}
-        {products_list.length == 0 ? (
-          <span>
-            Carrinho Vazio <SmileySad size={32} />{" "}
-          </span>
-        ) : (
-          ""
-        )}
-
-        <div className="InfoPrices">
-          <h4 className="left">Total de Itens</h4>
-          <h4 className="right">{formatCurrency(products_value / 100)}</h4>
-        </div>
-
-        <div className="InfoPrices">
-          <h4 className="left">Entrega</h4>
-          <h4 className="right">{formatCurrency(delivery_value / 100)}</h4>
-        </div>
-
-        <div className="InfoPrices">
-          <h3 className="left">Total</h3>
-          <h3 className="right">{formatCurrency(total_value / 100)}</h3>
-        </div>
 
         <Button
           onClick={onSubmit}
@@ -229,7 +235,137 @@ export function Checkout() {
         >
           CONFIRMAR PEDIDO
         </Button>
-      </CartList>
-    </Container>
-  );
+      </Container>
+    );
+  } else {
+    return (
+      <Container>
+        <div>
+          <AddressBox>
+            <HeaderItem>
+              <MapPinLine className="icon yellow" size={22} />
+              <div>
+                <h2>Endereço de Entrega</h2>
+                <p>Informe o endereço onde deseja receber seu pedido</p>
+              </div>
+            </HeaderItem>
+            {addressList.length > 0 ? (
+              <NoAddressMessage>
+                <p> Para editar seus endereços vá para</p>
+                <Link onClick={GoToAddress}>meus endereços</Link>
+              </NoAddressMessage>
+            ) : (
+              <div className="noAddresses">
+                <SmileySad size={32} />
+                <NoAddressMessage>
+                  <p>Você ainda não tem um endereço cadastrado, </p>
+                  <p>para cadastrar vá até </p>
+                  <Link onClick={GoToAddress}>meus endereços</Link>
+                </NoAddressMessage>
+              </div>
+            )}
+
+            <div>
+              {addressList.map((address, index) => {
+                return (
+                  <AddressItem
+                    key={address.id}
+                    onClick={() => setAddressSelect(index)}
+                    checked={addressSelect == index}
+                  >
+                    <Package weight="fill" />
+                    <div>
+                      <span>{address.name}</span>
+                      <p>
+                        {address.street}, {address.number}. {address.city} -{" "}
+                        {String(address.state).toUpperCase()}
+                      </p>
+                    </div>
+                  </AddressItem>
+                );
+              })}
+            </div>
+          </AddressBox>
+
+          <PaymentBox>
+            <HeaderItem>
+              <CurrencyDollar size={22} className="icon purple" />
+              <div>
+                <h2>Pagamento</h2>
+                <p>O pagamento é feito na entrega. Escolha a forma que deseja pagar</p>
+              </div>
+            </HeaderItem>
+            <PaymentButtonList>
+              <PaymentButton
+                active={payMethodSelect === 0}
+                onClick={() => setPayMethodSelect(0)}
+              >
+                <CreditCard /> Cartão de Crédito
+              </PaymentButton>
+
+              <PaymentButton
+                active={payMethodSelect === 1}
+                onClick={() => setPayMethodSelect(1)}
+              >
+                <Bank /> Cartão de Débito
+              </PaymentButton>
+
+              <PaymentButton
+                active={payMethodSelect === 2}
+                onClick={() => setPayMethodSelect(2)}
+              >
+                <Money /> Dinheiro
+              </PaymentButton>
+            </PaymentButtonList>
+          </PaymentBox>
+        </div>
+        <CartList>
+          {products_list.map((item) => {
+            return (
+              <CartItem
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                img={item.img}
+                price={item.price}
+                amount={item.amount}
+              />
+            );
+          })}
+          {products_list.length == 0 ? (
+            <span>
+              Carrinho Vazio <SmileySad size={32} />{" "}
+            </span>
+          ) : (
+            ""
+          )}
+
+          <div className="InfoPrices">
+            <h4 className="left">Total de Itens</h4>
+            <h4 className="right">{formatCurrency(products_value / 100)}</h4>
+          </div>
+
+          <div className="InfoPrices">
+            <h4 className="left">Entrega</h4>
+            <h4 className="right">{formatCurrency(delivery_value / 100)}</h4>
+          </div>
+
+          <div className="InfoPrices">
+            <h3 className="left">Total</h3>
+            <h3 className="right">{formatCurrency(total_value / 100)}</h3>
+          </div>
+
+          <Button
+            onClick={onSubmit}
+            isLoading={isSubmitting}
+            loadingText="Confirmando..."
+            color="purple"
+            type="submit"
+          >
+            CONFIRMAR PEDIDO
+          </Button>
+        </CartList>
+      </Container>
+    );
+  }
 }
