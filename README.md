@@ -4,7 +4,7 @@ Este é um projeto ao estilo e-commerce o qual tem por fim por em pratica a util
 
 ## 📒 Aprendizados
 
-- Consumo de API's ( API criada e utilizada no projeto [API Coffee delivery](https://github.com/ViniOliver01/coffee-delivery-api))
+- Criado e utilizado a [API Coffee delivery](https://github.com/ViniOliver01/coffee-delivery-api)
 - Manejo de variáveis ambiente para produção e desenvolvimento
 - Boa utilização dos recursos de contexto e estado do React JS
 - Utilização de Typescript em todo o projeto
