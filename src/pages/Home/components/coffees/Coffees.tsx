@@ -81,6 +81,11 @@ export function Coffees({
     fallback: false,
   });
 
+  const [isDesktop] = useMediaQuery("(min-width: 701px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   if (isMobile) {
     return (
       <Container>
@@ -111,7 +116,7 @@ export function Coffees({
         </div>
       </Container>
     );
-  } else {
+  } else if (isDesktop) {
     return (
       <Container>
         <img src={img} alt="" />
