@@ -111,7 +111,7 @@ export function Header() {
   }
 
   useEffect(() => {
-    if (isAuthenticated && !user.email_is_verified) {
+    if (isAuthenticated && user?.email_is_verified == false) {
       setIsEmailVerified(false);
     }
     if (pathname === "confirmemail") {
