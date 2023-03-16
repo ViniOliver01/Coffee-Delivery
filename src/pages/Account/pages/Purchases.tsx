@@ -80,7 +80,7 @@ export default function Purchases() {
     <Container>
       <Title>Meus pedidos</Title>
       <Card display="flex" padding="2rem 4rem">
-        <span>Clique para ver mais</span>
+        {purchasesList.length > 0 && <span>Clique para ver mais</span>}
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
           <ModalContent>
