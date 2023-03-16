@@ -80,9 +80,9 @@ export const AuthContext = createContext({} as AuthContextData);
 let authChannel: BroadcastChannel;
 
 export function signOut(shouldBroadcast = true) {
-  destroyCookie(undefined, "coffee.token");
-  destroyCookie(undefined, "coffee.refreshToken");
-  destroyCookie(undefined, "coffee.avatar");
+  destroyCookie(null, "coffee.token");
+  destroyCookie(null, "coffee.refreshToken");
+  destroyCookie(null, "coffee.avatar");
   shouldBroadcast && authChannel.postMessage("signOut");
 }
 
@@ -171,17 +171,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const { token, refresh_token, user } = response.data;
 
-      setCookie(undefined, "coffee.token", token, {
+      setCookie(null, "coffee.token", token, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: "/",
       });
 
-      setCookie(undefined, "coffee.refreshToken", refresh_token, {
+      setCookie(null, "coffee.refreshToken", refresh_token, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: "/",
       });
 
-      setCookie(undefined, "coffee.avatar", user.avatar_url, {
+      setCookie(null, "coffee.avatar", user.avatar_url, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: "/",
       });
@@ -196,7 +196,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
-      // navigation("/dashboard");
       authChannel.postMessage("signIn");
       return { status: 200, message: "Success" };
     } catch (error) {
