@@ -1,30 +1,34 @@
-# Coffee Delivery
+# 🚀 Coffee Delivery
 
-Esté é um projeto ao estilo e-commerce o qual tem por fim por em pratica a utilização da **Context API** do React, passando informações de 
-qual café foi selecionado e quantidade entre as paginas **Home** e **Checkout** para no fim pegar as informações de café do carrinho
-e os dados de entrgea da pagina **Checkout** com a possibilidade de capturar essas informações e enviar para um servidor
-atraves de uma API.
+Este é um projeto ao estilo e-commerce o qual tem por fim por em pratica a utilização de toda bagagem adquirida ao decorrer do curso de front end e do curso de back end da Rocketseat. onde criei uma API para armazenar usuários, cafés e compras, além de ter criado um sistema de email para notificar um novo usuário e para recuperar senha.
 
-### Pagina inicial
+## 📒 Aprendizados
 
-<img src="https://i.imgur.com/3yWkrII.png" alt="" />
+- Consumo de API's
+- Manejo de variáveis ambiente para produção e desenvolvimento
+- Boa utilização dos recursos de contexto e estado do React JS
+- Utilização de Typescript em todo o projeto
+- Aplicação de um sistema de autenticação com e-mail e senha
+- Envio de e-mail automático para recuperação de conta
+- Configuração da AWS ( S3 e EC2 )
 
-### Lista de Cafés
+## 🔨 Ferramentas
 
-<img src="https://imgur.com/uDMmFzT.png" alt="" />
+- React.Js
+- Typescript
+- AWS (Banco de dados e servidor da API)
+- Figma
+- Git e GitHub
+- Vercel (deploy)
 
-### Pagina de Checkout com Formulário
+## 🏗️ Melhorias
 
-<img src="https://imgur.com/noD1tPS.png" alt="" />
+- No momento não é possível fazer login com o Google, porém é algo que será implementado no futuro
 
-### Exemplo de Erro de não preenchimento do formulário
+## Demonstração
 
-<img src="https://imgur.com/UUdwFSN.png" alt="" />
+Para visualizar a diferença entre as duas versões, siga os links abaixo, imagens hospedadas no [imgur.com](https://imgur.com/)
 
-### Exemplo de Erro de não seleção de forma de pagamento
+[Versão 1.0.0](https://imgur.com/a/ANSFZ4N)
 
-<img src="https://imgur.com/3bopo7g.png" alt="" />
-
-### Pagina Success com dados de entrega
-
-<img src="https://imgur.com/tE45kZR.png" alt="" />
+[Versão 2.0.0](https://imgur.com/a/BTp5zbC)
