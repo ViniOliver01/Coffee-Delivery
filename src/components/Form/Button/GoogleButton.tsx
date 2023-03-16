@@ -1,4 +1,4 @@
-import { useToast } from "@chakra-ui/react";
+import { useMediaQuery, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import Button from "./Button";
@@ -25,6 +25,7 @@ export default function GoogleButton() {
       description: "No momento o botão de login com o Google não está ativo",
       status: "error",
       duration: 10000,
+      position: isMobile ? "top" : "bottom",
       isClosable: true,
     });
   }
@@ -64,6 +65,11 @@ export default function GoogleButton() {
 
   //   getGoogleData();
   // }, [token]);
+
+  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   return (
     <>

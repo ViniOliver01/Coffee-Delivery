@@ -60,6 +60,7 @@ export function Checkout() {
         title: "Você ainda não está logado",
         status: "error",
         duration: 9000,
+        position: isMobile ? "top" : "bottom",
         isClosable: true,
       });
     } else if (addressList.length === 0) {
@@ -67,6 +68,7 @@ export function Checkout() {
         title: "Nenhum endereço ativo",
         status: "error",
         duration: 9000,
+        position: isMobile ? "top" : "bottom",
         isClosable: true,
       });
     }
@@ -76,6 +78,7 @@ export function Checkout() {
         title: "Carrinho vazio",
         status: "error",
         duration: 9000,
+        position: isMobile ? "top" : "bottom",
         isClosable: true,
       });
     }
@@ -94,6 +97,7 @@ export function Checkout() {
             title: "Erro ao efetuar a compra",
             status: "error",
             duration: 9000,
+            position: isMobile ? "top" : "bottom",
             isClosable: true,
           });
         }

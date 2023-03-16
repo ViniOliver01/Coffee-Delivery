@@ -1,4 +1,4 @@
-import { useToast } from "@chakra-ui/react";
+import { useMediaQuery, useToast } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -91,6 +91,7 @@ export default function SingUp() {
         title: response.message,
         description: "Favor verifique sua caixa de email",
         status: "success",
+        position: isMobile ? "top" : "bottom",
         duration: 10000,
       });
       await signIn({
@@ -105,6 +106,11 @@ export default function SingUp() {
   watch((data) => {
     const passCheck = verifyPassword(data.password);
     setPasswordCheck(passCheck);
+  });
+
+  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+    ssr: true,
+    fallback: false,
   });
 
   return (

@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { AuthContext } from "../../context/AuthContext";
 import { Container, Form, Title } from "./styles";
 
-import { useToast } from "@chakra-ui/react";
+import { useMediaQuery, useToast } from "@chakra-ui/react";
 import FormError from "../../components/Error/Form/FormError";
 import Button from "../../components/Form/Button/Button";
 import { Card } from "../../components/Form/Card";
@@ -48,6 +48,7 @@ export default function SendEmailResetPassword() {
         description:
           "Email de recuperação de senha enviado. Favor verifique sua caixa de email",
         status: "success",
+        position: isMobile ? "top" : "bottom",
         duration: 10000,
       });
     }
@@ -61,6 +62,11 @@ export default function SendEmailResetPassword() {
   if (isAuthenticated) {
     return <Navigate to="/" />;
   }
+
+  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   return (
     <Container>

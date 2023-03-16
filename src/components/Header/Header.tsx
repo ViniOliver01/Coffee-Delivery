@@ -92,6 +92,7 @@ export function Header() {
           title: "Email enviado",
           description: "Confirmação de email enviado. Favor verifique sua caixa de email",
           status: "success",
+          position: isMobile ? "top" : "bottom",
           duration: 10000,
         });
       }
@@ -102,6 +103,7 @@ export function Header() {
           description:
             "Erro ao enviar confirmação de email. Favor entre em contato com um administrador",
           status: "error",
+          position: isMobile ? "top" : "bottom",
           duration: 10000,
         });
       }

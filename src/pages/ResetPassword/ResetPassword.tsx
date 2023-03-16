@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { AuthContext } from "../../context/AuthContext";
 import { Container, Form, Title } from "./styles";
 
-import { useToast } from "@chakra-ui/react";
+import { useMediaQuery, useToast } from "@chakra-ui/react";
 import YupPassword from "yup-password";
 import FormError from "../../components/Error/Form/FormError";
 import Button from "../../components/Form/Button/Button";
@@ -89,6 +89,7 @@ export default function ResetPassword() {
         title: response.message,
         description: "Senha alterada com sucesso",
         status: "success",
+        position: isMobile ? "top" : "bottom",
         duration: 10000,
       });
       navigation("/login");
@@ -123,6 +124,11 @@ export default function ResetPassword() {
   if (isFetchingToken === null) {
     return <></>;
   }
+
+  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   return (
     <Container>

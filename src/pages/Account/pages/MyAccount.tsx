@@ -1,4 +1,4 @@
-import { Avatar, Spinner, useToast } from "@chakra-ui/react";
+import { Avatar, Spinner, useMediaQuery, useToast } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import heic2any from "heic2any";
 import { Pencil } from "phosphor-react";
@@ -98,6 +98,7 @@ export default function MyAccount() {
       title: "Imagem carregada.",
       description: "Imagem carregada com sucesso.",
       status: "success",
+      position: isMobile ? "top" : "bottom",
       duration: 3000,
     });
   }
@@ -115,6 +116,7 @@ export default function MyAccount() {
       title: "Dados atualizados.",
       description: "Dados atualizados com sucesso.",
       status: "success",
+      position: isMobile ? "top" : "bottom",
       duration: 5000,
     });
   }
@@ -122,6 +124,11 @@ export default function MyAccount() {
   useEffect(() => {
     setValue("phone", phoneNumber);
   }, [phoneNumber]);
+
+  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   return (
     <>

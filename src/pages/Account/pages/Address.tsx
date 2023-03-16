@@ -86,6 +86,7 @@ export default function Address() {
       toast({
         title: "Endereço Atualizado",
         status: "success",
+        position: isMobile ? "top" : "bottom",
         duration: 10000,
       });
     }
@@ -103,6 +104,7 @@ export default function Address() {
       toast({
         title: "Endereço criado",
         status: "success",
+        position: isMobile ? "top" : "bottom",
         duration: 10000,
       });
     }

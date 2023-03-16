@@ -10,6 +10,7 @@ import {
   Spinner,
   Switch,
   useDisclosure,
+  useMediaQuery,
   useToast,
 } from "@chakra-ui/react";
 
@@ -133,6 +134,7 @@ export default function CoffeeList() {
       title: "Imagem carregada.",
       description: "Imagem carregada com sucesso.",
       status: "success",
+      position: isMobile ? "top" : "bottom",
       duration: 3000,
     });
   }
@@ -164,6 +166,7 @@ export default function CoffeeList() {
       title: "Café excluído.",
       description: "Café excluído com sucesso.",
       status: "success",
+      position: isMobile ? "top" : "bottom",
       duration: 5000,
     });
   }
@@ -192,6 +195,7 @@ export default function CoffeeList() {
         title: "Dados atualizados.",
         description: "Dados atualizados com sucesso.",
         status: "success",
+        position: isMobile ? "top" : "bottom",
         duration: 5000,
       });
     } else {
@@ -206,6 +210,7 @@ export default function CoffeeList() {
         title: "Café adicionado",
         description: "Café adicionado com sucesso.",
         status: "success",
+        position: isMobile ? "top" : "bottom",
         duration: 5000,
       });
     }
@@ -254,6 +259,11 @@ export default function CoffeeList() {
       });
     }
   }, [price]);
+
+  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   return (
     <CoffeeListItem>

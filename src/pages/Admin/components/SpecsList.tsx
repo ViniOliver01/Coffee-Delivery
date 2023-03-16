@@ -7,6 +7,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useMediaQuery,
   useToast,
 } from "@chakra-ui/react";
 
@@ -87,6 +88,7 @@ export default function SpecsList() {
       title: "Especificação excluída.",
       description: "Especificação excluída com sucesso.",
       status: "success",
+      position: isMobile ? "top" : "bottom",
       duration: 5000,
     });
   }
@@ -104,6 +106,7 @@ export default function SpecsList() {
         toast({
           title: response.message,
           status: "error",
+          position: isMobile ? "top" : "bottom",
           duration: 5000,
         });
       } else {
@@ -111,6 +114,7 @@ export default function SpecsList() {
           title: "Dados atualizados.",
           description: "Dados atualizados com sucesso.",
           status: "success",
+          position: isMobile ? "top" : "bottom",
           duration: 5000,
         });
       }
@@ -120,6 +124,7 @@ export default function SpecsList() {
         toast({
           title: response.message,
           status: "error",
+          position: isMobile ? "top" : "bottom",
           duration: 5000,
         });
       } else {
@@ -127,6 +132,7 @@ export default function SpecsList() {
           title: "Especificação adicionada.",
           description: "Especificação adicionada com sucesso.",
           status: "success",
+          position: isMobile ? "top" : "bottom",
           duration: 5000,
         });
       }
@@ -143,6 +149,11 @@ export default function SpecsList() {
     }
     listSpecs();
   }, [refresh]);
+
+  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   return (
     <SpecList>
