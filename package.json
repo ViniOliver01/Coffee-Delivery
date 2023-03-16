@@ -1,6 +1,8 @@
 {
   "name": "coffee-delivery",
   "version": "2.0.0",
+  "author": "Vinicius de Oliveira Pinto <viniciusoliveira9699@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
