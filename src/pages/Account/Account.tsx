@@ -4,14 +4,14 @@ import { Container } from "./Account.styles";
 import Sidebar from "./Components/Sidebar";
 
 export default function Account() {
-  const [isMobile] = useMediaQuery("(max-width: 700px)", {
+  const [isDesktop] = useMediaQuery("(min-width: 701px)", {
     ssr: true,
     fallback: false,
   });
 
   return (
     <Container>
-      {!isMobile && <Sidebar />}
+      {isDesktop && <Sidebar />}
       <Outlet />
     </Container>
   );

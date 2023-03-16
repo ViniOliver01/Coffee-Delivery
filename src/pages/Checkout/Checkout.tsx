@@ -125,6 +125,11 @@ export function Checkout() {
     fallback: false,
   });
 
+  const [isDesktop] = useMediaQuery("(min-width: 901px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   if (isMobile) {
     return (
       <Container>
@@ -261,7 +266,7 @@ export function Checkout() {
         </Button>
       </Container>
     );
-  } else {
+  } else if (isDesktop) {
     return (
       <Container>
         <div>

@@ -124,6 +124,11 @@ export function Header() {
     fallback: false,
   });
 
+  const [isDesktop] = useMediaQuery("(min-width: 701px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   if (isMobile) {
     return (
       <HeaderBody>
@@ -219,7 +224,7 @@ export function Header() {
         </Drawer>
       </HeaderBody>
     );
-  } else {
+  } else if (isDesktop) {
     return (
       <HeaderBody>
         {!isEmailVerified && (

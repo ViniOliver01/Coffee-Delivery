@@ -47,6 +47,11 @@ export default function Home() {
     fallback: false,
   });
 
+  const [isDesktop] = useMediaQuery("(min-width: 701px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   if (isMobile) {
     return (
       <Container>
@@ -109,7 +114,7 @@ export default function Home() {
         </CoffeesList>
       </Container>
     );
-  } else {
+  } else if (isDesktop) {
     return (
       <Container>
         <CoverArea>
