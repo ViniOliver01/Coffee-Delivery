@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  padding-inline: 10%;
   display: grid;
   justify-content: center;
   grid-template-areas:
@@ -9,6 +8,7 @@ export const Container = styled.div`
     "GradientBox ImageArea";
   grid-template-rows: auto auto;
   grid-template-columns: 1fr 1fr;
+  margin: auto;
 
   @media only screen and (max-width: 1000px) {
     grid-template-areas:

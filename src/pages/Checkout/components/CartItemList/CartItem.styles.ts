@@ -13,7 +13,7 @@ export const Container = styled.li`
     height: 4rem;
   }
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 430px) {
     display: flex;
     flex-direction: column;
     align-items: center;

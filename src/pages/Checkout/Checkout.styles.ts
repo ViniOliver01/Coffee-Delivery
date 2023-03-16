@@ -170,12 +170,11 @@ export const PaymentButton = styled.button`
 
 export const PaymentButtonList = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
   grid-gap: 0.5rem;
   width: 100%;
 
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 1200px) {
     display: flex;
     flex-direction: column;
     padding-inline: 0.5rem;
@@ -184,7 +183,7 @@ export const PaymentButtonList = styled.div`
 
 export const CartList = styled.div`
   background-color: ${(props) => props.theme["base-card"]};
-  padding: 2rem 0.8rem;
+  padding: 3rem 2rem;
   min-width: 400px;
   border-radius: 6px 44px 6px 44px;
   height: fit-content;
