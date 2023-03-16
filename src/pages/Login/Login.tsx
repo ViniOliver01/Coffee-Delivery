@@ -103,8 +103,6 @@ export default function Login() {
             <FormError message={error} />
           </LabelBox>
 
-          <FormError message={error} />
-
           <Options>
             <Checkbox defaultChecked {...register("remember")}>
               <p>Lembrar dados de login</p>
