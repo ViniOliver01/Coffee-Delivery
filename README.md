@@ -52,7 +52,7 @@ Para executar este aplicativo, você precisará configurar o back-end [API-Coffe
 # Instale as dependências
 $ yarn install ou npm install
 
-# Execute o expo
+# Execute o aplicativo
 $ yarn dev ou npm run dev
 ```
 ## 🧑 Autor
