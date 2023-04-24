@@ -41,7 +41,6 @@ Para clonar e executar este aplicativo, você precisará de [Git](https://git-sc
 ```
 # Clone este repositório
 $ git clone https://github.com/ViniOliver01/Coffee-Delivery
-
 ```
 ## ▶️ Rodando a Aplicação
 
@@ -53,7 +52,6 @@ $ yarn install ou npm install
 
 # Execute o expo
 $ yarn dev ou npm run dev
-
 ```
 ## 🧑 Autor
 
