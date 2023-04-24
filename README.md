@@ -49,10 +49,10 @@ $ git clone https://github.com/ViniOliver01/Coffee-Delivery
 Para executar este aplicativo, você precisará configurar o back-end [API-Coffee-Delivery](https://github.com/ViniOliver01/coffee-delivery-api)
 
 ```
-# Instale as dependências
+# Instalando as dependências
 $ yarn install ou npm install
 
-# Execute o aplicativo
+# Executando a aplicação
 $ yarn dev ou npm run dev
 ```
 ## 🧑 Autor
