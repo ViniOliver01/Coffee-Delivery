@@ -37,12 +37,14 @@ Para visualizar a diferença entre as duas versões, siga os links abaixo, image
 ## 📁 Como rodar este projeto
 
 Para clonar e executar este aplicativo, você precisará de [Git](https://git-scm.com) e [NodeJs](https://nodejs.org/en/) Instalado em seu computador.
-## 🌀 Clonando o repositório
+
+### 🌀 Clonando o repositório
 ```
 # Clone este repositório
 $ git clone https://github.com/ViniOliver01/Coffee-Delivery
 ```
-## ▶️ Rodando a Aplicação
+
+### ▶️ Rodando a Aplicação
 
 Para executar este aplicativo, você precisará configurar o back-end [API-Coffee-Delivery](https://github.com/ViniOliver01/coffee-delivery-api)
 
